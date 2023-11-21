@@ -1,0 +1,73 @@
+{
+  "menu": [
+    {
+      "url": "/dashboard",
+      "name": "Beranda",
+      "icon": "menu-icon tf-icons bx bx-home-circle",
+      "slug": ["dashboard"]
+    },
+    {
+      "menuHeader": "Data Master",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
+      "name": "Data Jurusan",
+      "icon": "menu-icon tf-icons bx bx-building",
+      "slug": ["departments.index", "departments.edit"],
+      "url": "/departments",
+      "roles": ["admin"]
+    },
+    {
+      "name": "Data Ruangan",
+      "icon": "menu-icon tf-icons bx bx-buildings",
+      "slug": ["rooms.index", "rooms.edit", "add-slider"],
+      "url": "/rooms",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
+      "name": "Data Pengguna",
+      "icon": "menu-icon tf-icons bx bx-user",
+      "slug": ["users.index", "users.create", "users.edit"],
+      "url": "/users",
+      "roles": ["admin"]
+    },
+    {
+      "name": "Data Peminjaman",
+      "icon": "menu-icon tf-icons bx bx-calendar",
+      "slug": ["reservation"],
+      "url": "/reservation",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
+      "name": "Laporan",
+      "icon": "menu-icon tf-icons bx bxs-report",
+      "slug": ["report"],
+      "url": "/report",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
+      "menuHeader": "Peminjaman"
+    },
+    {
+      "name": "Pinjam Ruangan",
+      "icon": "menu-icon tf-icons bx bx-calendar-check",
+      "slug": ["room_reservation.index", "room_reservation.show", "rooms.show"],
+      "url": "/room_reservation"
+    },
+    {
+      "name": "Peminjaman Saya",
+      "icon": "menu-icon tf-icons bx bxs-user-detail",
+      "slug": ["my_reservation", "history"],
+      "url": "/my_reservation"
+    },
+    {
+      "menuHeader": "Lainnya"
+    },
+    {
+      "name": "Pengaturan",
+      "icon": "menu-icon tf-icons bx bx-cog",
+      "slug": ["settings"],
+      "url": "/settings"
+    }
+  ]
+}
