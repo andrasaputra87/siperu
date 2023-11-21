@@ -53,14 +53,6 @@
   font-size: 150%;
 }
 
-.invalid-feedback {
-  display: none;
-  width: 100%;
-  margin-top: 0.3rem;
-  font-size: 85%;
-  color: #ff3e1d;
-}
-
 @media (max-width: 575.98px) {
   .authentication-wrapper .auth-input-wrapper .auth-input {
     font-size: 1.125rem;
