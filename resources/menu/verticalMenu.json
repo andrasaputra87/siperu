@@ -25,6 +25,13 @@
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
     {
+      "name": "Data Tahun Ajaran",
+      "icon": "menu-icon tf-icons bx bx-calendar-plus",
+      "slug": ["years.index", "years.edit"],
+      "url": "/years",
+      "roles": ["admin"]
+    },
+    {
       "name": "Data Pengguna",
       "icon": "menu-icon tf-icons bx bx-user",
       "slug": ["users.index", "users.create", "users.edit"],

@@ -8,6 +8,7 @@ use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ReportController;
 use App\Http\Controllers\authentications\ForgotPassword;
 use App\Http\Controllers\dashboard\DepartmentController;
+use App\Http\Controllers\dashboard\YearsController;
 use App\Http\Controllers\dashboard\ReservationController;
 use App\Http\Controllers\authentications\SocialiteController;
 use App\Http\Controllers\dashboard\RoomReservationController;
@@ -52,6 +53,7 @@ Route::get('/add-slider/{id}', [RoomController::class, 'add_slider'])->name('add
 Route::post('/upload-slider/{id}', [RoomController::class, 'upload_slider'])->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::delete('/delete-slider/{id}', [RoomController::class, 'delete_slider'])->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('departments', DepartmentController::class)->middleware(['auth', 'role:admin']);
+Route::resource('years', YearsController::class)->middleware(['auth', 'role:admin']);
 Route::resource('users', UserController::class)->middleware(['auth', 'role:admin']);
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware(['auth', 'role:admin']);
 Route::get('/profile/{slug}', [UserController::class, 'profile'])->name('profile')->middleware('auth');
