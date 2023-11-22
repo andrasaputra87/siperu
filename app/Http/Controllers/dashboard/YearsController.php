@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\dashboard;
 
+use App\Models\TahunAjaran;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,8 @@ class YearsController extends Controller
     public function index()
     {
         return view('content.dashboard.years', [
-            'departments' => Department::orderBy('id', 'desc')->get(),
-            'department_edit' => '',
+            'tahun_ajaran' => TahunAjaran::orderBy('id', 'desc')->get(),
+            'tahun_ajaran_edit' => '',
         ]);
     }
 
@@ -38,7 +39,13 @@ class YearsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'tahun_ajaran' => 'required',
+        ]);
+
+        TahunAjaran::create($data);
+
+        return redirect('years')->with('message', 'Data berhasil dimasukkan!👍');
     }
 
     /**
@@ -60,7 +67,12 @@ class YearsController extends Controller
      */
     public function edit($id)
     {
-        //
+        if ($id) {
+            return view('content.dashboard.years', [
+                'tahun_ajaran_edit' => TahunAjaran::find($id),
+                'tahun_ajaran' => TahunAjaran::orderBy('id', 'desc')->get(),
+            ]);
+        }
     }
 
     /**
@@ -72,7 +84,35 @@ class YearsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'tahun_ajaran' =>'required',
+        ]);
+        $post = TahunAjaran::find($id);
+        $post->tahun_ajaran = $request->tahun_ajaran;
+        $post->status = $request->status;
+        $post->update();
+
+        // TahunAjaran::where('id', '!=', $id)->update(['status' => 0]);
+
+        return redirect('years')->with('message', 'Data berhasil diubah!');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function set(Request $request, $id)
+    {
+        $post = TahunAjaran::find($id);
+        $post->status = 1;
+        $post->update();
+
+        TahunAjaran::where('id', '!=', $id)->update(['status' => 0]);
+
+        return redirect('years')->with('message', 'Data berhasil diubah!');
     }
 
     /**
@@ -83,6 +123,10 @@ class YearsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = TahunAjaran::findOrFail($id);
+
+        $data->delete();
+
+        return redirect('years')->with('message', 'Data berhasil dihapus!🙌');
     }
 }

@@ -68,6 +68,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+
         if ($department) {
             return view('content.dashboard.departments', [
                 'department_edit' => $department,

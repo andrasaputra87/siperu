@@ -106,12 +106,12 @@
             <div class="content-left">
               <span>Jurusan</span>
               <div class="d-flex align-items-end mt-2">
-                <h4 class="mb-0 me-2">{{ count($departments) }}</h4>
+                <h4 class="mb-0 me-2">{{ count($tahun_ajaran) }}</h4>
               </div>
-              <small>Total jurusan keseluruhan</small>
+              <small>Total tahun ajaran keseluruhan</small>
             </div>
             <span class="badge bg-label-primary rounded p-2">
-              <i class="bx bx-building bx-sm"></i>
+              <i class="bx bx-calendar-plus bx-sm"></i>
             </span>
           </div>
         </div>
@@ -123,48 +123,31 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                @if ($department_edit)
-                    <form action="{{ route('departments.update', $department_edit) }}" method="POST">
+                @if ($tahun_ajaran_edit)
+                    <form action="{{ route('years.update', $tahun_ajaran_edit) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $department_edit->name }}">
-                                @error('name')
+                                <label for="tahun_ajaran" class="form-label">Tahun Ajaran <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control @error('tahun_ajaran') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $tahun_ajaran_edit->tahun_ajaran }}">
+                                @error('tahun_ajaran')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="head_of_department" class="form-label">Ketua Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="head_of_department" id="head_of_department" class="form-control @error('head_of_department') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $department_edit->head_of_department }}">
-                                @error('head_of_department')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
+
                         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                         <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                     </form>
                 @else
-                    <form action="{{ route('departments.store') }}" method="POST">
+                    <form action="{{ route('years.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama jurusan" value="{{ old('name') }}">
-                                @error('name')
-                                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="head_of_department" class="form-label">Ketua Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="head_of_department" id="head_of_department" class="form-control @error('head_of_department') border-danger @enderror" placeholder="Masukkan ketua jurusan" value="{{ old('head_of_deparment') }}">
-                                @error('head_of_department')
+                                <label for="tahun_ajaran" class="form-label">Tahun Ajaran <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control @error('tahun_ajaran') border-danger @enderror" placeholder="Masukkan tahun ajaran" value="{{ old('tahun_ajaran') }}">
+                                @error('tahun_ajaran')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -186,21 +169,29 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nama</th>
-                                <th>Ketua Jurusan</th>
+                                <th>Tahun ajaran</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($departments as $department)
+                            @foreach ($tahun_ajaran as $tahun)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $department->name }}</td>
-                                    <td>{{ $department->head_of_department }}</td>
+                                    <td>{{ $tahun->tahun_ajaran }}</td>
+                                    @if($tahun->status ==0)         
+                                        <td><div class="p-3 mb-2 bg-danger text-white">Tidak Aktif</div>
+                                        </td>         
+                                    @else
+                                        <td><div class="p-3 mb-2 bg-success text-black">Aktif</div>
+                                    @endif
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('departments.edit', $department) }}" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
-                                            <form action="{{ route('departments.destroy', $department) }}" id="delete-form-{{ $department->id }}" method="POST">
+                                            <a href="{{ route('years.edit', $tahun) }}" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
+                                            @if($tahun->status ==0)         
+                                                <a href="/set/{{$tahun->id}}" class="btn btn-sm btn-icon item-check-circle"><i class="bx bxs-check-circle"></i></a>
+                                            @endif
+                                            <form action="{{ route('years.destroy', $tahun) }}" id="delete-form-{{ $tahun->id }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-icon tombol-hapus"><i class="bx bx-trash"></i></button>

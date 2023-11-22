@@ -16,7 +16,7 @@ class TahunAjaranSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tahun_ajaran')->insert([
+        DB::table('tahun_ajarans')->insert([
         	'tahun_ajaran' => '2022/2023',
         	'status' => true,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

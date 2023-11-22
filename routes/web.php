@@ -83,3 +83,7 @@ Route::post('/reschedule/{id}', [ReservationController::class, 'update'])->middl
 Route::get('/settings', [UserController::class, 'settings'])->name('settings')->middleware('auth');
 Route::put('/settings/{id}', [UserController::class, 'settings_action'])->name('settings.update')->middleware('auth');
 Route::get('/delete_signature', [UserController::class, 'delete_signature'])->middleware('auth');
+
+// tahunajaran
+Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->name('set-tahun-ajaran');
+
