@@ -146,7 +146,7 @@
                         <div class="row">
                             <div class="col mb-3">
                                 <label for="tahun_ajaran" class="form-label">Tahun Ajaran <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="tahun_ajaran" id="tahun_ajaran" class="form-control @error('tahun_ajaran') border-danger @enderror" placeholder="Masukkan tahun ajaran" value="{{ old('tahun_ajaran') }}">
+                                <input type="text" name="id_tahun_ajaran" id="id_tahun_ajaran" class="form-control @error('id_tahun_ajaran') border-danger @enderror" placeholder="Masukkan tahun ajaran" value="{{ old('tahun_ajaran') }}">
                                 @error('tahun_ajaran')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror

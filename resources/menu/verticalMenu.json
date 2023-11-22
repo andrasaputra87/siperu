@@ -32,6 +32,13 @@
       "roles": ["admin"]
     },
     {
+      "name": "Data Sesi Waktu",
+      "icon": "menu-icon tf-icons bx bx-timer",
+      "slug": ["sessions.index", "sessions.edit"],
+      "url": "/sessions",
+      "roles": ["admin"]
+    },
+    {
       "name": "Data Pengguna",
       "icon": "menu-icon tf-icons bx bx-user",
       "slug": ["users.index", "users.create", "users.edit"],
