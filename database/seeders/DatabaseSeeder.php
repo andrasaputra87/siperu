@@ -59,18 +59,5 @@ class DatabaseSeeder extends Seeder
         'avatar' => 'avatars/' . $avatarFileName
       ],
     );
-
-    DB::table('users')->insert(
-      [
-        'fullname' => 'Ananda',
-        'slug' => 'ananda',
-        'email' => 'anndrzq8@gmail.com',
-        'phone_number' => '12313213132',
-        'department_id' => '1',
-        'password' => bcrypt('123123'),
-        'role' => 'user',
-        'avatar' => 'avatars/' . $avatarFileName
-      ],
-    );
   }
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class RoomSeeder extends Seeder
 {
@@ -23,8 +24,8 @@ class RoomSeeder extends Seeder
         	'capacity' => 50,
         	'location' => 'Lantai 1',
         	'availability' => 1,
-        	'created_at' => '2023-11-09 02:47:50',
-        	'updated_at' => '2023-11-09 02:47:50',
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
         	'ownership' => 'BAAK'
         ]);
     }
