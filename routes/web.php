@@ -80,6 +80,7 @@ Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])-
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/reschedule/{id}', [ReservationController::class, 'show'])->middleware('auth')->name('reschedule');
 Route::post('/reschedule/{id}', [ReservationController::class, 'update'])->middleware('auth')->name('reschedule-jadwal');
+Route::post('/get', [RoomReservationController::class, 'get'])->middleware('auth')->name('get');
 
 // setting
 Route::get('/settings', [UserController::class, 'settings'])->name('settings')->middleware('auth');

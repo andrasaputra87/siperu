@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f2715bb9ff8e7267a195088b690158f",
+    "content-hash": "15399f02f73fc993459fc7243206fbe3",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -515,16 +515,16 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.6.5",
+            "version": "3.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "96d5a70fd91efdcec81fc46316efc5bf3da17ddf"
+                "reference": "0ac3c270590e54910715e9a1a044cc368df282b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/96d5a70fd91efdcec81fc46316efc5bf3da17ddf",
-                "reference": "96d5a70fd91efdcec81fc46316efc5bf3da17ddf",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/0ac3c270590e54910715e9a1a044cc368df282b2",
+                "reference": "0ac3c270590e54910715e9a1a044cc368df282b2",
                 "shasum": ""
             },
             "require": {
@@ -540,10 +540,11 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.1",
-                "phpstan/phpstan": "1.10.21",
+                "phpstan/phpstan": "1.10.42",
                 "phpstan/phpstan-strict-rules": "^1.5",
-                "phpunit/phpunit": "9.6.9",
+                "phpunit/phpunit": "9.6.13",
                 "psalm/plugin-phpunit": "0.18.4",
+                "slevomat/coding-standard": "8.13.1",
                 "squizlabs/php_codesniffer": "3.7.2",
                 "symfony/cache": "^5.4|^6.0",
                 "symfony/console": "^4.4|^5.4|^6.0",
@@ -607,7 +608,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.6.5"
+                "source": "https://github.com/doctrine/dbal/tree/3.7.2"
             },
             "funding": [
                 {
@@ -623,7 +624,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-17T09:15:50+00:00"
+            "time": "2023-11-19T08:06:58+00:00"
         },
         {
             "name": "doctrine/deprecations",
@@ -1825,6 +1826,71 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
+        },
+        {
+            "name": "irfa/php-hari-libur",
+            "version": "v1.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/irfaardy/php-hari-libur.git",
+                "reference": "29e6982c2b7940563bacd118dab624ee479a8441"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/irfaardy/php-hari-libur/zipball/29e6982c2b7940563bacd118dab624ee479a8441",
+                "reference": "29e6982c2b7940563bacd118dab624ee479a8441",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.0"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Irfa\\HariLibur\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Irfa Ardiansyah",
+                    "email": "irfa.backend@protonmail.com"
+                }
+            ],
+            "description": "\"Plugin ini berfungsi untuk mengecek hari libur nasional\"",
+            "homepage": "https://github.com/irfaardy/php-hari-libur",
+            "keywords": [
+                "hari libur",
+                "holidays",
+                "hris",
+                "laravel",
+                "php",
+                "plugin",
+                "plugin hari libur"
+            ],
+            "support": {
+                "issues": "https://github.com/irfaardy/php-hari-libur/issues",
+                "source": "https://github.com/irfaardy/php-hari-libur/tree/v1.21"
+            },
+            "funding": [
+                {
+                    "url": "https://buymeacoff.ee/irfaardy",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://ko-fi.com/irfaardy",
+                    "type": "ko_fi"
+                },
+                {
+                    "url": "https://www.patreon.com/irfa",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2021-05-28T02:58:08+00:00"
         },
         {
             "name": "laravel/framework",

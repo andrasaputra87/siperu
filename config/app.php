@@ -179,7 +179,7 @@ return [
     App\Providers\RouteServiceProvider::class,
     App\Providers\MenuServiceProvider::class,
     Maatwebsite\Excel\ExcelServiceProvider::class,
-
+    Irfa\HariLibur\HariLiburServiceProvider::class,
   ],
   
 
@@ -195,6 +195,7 @@ return [
     */
 
   'aliases' => Facade::defaultAliases()->merge([
+    'HariLibur' => Irfa\HariLibur\Facades\HariLibur::class,
   ])->toArray(),
 
 ];

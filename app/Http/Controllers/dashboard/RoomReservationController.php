@@ -5,6 +5,8 @@ namespace App\Http\Controllers\dashboard;
 use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Session;
+use App\Models\TahunAjaran;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use App\Models\RoomReservation;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreRoomReservationRequest;
 use App\Http\Requests\UpdateRoomReservationRequest;
+use Irfa\HariLibur\Facades\HariLibur;
 
 class RoomReservationController extends Controller
 {
@@ -52,22 +55,24 @@ class RoomReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        'end_time' => 'required|after:start_time',
+        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        'guarantee' => 'required',
+        // 'guarantee' => 'required',
         'room_id' => 'required',
+        'sks' => 'required',
       ]);
       $data['user_id'] = Auth()->user()->id;
     } else {
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        'end_time' => 'required|after:start_time',
+        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        'guarantee' => 'required',
+        // 'guarantee' => 'required',
         'room_id' => 'required',
         'organization_name' => 'required',
-        'total_participants' => 'required'
+        'total_participants' => 'required',
+        'sks' => 'required',
       ]);
 
       $data['user_id'] = Auth()->user()->id;
@@ -101,6 +106,16 @@ class RoomReservationController extends Controller
       }
     }
 
+    $start_time = Session::findOrFail($request->start_time);
+    if($request->sks==2){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();
+    }elseif($request->sks==3){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(135)->toTimeString();
+    }else{
+      $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
+    }
+    $data['end_time'] = $end_time;
+
     RoomReservation::create($data);
 
     // $room = Room::findOrFail($data['room_id']);
@@ -120,10 +135,13 @@ class RoomReservationController extends Controller
   {
     $today = Carbon::today()->format('Y-m-d');
     $room = Room::findOrFail($id);
+    $id_tahun_aktif = TahunAjaran::where('status', '1')->first()->id;
+    $sesi = Session::where('id_tahun_ajaran',$id_tahun_aktif)->get();
 
     return view('content.dashboard.room_reservation_create', [
       'room' => $room,
       'departments' => Department::all(),
+      'sessions' => $sesi,
       'list_reservation' => RoomReservation::latest()->where('room_id', $id)->where('reservation_date', $today)->where(function ($query) {
         $query->where('status', 'pending')
           ->orWhere('status', 'approved');
@@ -139,6 +157,34 @@ class RoomReservationController extends Controller
    */
   public function edit($id)
   {
+  }
+
+  public function get(Request $request){
+    $date = Carbon::parse($request->date)->format('d-m-Y');
+    $dayName = strtolower(substr(Carbon::parse($date)->dayName,0,3));
+    if(HariLibur::date($date)->isHoliday())
+    {
+      return response()->json([
+        'success' => false,
+        'data'    => 'Tanggal yang dipilih tanggal merah yaitu "'.HariLibur::date("25-12-2023")->getInfo().'"' 
+      ]);
+    } else {
+      $get = RoomReservation::leftjoin('sessions','room_reservations.start_time','=','sessions.id')
+      ->where('reservation_date', '=', $request->date)
+      ->get(['sessions.id']);   
+      $data = Session::select('*')->whereNotIn('id',RoomReservation::leftjoin('sessions','room_reservations.start_time','=','sessions.id')
+                                              ->where('reservation_date', '=', $request->date)
+                                              ->get(['sessions.id']))
+                                  ->where($dayName,'=','1')
+                                  ->get();
+
+      return response()->json([
+        'success' => true,
+        'data'    => $data  
+      ]);
+    }
+
+    
   }
 
   /**
