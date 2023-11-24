@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Session;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,5 +21,10 @@ class RoomReservation extends Model
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function session()
+    {
+        return $this->belongsTo(Session::class,'start_time');
     }
 }

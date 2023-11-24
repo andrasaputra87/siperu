@@ -270,12 +270,12 @@
                                         <td class="text-center">{{ $loop->iteration }}</td>
                                         <td>{{ $reservation->room->name }}</td>
                                         <td>{{ $reservation->reservation_date }}</td>
-                                        <td>{{ substr($reservation->start_time, 0, 5) }}</td>
+                                        <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                         <td>
                                             @if (
                                                 $reservation->status == 'approved' &&
-                                                    \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->start_time)->isPast())
+                                                    \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
                                                 @if (!$reservation->key_status)
                                                     <div id="countdown-{{ $reservation->id }}"></div>
                                                 @else
@@ -326,7 +326,7 @@
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if (
                                                     $reservation->status == 'approved' &&
-                                                        \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->start_time)->isPast())
+                                                        \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
                                                     @if (!$reservation->key_status)
                                                         <a href="/return/{{ $reservation->id }}/{{ $reservation->room_id }}"
                                                             class="btn btn-sm btn-primary tombol-konfirmasi"><i
