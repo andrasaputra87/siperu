@@ -41,6 +41,8 @@ class YearsController extends Controller
     {
         $data = $request->validate([
             'tahun_ajaran' => 'required',
+            'start_tahun_ajaran' => 'required',
+            'end_tahun_ajaran' => 'required',
         ]);
 
         TahunAjaran::create($data);
