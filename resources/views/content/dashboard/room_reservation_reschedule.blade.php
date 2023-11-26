@@ -107,6 +107,32 @@
             sign.signature('clear');
             $('#signature').val('');
         });
+
+        function myFunction() {
+            let date = document.getElementById("reservation_date").value;
+            // alert(date);
+            $.ajax({
+                type:'POST',
+                url:'/get',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:'date='+date,
+                success:function(html){
+                    // console.log(html.data)
+                    if (html.success) {
+                        $("#start_time").empty();
+                        $("#start_time").append('<option>Pilih Sesi</option>');
+                        $.each(html.data, function (key, value) {
+
+                            $("#start_time").append('<option value="' + value[
+                                    "id"] + '">' + value["start"].substring(0,5) + ' WIB (' + value["nama"] +
+                                ') </option>');
+                        });
+                    }else{
+                        alert(html.data);
+                    }
+                }
+            })
+        }
     </script>
 @endsection
 
@@ -197,7 +223,7 @@
                                     <div class="row g-3">
                                         <div class="col-12 col-lg-6 custom-col">
                                             <label class="form-label" for="reservation_date">Tanggal Pinjam</label>
-                                            <input type="date" id="reservation_date" name="reservation_date"
+                                            <input type="date" id="reservation_date" name="reservation_date" onchange="myFunction()"
                                                 class="form-control @error('reservation_date') border-danger @enderror"
                                                 value="{{ old('reservation_date') }}" />
                                             @error('reservation_date')
@@ -206,19 +232,22 @@
                                         </div>
                                         <div class="col-12 col-lg-3 custom-col">
                                             <label class="form-label" for="start_time">Waktu Mulai</label>
-                                            <input type="time" id="start_time" name="start_time"
-                                                class="form-control @error('start_time') border-danger @enderror"
-                                                value="{{ old('start_time') }}" />
+                                            <select class="form-control" name="start_time" id="start_time">
+                                                <option>Pilih Sesi</option>
+                                            </select>
                                             @error('start_time')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                                             @enderror
                                         </div>
                                         <div class="col-12 col-lg-3 custom-col">
-                                            <label class="form-label" for="end_time">Waktu Selesai</label>
-                                            <input type="time" id="end_time" name="end_time"
-                                                class="form-control @error('end_time') border-danger @enderror"
-                                                value="{{ old('end_time') }}" />
-                                            @error('end_time')
+                                            <label class="form-label" for="end_time">SKS (Per sks di kali 45 menit)</label>
+                                            <select class="form-control" name="sks">
+                                                <option>Pilih SKS</option>
+                                                <option value='2'>2 SKS</option>
+                                                <option value='3'>3 SKS</option>
+                                                <option value='4'>4 SKS</option>
+                                            </select>
+                                            @error('sks')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -232,44 +261,7 @@
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label">Jaminan</label>
-                                    <div class="row">
-                                        <div class="col-md mb-md-0 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('guarantee') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioKTP">
-                                                    <span class="custom-option-body">
-                                                        <i class="bx bxs-id-card"></i>
-                                                        <span class="custom-option-title">KTP</span>
-                                                        <small> Kartu Tanda Penduduk </small>
-                                                    </span>
-                                                    <input name="guarantee" class="form-check-input" type="radio"
-                                                        value="ktp" id="radioKTP"
-                                                        {{ old('guarantee') == 'ktp' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md mb-md-0 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('guarantee') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioKTM">
-                                                    <span class="custom-option-body">
-                                                        <i class='bx bx-id-card'></i>
-                                                        <span class="custom-option-title"> KTM </span>
-                                                        <small> Kartu Tanda Mahasiswa </small>
-                                                    </span>
-                                                    <input name="guarantee" class="form-check-input" type="radio"
-                                                        value="ktm" id="radioKTM"
-                                                        {{ old('guarantee') == 'ktm' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @error('guarantee')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                               
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
                                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"

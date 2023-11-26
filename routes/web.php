@@ -79,6 +79,8 @@ Route::get('/reservation', [ReservationController::class, 'index'])->name('reser
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/reschedule/{id}', [ReservationController::class, 'show'])->middleware('auth')->name('reschedule');
+Route::get('/update_sks/{id}', [ReservationController::class, 'change_sks'])->middleware('auth')->name('change-sks');
+Route::post('/update_sks/{id}', [ReservationController::class, 'update_sks'])->middleware('auth')->name('update-sks');
 Route::post('/reschedule/{id}', [ReservationController::class, 'update'])->middleware('auth')->name('reschedule-jadwal');
 Route::post('/get', [RoomReservationController::class, 'get'])->middleware('auth')->name('get');
 

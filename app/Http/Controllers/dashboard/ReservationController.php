@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Session;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\RoomReservation;
@@ -129,10 +130,6 @@ class ReservationController extends Controller
 
   public function my_reservation()
   {
-  //   $rom= RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get();
-  //   foreach ($rom as $book) {
-  //     echo $book->session->id;
-  // }
     return view('content.dashboard.my_reservation', [
       'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
@@ -193,15 +190,30 @@ class ReservationController extends Controller
     ]);
   }
 
+  public function change_sks($id)
+  {
+    $today = Carbon::today()->format('Y-m-d');
+    $room = RoomReservation::findOrFail($id);
+
+    return view('content.dashboard.room_reservation_change_sks', [
+      'reservation' => $room,
+      'departments' => Department::all(),
+      'list_reservation' => RoomReservation::latest()->where('room_id', $id)->where('reservation_date', $today)->where(function ($query) {
+        $query->where('status', 'pending')
+          ->orWhere('status', 'approved');
+      })->get()
+    ]);
+  }
+
   public function update(Request $request, $id)
   {
     if ($request->has('baak')) {
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        'end_time' => 'required|after:start_time',
+        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        'guarantee' => 'required',
+        // 'guarantee' => 'required',
         'room_id' => 'required',
       ]);
       $data['user_id'] = Auth()->user()->id;
@@ -209,9 +221,9 @@ class ReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        'end_time' => 'required|after:start_time',
+        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        'guarantee' => 'required',
+        // 'guarantee' => 'required',
         'room_id' => 'required',
         'organization_name' => 'required',
         'total_participants' => 'required'
@@ -249,10 +261,85 @@ class ReservationController extends Controller
         $user->update($data_user);
       }
     }
+    $start_time = Session::findOrFail($request->start_time);
+    if($request->sks==2){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();
+    }elseif($request->sks==3){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(135)->toTimeString();
+    }else{
+      $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
+    }
+    $data['end_time'] = $end_time;
 
     $reservation = RoomReservation::findOrFail($id);
     $reservation->update(array_merge(['status' => 'pending'], $data));
 
     return redirect('my_reservation')->with('message', 'Berhasil Mengatur Ulang Jadwal.');
+  }
+
+  public function update_sks(Request $request, $id)
+  {
+
+    if ($request->has('baak')) {
+
+    } else {
+      $data = $request->validate([
+        'reservation_date' => 'required',
+        'start_time' => 'required',
+        // 'end_time' => 'required|after:start_time',
+        'necessary' => 'required',
+        // 'guarantee' => 'required',
+        'room_id' => 'required',
+        'organization_name' => 'required',
+        'total_participants' => 'required'
+      ]);
+
+      $data['user_id'] = Auth()->user()->id;
+      $data['building_officer'] = $request->building_officer;
+      $data['security_officer'] = $request->security_officer;
+      $data['clean_officer'] = $request->clean_officer;
+      $data['logistic_officer'] = $request->logistic_officer;
+      $data['etc_officer'] = $request->etc_officer;
+      $data['note'] = $request->note;
+
+
+
+      if ($request->has('signature')) {
+        $request->validate([
+          'signature' => 'required',
+        ]);
+
+        $folderPath = public_path('signature/');
+
+        $image_parts = explode(';base64', $request->signature);
+        $image_type_aux = explode('image/', $image_parts[0]);
+
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $filename = uniqid() . '.' . $image_type;
+        $file = $folderPath . $filename;
+        file_put_contents($file, $image_base64);
+
+        $data_user["signature"] = 'signature/' . $filename;
+
+        $user = User::findOrFail(auth()->user()->id);
+        $user->update($data_user);
+      }
+    }
+    $reservation = RoomReservation::findOrFail($id);
+
+    $start_time = Session::findOrFail($reservation->start_time);
+    if($request->sks==2){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();
+    }elseif($request->sks==3){
+      $end_time = Carbon::parse($start_time->start)->addMinutes(135)->toTimeString();
+    }else{
+      $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
+    }
+    $data['end_time'] = $end_time;
+
+    $reservation->update(array_merge( $data));
+
+    return redirect('my_reservation')->with('message', 'Berhasil Mengubah Data.');
   }
 }

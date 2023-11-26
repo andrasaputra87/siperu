@@ -386,6 +386,9 @@
                                                     -
                                                 @endif
                                             @endif
+                                            <a href="{{ route('change-sks', ['id' => $reservation->id]) }}"
+                                                class="btn btn-sm btn-warning "><i
+                                                    class='bx bx-calendar'></i>Ubah SKS</a>
                                         </td>
                                     </tr>
                                     @if ($reservation->status == 'approved')
