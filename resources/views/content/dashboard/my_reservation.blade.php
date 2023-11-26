@@ -272,7 +272,7 @@
                                         <td>{{ $reservation->reservation_date }}</td>
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
-                                        <td>
+                                        <td> 
                                             @if (
                                                 $reservation->status == 'approved' &&
                                                     \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
@@ -407,7 +407,7 @@
                                             setInterval(function() {
                                                 // Kurangi satu detik dari selisih waktu
                                                 timeDifference{{ $reservation->id }} -= 1000;
-
+                                                    
                                                 // Jika waktu masih positif, lanjutkan perhitungan dan pembaruan
                                                 if (timeDifference{{ $reservation->id }} > 0) {
                                                     // Hitung jam, menit, dan detik dari selisih waktu
@@ -421,10 +421,8 @@
                                                     // Format waktu ke dalam string jam:menit:detik
                                                     var formattedTime{{ $reservation->id }} = hours{{ $reservation->id }} + ':' +
                                                         minutes{{ $reservation->id }} + ':' + seconds{{ $reservation->id }};
-
                                                     // Perbarui elemen HTML dengan ID yang sesuai
-                                                    document.getElementById("countdown-{{ $reservation->id }}").innerHTML =
-                                                        formattedTime{{ $reservation->id }};
+                                                    document.getElementById("countdown-{{ $reservation->id }}").innerHTML = formattedTime{{ $reservation->id }};
                                                 } else {
                                                     // Jika waktu telah melewati waktu akhir, tampilkan 0:00:00
                                                     document.getElementById("countdown-{{ $reservation->id }}").innerHTML = 'Waktu Habis';
