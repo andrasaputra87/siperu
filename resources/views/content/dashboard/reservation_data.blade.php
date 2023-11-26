@@ -336,7 +336,7 @@
                                                 class="text-muted d-block">({{ strtoupper($reservation->room->ownership) }})</small>
                                         </td>
                                         <td>{{ $reservation->reservation_date }}</td>
-                                        <td>{{ substr($reservation->start_time, 0, 5) }}</td>
+                                        <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                         <td>
                                             @if (strlen($reservation->necessary) > 35)

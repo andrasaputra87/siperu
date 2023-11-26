@@ -25,7 +25,7 @@ class ReservationController extends Controller
       $reservation_cancelled = RoomReservation::where('status', 'cancelled')->count();
       $reschedule = RoomReservation::where('status','reschedule')->count();
     } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
-      $reservations = RoomReservation::with(['user', 'room'])->whereHas('room', function ($query) {
+      $reservations = RoomReservation::with(['user', 'room','session'])->whereHas('room', function ($query) {
         $query->where('ownership', 'baak');
       })->orderBy('id', 'desc')->get();
       $reservation_total = RoomReservation::whereHas('room', function ($query) {
@@ -44,7 +44,7 @@ class ReservationController extends Controller
         $query->where('ownership', 'baak');
       })->where('status', 'reschedule')->count();
     } else {
-      $reservations = RoomReservation::with(['user', 'room'])->whereHas('room', function ($query) {
+      $reservations = RoomReservation::with(['user', 'room','session'])->whereHas('room', function ($query) {
         $query->where('ownership', 'bm');
       })->orderBy('id', 'desc')->get();
       $reservation_total = RoomReservation::whereHas('room', function ($query) {
