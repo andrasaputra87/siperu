@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\Session;
 use App\Models\Department;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use App\Models\RoomReservation;
 use App\Exports\ReservationExport;
@@ -54,9 +55,7 @@ class RoomReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        // 'guarantee' => 'required',
         'room_id' => 'required',
         'sks' => 'required',
       ]);
@@ -65,9 +64,7 @@ class RoomReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        // 'guarantee' => 'required',
         'room_id' => 'required',
         'organization_name' => 'required',
         'total_participants' => 'required',
@@ -117,11 +114,14 @@ class RoomReservationController extends Controller
     $data['end_time'] = $end_time;
     if ( $request->has('recurring')) {
       $tahun_ajaran = TahunAjaran::findOrFail($start_time->id_tahun_ajaran);
-      
+      $recurring = $request->reservation_date;
 
       for ($i=0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) { 
-        $data['reservation_date'] = $temp_date;
-        RoomReservation::create($data);
+        if(RoomReservation::where('reservation_date',$temp_date)->where('start_time',$request->start_time)->count()==0){
+          $data['reservation_date'] = $temp_date;
+          $data['recurring'] = $recurring;
+          RoomReservation::create($data);
+        }
         // var_dump($data);
         $temp_date = Carbon::parse($temp_date)->addDays(7)->toDateString();
       }

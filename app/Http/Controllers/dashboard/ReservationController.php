@@ -19,7 +19,7 @@ class ReservationController extends Controller
   public function index()
   {
     if (auth()->user()->role == 'admin') {
-      $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'desc')->get();
+      $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'asc')->get();
       $reservation_total = RoomReservation::count();
       $reservation_approved = RoomReservation::where('status', 'approved')->count();
       $reservation_not_approved = RoomReservation::where('status', 'not approved')->count();
@@ -97,8 +97,14 @@ class ReservationController extends Controller
       ->exists();
 
     if (!$existingApprovedReservations) {
-      $reservation->update(['status' => 'approved']);
-      return redirect('/reservation')->with('message', 'Reservasi berhasil disetujui!👍');
+      if($reservation->recurring!=null){
+        RoomReservation::whereIn('id',RoomReservation::where('recurring', $reservation->reservation_date)->get(['id']))
+          ->update(['status' => 'approved']);
+        return redirect('/reservation')->with('message', 'Reservasi berhasil disetujui!👍');
+      }else{
+        $reservation->update(['status' => 'approved']);
+        return redirect('/reservation')->with('message', 'Reservasi berhasil disetujui!👍');
+      }
     } else {
       $reservation->update(['status' => 'reschedule']);
       return redirect('/reservation')
@@ -131,7 +137,7 @@ class ReservationController extends Controller
   public function my_reservation()
   {
     return view('content.dashboard.my_reservation', [
-      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get(),
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'asc')->where('user_id', Auth()->user()->id)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
       'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
       'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),
@@ -211,9 +217,7 @@ class ReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        // 'guarantee' => 'required',
         'room_id' => 'required',
       ]);
       $data['user_id'] = Auth()->user()->id;
@@ -221,9 +225,7 @@ class ReservationController extends Controller
       $data = $request->validate([
         'reservation_date' => 'required',
         'start_time' => 'required',
-        // 'end_time' => 'required|after:start_time',
         'necessary' => 'required',
-        // 'guarantee' => 'required',
         'room_id' => 'required',
         'organization_name' => 'required',
         'total_participants' => 'required'
