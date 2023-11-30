@@ -13,6 +13,7 @@ use App\Http\Controllers\dashboard\SessionController;
 use App\Http\Controllers\dashboard\ReservationController;
 use App\Http\Controllers\authentications\SocialiteController;
 use App\Http\Controllers\dashboard\RoomReservationController;
+use App\Http\Controllers\dashboard\RoomReservationConditionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,8 @@ Route::get('/delete_signature', [UserController::class, 'delete_signature'])->mi
 
 // tahunajaran
 Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->name('set-tahun-ajaran');
+
+// conditional
+Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
+Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');
 

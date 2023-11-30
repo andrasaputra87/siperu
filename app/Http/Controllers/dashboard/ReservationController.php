@@ -274,7 +274,7 @@ class ReservationController extends Controller
     $data['end_time'] = $end_time;
 
     $reservation = RoomReservation::findOrFail($id);
-    $reservation->update(array_merge(['status' => 'pending'], $data));
+    $reservation->update(array_merge(['status' => 'pending'], $data)); 
 
     return redirect('my_reservation')->with('message', 'Berhasil Mengatur Ulang Jadwal.');
   }
