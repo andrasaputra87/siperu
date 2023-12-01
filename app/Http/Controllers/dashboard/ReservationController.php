@@ -19,7 +19,7 @@ class ReservationController extends Controller
   public function index()
   {
     if (auth()->user()->role == 'admin') {
-      $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'asc')->get();
+      $reservations = RoomReservation::with(['user', 'room'])->orderBy('status', 'asc')->orderBy('id', 'asc')->get();
       $reservation_total = RoomReservation::count();
       $reservation_approved = RoomReservation::where('status', 'approved')->count();
       $reservation_not_approved = RoomReservation::where('status', 'not approved')->count();

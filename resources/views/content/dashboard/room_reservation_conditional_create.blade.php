@@ -221,7 +221,7 @@
                         </div>
 
                         @if ($room->ownership == 'baak')
-                            <form action="{{ route('room_reservation.store') }}" method="POST" class="row g-3">
+                            <form action="{{ route('room_reservation_conditional.store') }}" method="POST" class="row g-3">
                                 @csrf
                                 <input type="hidden" name="baak">
                                 <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -260,7 +260,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label for="necessary" class="form-label">Keperluan</label>
+                                    <label for="necessary" class="form-label">Permohonan Keperluan</label>
                                     <textarea name="necessary" id="necessary" rows="5"
                                         class="form-control @error('necessary') border-danger @enderror">{{ old('necessary') }}</textarea>
                                     @error('necessary')

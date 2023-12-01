@@ -14,6 +14,7 @@ use App\Http\Controllers\dashboard\ReservationController;
 use App\Http\Controllers\authentications\SocialiteController;
 use App\Http\Controllers\dashboard\RoomReservationController;
 use App\Http\Controllers\dashboard\RoomReservationConditionalController;
+use App\Http\Controllers\dashboard\ReservationConditionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,4 +97,8 @@ Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->na
 // conditional
 Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
 Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');
+
+// peminjaman kondisoinal
+Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 

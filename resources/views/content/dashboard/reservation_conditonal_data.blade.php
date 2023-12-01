@@ -187,104 +187,7 @@
                 </div>
             </div>
         @endif
-        <div class="col-sm-6 col-lg-4 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="content-left">
-                            <span>Peminjaman</span>
-                            <div class="d-flex align-items-end mt-2">
-                                <h4 class="mb-0 me-2">{{ $reservation_total }}</h4>
-                            </div>
-                            <small>Total Peminjaman</small>
-                        </div>
-                        <span class="badge bg-label-primary rounded p-2">
-                            <i class='bx bx-calendar'></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="content-left">
-                            <span>Disetujui</span>
-                            <div class="d-flex align-items-end mt-2">
-                                <h4 class="mb-0 me-2">{{ $reservation_approved }}</h4>
-                                <small
-                                    class="text-success">({{ $reservation_total > 0 ? round(($reservation_approved / $reservation_total) * 100) . '%' : '0%' }})</small>
-                            </div>
-                            <small>Peminjaman Disetujui</small>
-                        </div>
-                        <span class="badge bg-label-success rounded p-2">
-                            <i class='bx bx-calendar-check'></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="content-left">
-                            <span>Ditolak</span>
-                            <div class="d-flex align-items-end mt-2">
-                                <h4 class="mb-0 me-2">{{ $reservation_not_approved }}</h4>
-                                <small
-                                    class="text-danger">({{ $reservation_total > 0 ? round(($reservation_not_approved / $reservation_total) * 100) . '%' : '0%' }})</small>
-                            </div>
-                            <small>Peminjaman Ditolak</small>
-                        </div>
-                        <span class="badge bg-label-danger rounded p-2">
-                            <i class='bx bx-calendar-x'></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="content-left">
-                            <span>Dijadwalkan Ulang</span>
-                            <div class="d-flex align-items-end mt-2">
-                                <h4 class="mb-0 me-2">{{ $reschedule }}</h4>
-                                <small
-                                    class="text-warning">({{ $reschedule > 0 ? round(($reschedule / $reservation_total) * 100) . '%' : '0%' }})</small>
-                            </div>
-                            <small>Peminjaman Dijadwal Ulang</small>
-                        </div>
-                        <span class="badge bg-label-warning rounded p-2">
-                            <i class='bx bx-calendar-x'></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-lg-4 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-start justify-content-between">
-                        <div class="content-left">
-                            <span>Dibatalkan</span>
-                            <div class="d-flex align-items-end mt-2">
-                                <h4 class="mb-0 me-2">{{ $reservation_cancelled }}</h4>
-                                <small
-                                    class="text-danger">({{ $reservation_total > 0 ? round(($reservation_cancelled / $reservation_total) * 100) . '%' : '0%' }})</small>
-                            </div>
-                            <small>Peminjaman Dibatalkan</small>
-                        </div>
-                        <span class="badge bg-label-danger rounded p-2">
-                            <i class='bx bx-calendar-exclamation'></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
     </div>
     <div class="row">
         <div class="col-12">
@@ -297,7 +200,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
-                                    <th>Peminjam</th>
+                                    <th>Pemohon</th>
+                                    <th>Termohon</th>
                                     <th>Ruangan</th>
                                     <th>Tanggal Peminjaman</th>
                                     <th>Waktu Mulai</th>
@@ -305,7 +209,6 @@
                                     <th>Keperluan</th>
                                     <th>Jaminan</th>
                                     <th>Status</th>
-                                    <th>Permohonan Kondisional</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -313,6 +216,24 @@
                                 @foreach ($reservations as $reservation)
                                     <tr>
                                         <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td>
+                                            <div class="d-flex justify-content-start align-items-center user-name">
+                                                <div class="avatar-wrapper">
+                                                    <div class="avatar avatar-sm me-3">
+                                                        <img src="{{ asset($reservation->user->avatar) }}"
+                                                            alt="{{ $reservation->user->fullname }}" class="rounded-circle"
+                                                            style="object-fit: cover">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <a href="/profile/{{ $reservation->user->slug }}"
+                                                        class="text-body text-truncate">
+                                                        <span
+                                                            class="fw-semibold">{{ $reservation->user->fullname }}</span></a>
+                                                    <small class="text-muted">{{ $reservation->user->nim }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center user-name">
                                                 <div class="avatar-wrapper">
@@ -383,7 +304,6 @@
                                             @endif
                                         </td>
                                         
-                                        <td>{{ $reservation->conditional==0?'Bukan':'Ya' }}</td>
                                         <td>
                                             
                                             @if ($reservation->status == 'wait')
@@ -395,7 +315,7 @@
                                             @elseif ($reservation->status == 'pending')
                                                 @if (auth()->user()->signature)
                                                     <div class="d-flex gap-2">
-                                                        <a href="/approve/{{ $reservation->id }}"
+                                                        <a href="/approve_conditional/{{ $reservation->id }}"
                                                             class="btn btn-sm btn-primary setuju"><i
                                                                 class='bx bx-check'></i> Setuju</a>
                                                         <button id="delete-btn"

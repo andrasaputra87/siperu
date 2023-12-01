@@ -46,7 +46,86 @@ class RoomReservationConditionalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      if ($request->has('baak')) {
+        $data = $request->validate([
+          'reservation_date' => 'required',
+          'start_time' => 'required',
+          'necessary' => 'required',
+          'room_id' => 'required',
+          'sks' => 'required',
+        ]);
+        $data['user_id'] = Auth()->user()->id;
+      } else {
+        $data = $request->validate([
+          'reservation_date' => 'required',
+          'start_time' => 'required',
+          'necessary' => 'required',
+          'room_id' => 'required',
+          'organization_name' => 'required',
+          'total_participants' => 'required',
+          'sks' => 'required',
+        ]);
+  
+        $data['user_id'] = Auth()->user()->id;
+        $data['building_officer'] = $request->building_officer;
+        $data['security_officer'] = $request->security_officer;
+        $data['clean_officer'] = $request->clean_officer;
+        $data['logistic_officer'] = $request->logistic_officer;
+        $data['etc_officer'] = $request->etc_officer;
+        $data['note'] = $request->note;
+  
+        if ($request->has('signature')) {
+          $request->validate([
+            'signature' => 'required',
+          ]);
+  
+          $folderPath = public_path('signature/');
+  
+          $image_parts = explode(';base64', $request->signature);
+          $image_type_aux = explode('image/', $image_parts[0]);
+  
+          $image_type = $image_type_aux[1];
+          $image_base64 = base64_decode($image_parts[1]);
+          $filename = uniqid() . '.' . $image_type;
+          $file = $folderPath . $filename;
+          file_put_contents($file, $image_base64);
+  
+          $data_user["signature"] = 'signature/' . $filename;
+  
+          $user = User::findOrFail(auth()->user()->id);
+          $user->update($data_user);
+        }
+      }
+      $start_time = Session::findOrFail($request->start_time);
+      if($request->sks==2){
+        $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();
+      }elseif($request->sks==3){
+        $end_time = Carbon::parse($start_time->start)->addMinutes(135)->toTimeString();
+      }else{
+        $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
+      }
+      $temp_date = $request->reservation_date;
+      $data['end_time'] = $end_time;
+      $data['conditional'] = true;
+      $data['termohon'] = RoomReservation::where('reservation_date',$request->reservation_date)->where('status','!=','cancelled')->first()->id;
+      // if ( $request->has('recurring')) {
+      //   $tahun_ajaran = TahunAjaran::findOrFail($start_time->id_tahun_ajaran);
+      //   $recurring = $request->reservation_date;
+
+      //   for ($i=0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) { 
+      //     if(RoomReservation::where('reservation_date',$temp_date)->where('start_time',$request->start_time)->count()==0){
+      //       $data['reservation_date'] = $temp_date;
+      //       $data['recurring'] = $recurring;
+      //       RoomReservation::create($data);
+      //     }
+      //     // var_dump($data);
+      //     $temp_date = Carbon::parse($temp_date)->addDays(7)->toDateString();
+      //   }
+      //   return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
+      // }else{
+        RoomReservation::create($data);
+        return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
+      // }
     }
 
     /**
@@ -99,8 +178,6 @@ class RoomReservationConditionalController extends Controller
             'data'    => $data  
           ]);
         }
-    
-        
       }
 
     /**

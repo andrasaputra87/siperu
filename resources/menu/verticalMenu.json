@@ -53,6 +53,13 @@
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
     {
+      "name": "Data Peminjaman Kondisional",
+      "icon": "menu-icon tf-icons bx bx-calendar-event",
+      "slug": ["reservation_conditional"],
+      "url": "/reservation_conditional",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
       "name": "Laporan",
       "icon": "menu-icon tf-icons bx bxs-report",
       "slug": ["report"],

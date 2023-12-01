@@ -17,6 +17,11 @@ class RoomReservation extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function termohon()
+    {
+        return $this->belongsTo(User::class);
+    }
     
     public function room()
     {
