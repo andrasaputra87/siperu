@@ -271,8 +271,8 @@
                                 
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                        aria-label="Close">Cancel</button>
+                                    <!-- <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">Cancel</button> -->
                                 </div>
                             </form>
                         @else

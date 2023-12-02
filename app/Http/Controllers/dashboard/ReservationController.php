@@ -137,7 +137,7 @@ class ReservationController extends Controller
   public function my_reservation()
   {
     return view('content.dashboard.my_reservation', [
-      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'asc')->where('user_id', Auth()->user()->id)->get(),
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
       'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
       'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),

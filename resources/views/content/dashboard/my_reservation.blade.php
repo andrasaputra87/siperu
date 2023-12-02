@@ -261,6 +261,7 @@
                                     <th>Keperluan</th>
                                     <th>Jaminan</th>
                                     <th>Status</th>
+                                    <th>Jadwal Berulang</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -322,6 +323,7 @@
                                                 @endif
                                             @endif
                                         </td>
+                                        <td>{{ $reservation->recurring!=NULL? 'Ya' : 'Bukan' }}</td>
                                         <td class="text-center">
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if (
@@ -334,7 +336,7 @@
                                                     @else
                                                         <span class="badge bg-success">Dikembalikan</span>
                                                     @endif
-                                                @elseif ($reservation->status == 'approved')
+                                                @elseif ($reservation->status == 'approved' && $reservation->recurring==$reservation->reservation_date)
                                                     <a href="/reschedule/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-success tombol-reschedule"><i
                                                             class='bx bx-calendar'></i>Jadwal Ulang</a>
@@ -365,7 +367,7 @@
                                                     @else
                                                         <span class="badge bg-success">Dikembalikan</span>
                                                     @endif
-                                                @elseif ($reservation->status == 'approved')
+                                                @elseif ($reservation->status == 'approved' && $reservation->recurring==$reservation->reservation_date)
                                                     <a href="/reschedule/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-success tombol-reschedule"><i
                                                             class='bx bx-calendar'></i>Jadwal Ulang</a>
@@ -386,9 +388,11 @@
                                                     -
                                                 @endif
                                             @endif
+                                            @if($reservation->recurring==$reservation->reservation_date)
                                             <a href="{{ route('change-sks', ['id' => $reservation->id]) }}"
                                                 class="btn btn-sm btn-warning "><i
                                                     class='bx bx-calendar'></i>Ubah SKS</a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @if ($reservation->status == 'approved')
