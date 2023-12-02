@@ -310,9 +310,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no=1;
+                                @endphp
                                 @foreach ($reservations as $reservation)
+                                @if($reservation->recurring==NULL || $reservation->recurring==$reservation->reservation_date)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $no++ }}</td>
                                         <td>
                                             <div class="d-flex justify-content-start align-items-center user-name">
                                                 <div class="avatar-wrapper">
@@ -419,6 +423,7 @@
                                             
                                         </td>
                                     </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>

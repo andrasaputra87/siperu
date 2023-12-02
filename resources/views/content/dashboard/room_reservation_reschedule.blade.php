@@ -262,10 +262,10 @@
                                     @enderror
                                 </div>
                                
-                                <div class="col-12 col-lg-6 custom-col">
+                                {{-- <div class="col-12 col-lg-6 custom-col">
                                     <label class="form-label" for="recurring">Pinjam Berulang</label>
                                     <input type="checkbox" id="recurring" name="recurring" value="{{ old('recurring') }}" />
-                                </div>
+                                </div> --}}
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
                                     <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"

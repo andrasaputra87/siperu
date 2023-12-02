@@ -257,7 +257,7 @@
                                     <th>Tanggal Peminjaman</th>
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
-                                    <th>Sisa Waktu</th>
+                                    {{-- <th>Sisa Waktu</th> --}}
                                     <th>Keperluan</th>
                                     <th>Jaminan</th>
                                     <th>Status</th>
@@ -266,14 +266,25 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no=1;
+                                @endphp
                                 @foreach ($reservations as $reservation)
+                                @if($reservation->recurring==NULL || $reservation->recurring==$reservation->reservation_date)
                                     <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-center">{{ $no++ }}</td>
                                         <td>{{ $reservation->room->name }}</td>
-                                        <td>{{ $reservation->reservation_date }}</td>
+                                        <td>
+                                            @if ($reservation->recurring==NULL)
+                                                {{ $reservation->reservation_date }}
+                                            @else
+                                                <a href="/detail/{{ $reservation->reservation_date }}"
+                                                class="btn btn-sm btn-info">{{ $reservation->reservation_date }}</a>
+                                            @endif 
+                                        </td>
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
-                                        <td> 
+                                        {{-- <td> 
                                             @if (
                                                 $reservation->status == 'approved' &&
                                                     \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
@@ -285,7 +296,7 @@
                                             @else
                                                 -
                                             @endif
-                                        </td>
+                                        </td> --}}
                                         <td>{{ $reservation->necessary }}</td>
                                         <td>{{ strtoupper($reservation->guarantee) }}</td>
                                         <td>
@@ -336,7 +347,7 @@
                                                     @else
                                                         <span class="badge bg-success">Dikembalikan</span>
                                                     @endif
-                                                @elseif ($reservation->status == 'approved' && $reservation->recurring==$reservation->reservation_date)
+                                                @elseif ($reservation->status == 'approved' && ($reservation->recurring==$reservation->reservation_date || $reservation->recurring==NULL))
                                                     <a href="/reschedule/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-success tombol-reschedule"><i
                                                             class='bx bx-calendar'></i>Jadwal Ulang</a>
@@ -367,7 +378,7 @@
                                                     @else
                                                         <span class="badge bg-success">Dikembalikan</span>
                                                     @endif
-                                                @elseif ($reservation->status == 'approved' && $reservation->recurring==$reservation->reservation_date)
+                                                @elseif ($reservation->status == 'approved' && ($reservation->recurring==$reservation->reservation_date || $reservation->recurring==NULL))
                                                     <a href="/reschedule/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-success tombol-reschedule"><i
                                                             class='bx bx-calendar'></i>Jadwal Ulang</a>
@@ -388,14 +399,14 @@
                                                     -
                                                 @endif
                                             @endif
-                                            @if($reservation->recurring==$reservation->reservation_date)
+                                            @if(($reservation->recurring==NULL || $reservation->recurring=$reservation->reservation_date) && $reservation->key_status!='cancelled' && $reservation->status!='returned')
                                             <a href="{{ route('change-sks', ['id' => $reservation->id]) }}"
                                                 class="btn btn-sm btn-warning "><i
                                                     class='bx bx-calendar'></i>Ubah SKS</a>
                                             @endif
                                         </td>
                                     </tr>
-                                    @if ($reservation->status == 'approved')
+                                    {{-- @if ($reservation->status == 'approved')
                                         <script>
                                             // Ambil waktu sekarang di sisi klien
                                             var currentTime{{ $reservation->id }} = new Date();
@@ -406,15 +417,19 @@
                                             targetTime{{ $reservation->id }}.setHours(parseInt(timeParts{{ $reservation->id }}[0]));
                                             targetTime{{ $reservation->id }}.setMinutes(parseInt(timeParts{{ $reservation->id }}[1]));
                                             targetTime{{ $reservation->id }}.setSeconds(parseInt(timeParts{{ $reservation->id }}[2]));
-
+                                            console.log({{ $reservation->id }});
+                                            console.log(currentTime{{ $reservation->id }});
+                                            console.log(timeParts{{ $reservation->id }});
                                             // Hitung selisih waktu antara waktu sekarang dan waktu target
                                             var timeDifference{{ $reservation->id }} = targetTime{{ $reservation->id }} - currentTime{{ $reservation->id }};
+                                            console.log(timeDifference{{ $reservation->id }});
 
                                             // Perbarui hitung mundur setiap detik
                                             setInterval(function() {
                                                 // Kurangi satu detik dari selisih waktu
                                                 timeDifference{{ $reservation->id }} -= 1000;
-                                                    
+                                                // console.log(timeDifference{{ $reservation->id }});
+
                                                 // Jika waktu masih positif, lanjutkan perhitungan dan pembaruan
                                                 if (timeDifference{{ $reservation->id }} > 0) {
                                                     // Hitung jam, menit, dan detik dari selisih waktu
@@ -436,7 +451,8 @@
                                                 }
                                             }, 1000);
                                         </script>
-                                    @endif
+                                    @endif --}}
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
