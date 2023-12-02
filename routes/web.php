@@ -3,6 +3,7 @@
 use App\Models\RoomReservation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RescheduleController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\dashboard\RoomController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ReportController;
@@ -105,3 +106,5 @@ Route::post('/get_conditional', [RoomReservationConditionalController::class, 'g
 Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 
+// open calendar
+Route::get('/calendar', [CalendarController::class, 'index'])->name('reservation_conditional');
