@@ -262,6 +262,7 @@
                                     <th>Jaminan</th>
                                     <th>Status</th>
                                     <th>Jadwal Berulang</th>
+                                    <th>Peminjaman Kondisional</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -335,6 +336,7 @@
                                             @endif
                                         </td>
                                         <td>{{ $reservation->recurring!=NULL? 'Ya' : 'Bukan' }}</td>
+                                        <td>{{ $reservation->conditional!=0? 'Ya' : 'Bukan' }}</td>
                                         <td class="text-center">
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if (

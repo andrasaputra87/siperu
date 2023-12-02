@@ -85,6 +85,7 @@ Route::get('/update_sks/{id}', [ReservationController::class, 'change_sks'])->mi
 Route::post('/update_sks/{id}', [ReservationController::class, 'update_sks'])->middleware('auth')->name('update-sks');
 Route::post('/reschedule/{id}', [ReservationController::class, 'update'])->middleware('auth')->name('reschedule-jadwal');
 Route::post('/get', [RoomReservationController::class, 'get'])->middleware('auth')->name('get');
+Route::get('/detail/{date}', [ReservationController::class, 'detail'])->name('detail')->middleware('auth');
 
 // setting
 Route::get('/settings', [UserController::class, 'settings'])->name('settings')->middleware('auth');

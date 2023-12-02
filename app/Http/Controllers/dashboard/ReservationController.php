@@ -20,7 +20,7 @@ class ReservationController extends Controller
   public function index()
   {
     if (auth()->user()->role == 'admin') {
-      $reservations = RoomReservation::with(['user', 'room'])->orderBy('status', 'asc')->orderBy('id', 'asc')->get();
+      $reservations = RoomReservation::with(['user', 'room'])->where('conditional',0)->orderBy('status', 'asc')->orderBy('id', 'asc')->get();
       $reservation_total = RoomReservation::count();
       $reservation_approved = RoomReservation::where('status', 'approved')->count();
       $reservation_not_approved = RoomReservation::where('status', 'not approved')->count();
@@ -139,6 +139,17 @@ class ReservationController extends Controller
   {
     return view('content.dashboard.my_reservation', [
       'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get(),
+      'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
+      'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
+      'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),
+      'reschedule' => RoomReservation::where('user_id', Auth()->user()->id)->where('status','reschedule')->count(),
+    ]);
+  }
+
+  public function detail($date)
+  {
+    return view('content.dashboard.detail', [
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('recurring', $date)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
       'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
       'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),
