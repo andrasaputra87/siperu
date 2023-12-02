@@ -365,6 +365,10 @@
                                                     <span class="badge bg-success">Dikembalikan</span>
                                                 @elseif ($reservation->status == 'reschedule')
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
+                                                @elseif ($reservation->status == 'opened')
+                                                    <span class="badge bg-info">Kelas Dibuka</span>
+                                                @elseif ($reservation->status == 'off-day')
+                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
@@ -381,6 +385,10 @@
                                                     <span class="badge bg-success">Dikembalikan</span>
                                                 @elseif ($reservation->status == 'reschedule')
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
+                                                @elseif ($reservation->status == 'opened')
+                                                    <span class="badge bg-info">Kelas Dibuka</span>
+                                                @elseif ($reservation->status == 'off-day')
+                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
@@ -417,6 +425,21 @@
                                                     class="btn btn-sm btn-warning setuju"><i class='bx bx-check'></i>
                                                     Kirim Permohonan Kepada WA Termohon</a>
                                                 @endif --}}
+                                            @elseif($reservation->status == 'approved')
+                                                @php
+                                                    $date =  \Illuminate\Support\Carbon::now();
+                                                    // var_dump($date->format('h-i'));
+                                                @endphp
+                                                @if($date->format('Y-m-d') == $reservation->reservation_date && $date->toTimeString()>$reservation->session->start && $date->toTimeString()<$reservation->end_time)
+                                                <div class="d-flex gap-2">
+                                                    <a href="/open/{{ $reservation->id }}"
+                                                        class="btn btn-sm btn-primary "><i
+                                                            class='bx bx-check'></i> Buka Kelas</a>
+                                                    <a href="/offday/{{ $reservation->id }}"
+                                                        class="btn btn-sm btn-warning "><i
+                                                            class='bx bx-check'></i> Batal Masuk</a>
+                                                </div>
+                                                @endif
                                             @else
                                                 -
                                             @endif

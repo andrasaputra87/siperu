@@ -114,6 +114,22 @@ class ReservationController extends Controller
     // }
   }
 
+  public function open($id)
+  {
+    $reservation = RoomReservation::findOrFail($id);
+    $reservation->update(['status' => 'opened']);
+    return redirect('/reservation')->with('message', 'Reservasi berhasil dibuka!👍');
+      
+  }
+
+  public function offday($id)
+  {
+    $reservation = RoomReservation::findOrFail($id);
+    $reservation->update(['status' => 'off-day']);
+    return redirect('/reservation')->with('message', 'Reservasi berhasil dibatalkan!👍');
+      
+  }
+
   public function not_approve(Request $request)
   {
     $validatedData = $request->validate([
