@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\TahunAjaran;
 use App\Models\Session;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ReservationController extends Controller
   public function index()
   {
     if (auth()->user()->role == 'admin') {
-      $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'asc')->get();
+      $reservations = RoomReservation::with(['user', 'room'])->where('conditional',0)->orderBy('status', 'asc')->orderBy('id', 'asc')->get();
       $reservation_total = RoomReservation::count();
       $reservation_approved = RoomReservation::where('status', 'approved')->count();
       $reservation_not_approved = RoomReservation::where('status', 'not approved')->count();
@@ -80,24 +81,24 @@ class ReservationController extends Controller
     $reservation = RoomReservation::findOrFail($id);
 
     // Pengecekan apakah ada reservasi yang sudah diapprove pada rentang tanggal yang sama
-    $existingApprovedReservations = RoomReservation::where('status', 'approved')
-      ->where('key_status', null)
-      ->where('room_id', $reservation->room_id)
-      ->where(function ($query) use ($reservation) {
-        $query->where(function ($subquery) use ($reservation) {
-          $subquery->where('start_time', '>=', $reservation->start_time)
-            ->where('start_time', '<=', $reservation->end_time);
-        })->orWhere(function ($subquery) use ($reservation) {
-          $subquery->where('end_time', '>=', $reservation->start_time)
-            ->where('end_time', '<=', $reservation->end_time);
-        })->orWhere(function ($subquery) use ($reservation) {
-          $subquery->where('reservation_date', $reservation->reservation_date);
-        });
-      })
-      ->exists();
+    // $existingApprovedReservations = RoomReservation::where('status', 'approved')
+    //   ->where('key_status', null)
+    //   ->where('room_id', $reservation->room_id)
+    //   ->where(function ($query) use ($reservation) {
+    //     $query->where(function ($subquery) use ($reservation) {
+    //       $subquery->where('start_time', '>=', $reservation->start_time)
+    //         ->where('start_time', '<=', $reservation->end_time);
+    //     })->orWhere(function ($subquery) use ($reservation) {
+    //       $subquery->where('end_time', '>=', $reservation->start_time)
+    //         ->where('end_time', '<=', $reservation->end_time);
+    //     })->orWhere(function ($subquery) use ($reservation) {
+    //       $subquery->where('reservation_date', $reservation->reservation_date);
+    //     });
+    //   })
+    //   ->exists();
 
-    if (!$existingApprovedReservations) {
-      if($reservation->recurring!=null){
+    // if (!$existingApprovedReservations) {
+      if($reservation->recurring!=NULL){
         RoomReservation::whereIn('id',RoomReservation::where('recurring', $reservation->reservation_date)->get(['id']))
           ->update(['status' => 'approved']);
         return redirect('/reservation')->with('message', 'Reservasi berhasil disetujui!👍');
@@ -105,12 +106,28 @@ class ReservationController extends Controller
         $reservation->update(['status' => 'approved']);
         return redirect('/reservation')->with('message', 'Reservasi berhasil disetujui!👍');
       }
-    } else {
-      $reservation->update(['status' => 'reschedule']);
-      return redirect('/reservation')
-        ->with('message_error', 'Reservasi gagal di setujui karena ada reservasi lain yang sudah di setujui pada rentang tanggal yang sama.')
-        ->withInput();
-    }
+    // } else {
+    //   $reservation->update(['status' => 'reschedule']);
+    //   return redirect('/reservation')
+    //     ->with('message_error', 'Reservasi gagal di setujui karena ada reservasi lain yang sudah di setujui pada rentang tanggal yang sama.')
+    //     ->withInput();
+    // }
+  }
+
+  public function open($id)
+  {
+    $reservation = RoomReservation::findOrFail($id);
+    $reservation->update(['status' => 'opened']);
+    return redirect('/reservation')->with('message', 'Reservasi berhasil dibuka!👍');
+      
+  }
+
+  public function offday($id)
+  {
+    $reservation = RoomReservation::findOrFail($id);
+    $reservation->update(['status' => 'off-day']);
+    return redirect('/reservation')->with('message', 'Reservasi berhasil dibatalkan!👍');
+      
   }
 
   public function not_approve(Request $request)
@@ -137,7 +154,18 @@ class ReservationController extends Controller
   public function my_reservation()
   {
     return view('content.dashboard.my_reservation', [
-      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'asc')->where('user_id', Auth()->user()->id)->get(),
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('user_id', Auth()->user()->id)->get(),
+      'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
+      'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
+      'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),
+      'reschedule' => RoomReservation::where('user_id', Auth()->user()->id)->where('status','reschedule')->count(),
+    ]);
+  }
+
+  public function detail($date)
+  {
+    return view('content.dashboard.detail', [
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('recurring', $date)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
       'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
       'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),
@@ -168,10 +196,16 @@ class ReservationController extends Controller
     $reservation->key_status = 'cancelled';
     $reservation->save();
 
-    $room = Room::findOrFail($room_id);
-    $room->availability = '1';
-    $room->save();
-    return redirect('/my_reservation')->with('message', 'Anda berhasil membatalkan pinjam ruangan!👍');
+    if($reservation->recurring!=null){
+      RoomReservation::whereIn('id',RoomReservation::where('recurring', $reservation->reservation_date)->get(['id']))
+        ->update(['status' => 'cancelled','key_status' => 'cancelled']);
+      return redirect('/my_reservation')->with('message', 'Reservasi berhasil disetujui!👍');
+    }else{
+      $room = Room::findOrFail($room_id);
+      $room->availability = '1';
+      $room->save();
+      return redirect('/my_reservation')->with('message', 'Anda berhasil membatalkan pinjam ruangan!👍');
+    }
   }
 
   public function history()
@@ -219,6 +253,7 @@ class ReservationController extends Controller
         'start_time' => 'required',
         'necessary' => 'required',
         'room_id' => 'required',
+        'sks' => 'required',
       ]);
       $data['user_id'] = Auth()->user()->id;
     } else {
@@ -228,7 +263,8 @@ class ReservationController extends Controller
         'necessary' => 'required',
         'room_id' => 'required',
         'organization_name' => 'required',
-        'total_participants' => 'required'
+        'total_participants' => 'required',
+        'sks' => 'required',
       ]);
 
       $data['user_id'] = Auth()->user()->id;
@@ -271,12 +307,34 @@ class ReservationController extends Controller
     }else{
       $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
     }
+    $temp_date = $request->reservation_date;
+
     $data['end_time'] = $end_time;
-
     $reservation = RoomReservation::findOrFail($id);
-    $reservation->update(array_merge(['status' => 'pending'], $data));
+// var_dump($reservation->recurring);
+    if ( $reservation->reservation_date == $reservation->recurring) {
+      RoomReservation::whereIn('id',RoomReservation::where('recurring', $reservation->reservation_date)->get(['id']))
+        ->update(['status' => 'cancelled','key_status' => 'cancelled']);
+      $tahun_ajaran = TahunAjaran::findOrFail($start_time->id_tahun_ajaran);
+      $recurring = $request->reservation_date;
 
-    return redirect('my_reservation')->with('message', 'Berhasil Mengatur Ulang Jadwal.');
+      for ($i=0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) { 
+        if(RoomReservation::where('reservation_date',$temp_date)->where('start_time',$request->start_time)->count()==0){
+          $data['reservation_date'] = $temp_date;
+          $data['recurring'] = $recurring;
+          RoomReservation::create($data);
+        }
+        // var_dump($data);
+        $temp_date = Carbon::parse($temp_date)->addDays(7)->toDateString();
+      }
+      return redirect('my_reservation')->with('message', 'Berhasil Mengatur Ulang Jadwal.');
+    }else{
+      $reservation = RoomReservation::findOrFail($id);
+      $reservation->update(array_merge(['status' => 'pending'], $data)); 
+  
+      return redirect('my_reservation')->with('message', 'Berhasil Mengatur Ulang Jadwal.');
+    }
+
   }
 
   public function update_sks(Request $request, $id)
@@ -340,8 +398,13 @@ class ReservationController extends Controller
     }
     $data['end_time'] = $end_time;
 
-    $reservation->update(array_merge( $data));
-
-    return redirect('my_reservation')->with('message', 'Berhasil Mengubah Data.');
+    if($reservation->recurring!=null){
+      RoomReservation::whereIn('id',RoomReservation::where('recurring', $reservation->reservation_date)->get(['id']))
+        ->update(array_merge( $data));
+      return redirect('/my_reservation')->with('message', 'Reservasi berhasil disetujui!👍');
+    }else{
+      $reservation->update(array_merge( $data));
+      return redirect('my_reservation')->with('message', 'Berhasil Mengubah Data.');
+    }
   }
 }

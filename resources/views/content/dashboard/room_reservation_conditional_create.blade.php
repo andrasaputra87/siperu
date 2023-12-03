@@ -21,6 +21,8 @@
             height: auto;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 @endsection
 
 @section('vendor-script')
@@ -42,6 +44,8 @@
     <script
         src="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo/assets/js/forms-selects.js">
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             var toast = $('#toast');
@@ -88,15 +92,6 @@
         });
 
 
-        // Dapatkan elemen input tanggal
-        const reservationDateInput = document.getElementById('reservation_date');
-
-        // Dapatkan tanggal hari ini
-        const today = new Date().toISOString().split('T')[0];
-
-        // Atur nilai minimum tanggal untuk tanggal hari ini
-        reservationDateInput.setAttribute('min', today);
-
         var sign = $('#sign').signature({
             syncField: '#signature',
             syncFormat: 'PNG',
@@ -107,13 +102,26 @@
             sign.signature('clear');
             $('#signature').val('');
         });
+    </script>
+    <script>
+
+
+        // Dapatkan elemen input tanggal
+        const reservationDateInput = document.getElementById('reservation_date');
+
+        // Dapatkan tanggal hari ini
+        const today = new Date().toISOString().split('T')[0];
+
+        // Atur nilai minimum tanggal untuk tanggal hari ini
+        reservationDateInput.setAttribute('min', today);
+
 
         function myFunction() {
             let date = document.getElementById("reservation_date").value;
             // alert(date);
             $.ajax({
                 type:'POST',
-                url:'/get',
+                url:'/get_conditional',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data:'date='+date,
                 success:function(html){
@@ -168,7 +176,6 @@
                         <hr>
                         <form action="/complete_personal_data/{{ auth()->user()->id }}" method="POST">
                             @csrf
-                            @method('PUT')
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="nim">NIM <span class="text-danger fw-bold">*</span></label>
@@ -207,20 +214,37 @@
                         </form>
                     @else
                         <div class="text-center mb-4">
-                            <h4 class="address-title text-primary">{{ $reservation->room->name }}</h4>
+                            <h4 class="address-title text-primary">{{ $room->name }}</h4>
                         </div>
                         <div class="divider">
                             <div class="divider-text">Data Peminjaman</div>
                         </div>
-                        {{-- @dd($reservation->room) --}}
-                        @if ($reservation->room->ownership == 'baak')
-                            <form action="{{ route('update-sks', ['id' => $reservation->id]) }}" method="POST"
-                                class="row g-3">
+
+                        @if ($room->ownership == 'baak')
+                            <form action="{{ route('room_reservation_conditional.store') }}" method="POST" class="row g-3">
                                 @csrf
                                 <input type="hidden" name="baak">
-                                <input type="hidden" name="room_id" value="{{ $reservation->room->id }}">
+                                <input type="hidden" name="room_id" value="{{ $room->id }}">
                                 <div class="col-12">
                                     <div class="row g-3">
+                                        <div class="col-12 col-lg-6 custom-col">
+                                            <label class="form-label" for="reservation_date">Tanggal Pinjam</label>
+                                            <input type="date" id="reservation_date" name="reservation_date" onchange="myFunction()"
+                                                class="form-control @error('reservation_date') border-danger @enderror"
+                                                value="{{ old('reservation_date') }}" />
+                                            @error('reservation_date')
+                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 col-lg-3 custom-col">
+                                            <label class="form-label" for="start_time">Waktu Mulai</label>
+                                            <select class="form-control" name="start_time" id="start_time">
+                                                <option>Pilih Sesi</option>
+                                            </select>
+                                            @error('start_time')
+                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                            @enderror
+                                        </div>
                                         <div class="col-12 col-lg-3 custom-col">
                                             <label class="form-label" for="end_time">SKS (Per sks di kali 45 menit)</label>
                                             <select class="form-control" name="sks">
@@ -236,7 +260,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <label for="necessary" class="form-label">Keperluan</label>
+                                    <label for="necessary" class="form-label">Permohonan Keperluan</label>
                                     <textarea name="necessary" id="necessary" rows="5"
                                         class="form-control @error('necessary') border-danger @enderror">{{ old('necessary') }}</textarea>
                                     @error('necessary')
@@ -244,18 +268,18 @@
                                     @enderror
                                 </div>
                                
+                                
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                                    {{-- <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                        aria-label="Close">Cancel</button> --}}
+                                    <!-- <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">Cancel</button> -->
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('reschedule-jadwal', ['id' => $reservation->id]) }}" method="POST"
-                                class="row g-3">
+                            <form action="{{ route('room_reservation.store') }}" method="POST" class="row g-3">
                                 @csrf
                                 <input type="hidden" name="bm">
-                                <input type="hidden" name="room_id" value="{{ $reservation->room->id }}">
+                                <input type="hidden" name="room_id" value="{{ $room->id }}">
                                 <div class="col-12">
                                     <div class="row g-3">
                                         <div class="col-12 col-lg-6 custom-col">
@@ -470,13 +494,13 @@
                     <div class="divider">
                         <div class="divider-text">Data Ruangan</div>
                     </div>
-                    <img src="{{ asset($reservation->room->thumbnail) }}" alt="" class="w-100 rounded">
-                    <h5 class="text-truncate mt-4 fw-bold">{{ $reservation->room->name }}</h5>
+                    <img src="{{ asset($room->thumbnail) }}" alt="" class="w-100 rounded">
+                    <h5 class="text-truncate mt-4 fw-bold">{{ $room->name }}</h5>
                     <div class="d-flex gap-2 mb-3">
-                        <span class="badge bg-label-primary">{{ $reservation->room->location }}</span>
-                        <span class="badge bg-label-primary">{{ $reservation->room->capacity }} Orang</span>
+                        <span class="badge bg-label-primary">{{ $room->location }}</span>
+                        <span class="badge bg-label-primary">{{ $room->capacity }} Orang</span>
                     </div>
-                    <p>{{ $reservation->room->description }}</p>
+                    <p>{{ $room->description }}</p>
                     <table class="table datatables-basic">
                         <thead>
                             <tr>

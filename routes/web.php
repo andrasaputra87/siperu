@@ -3,6 +3,7 @@
 use App\Models\RoomReservation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RescheduleController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\dashboard\RoomController;
 use App\Http\Controllers\dashboard\UserController;
 use App\Http\Controllers\dashboard\ReportController;
@@ -15,6 +16,8 @@ use App\Http\Controllers\authentications\SocialiteController;
 use App\Http\Controllers\dashboard\BuildingViewController;
 use App\Http\Controllers\dashboard\BuildingController;
 use App\Http\Controllers\dashboard\RoomReservationController;
+use App\Http\Controllers\dashboard\RoomReservationConditionalController;
+use App\Http\Controllers\dashboard\ReservationConditionalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +78,8 @@ Route::get('/returned/{id}', [ReservationController::class, 'returned'])->name('
 Route::get('/return/{id}/{room_id}', [ReservationController::class, 'return'])->name('return')->middleware('auth');
 Route::get('/cancel/{id}/{room_id}', [ReservationController::class, 'cancel'])->name('cancel')->middleware('auth');
 Route::post('/complete_personal_data/{id}', [RoomReservationController::class, 'complete_personal_data'])->middleware('auth');
+Route::get('/open/{id}', [ReservationController::class, 'open'])->name('open')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offday')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 
 // peminjaman
 Route::resource('building_view', BuildingViewController::class)->middleware('auth');
@@ -88,6 +93,7 @@ Route::get('/update_sks/{id}', [ReservationController::class, 'change_sks'])->mi
 Route::post('/update_sks/{id}', [ReservationController::class, 'update_sks'])->middleware('auth')->name('update-sks');
 Route::post('/reschedule/{id}', [ReservationController::class, 'update'])->middleware('auth')->name('reschedule-jadwal');
 Route::post('/get', [RoomReservationController::class, 'get'])->middleware('auth')->name('get');
+Route::get('/detail/{date}', [ReservationController::class, 'detail'])->name('detail')->middleware('auth');
 
 // setting
 Route::get('/settings', [UserController::class, 'settings'])->name('settings')->middleware('auth');
@@ -97,5 +103,18 @@ Route::get('/delete_signature', [UserController::class, 'delete_signature'])->mi
 // tahunajaran
 Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->name('set-tahun-ajaran');
 
+<<<<<<< HEAD
 //building
 Route::get('set/{id}', [BuildingController::class, 'set'])->middleware('auth')->name('building-name');
+=======
+// conditional
+Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
+Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');
+
+// peminjaman kondisoinal
+Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+
+// open calendar
+Route::get('/calendar', [CalendarController::class, 'index'])->name('reservation_conditional');
+>>>>>>> c317f37939c39835a93fb37115347e4164dd1793

@@ -61,6 +61,13 @@
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
     {
+      "name": "Data Peminjaman Kondisional",
+      "icon": "menu-icon tf-icons bx bx-calendar-event",
+      "slug": ["reservation_conditional"],
+      "url": "/reservation_conditional",
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+    },
+    {
       "name": "Laporan",
       "icon": "menu-icon tf-icons bx bxs-report",
       "slug": ["report"],
@@ -77,10 +84,17 @@
       "url": "/room_reservation"
     },
     {
+<<<<<<< HEAD
       "name": "Pinjam Gedung",
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": ["buildingview.index", "buildingview.show", "rooms.show"],
       "url": "/building_view"
+=======
+      "name": "Pinjam Ruangan Kondisional",
+      "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
+      "slug": ["room_reservation_conditional.index", "room_reservation_conditional.show", "rooms.show"],
+      "url": "/room_reservation_conditional"
+>>>>>>> c317f37939c39835a93fb37115347e4164dd1793
     },
     {
       "name": "Peminjaman Saya",
