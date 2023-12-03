@@ -54,11 +54,8 @@
         </div>
     @endif
 
-
-
     <!-- DataTable with Buttons -->
     <div class="row">
-
         @if (!$rooms->isEmpty())
             @foreach ($rooms as $room)
                 <div class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-3">
@@ -66,20 +63,17 @@
                         <img src="{{ asset($room->thumbnail) }}" alt="" class="img-fluid"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
-                            <h5 class="text-truncate">{{ $room->name }} <span
-                                    class="badge rounded-pill bg-label-secondary text-sm">{{ $room->ownership }}</span></h5>
-                            <div class="d-flex gap-2 mb-3">
-                                <span class="badge bg-label-success">Tersedia</span>
-                                <span class="badge bg-label-primary">{{ $room->location }}</span>
-                                <span class="badge bg-label-primary">{{ $room->capacity }} Orang</span>
-                            </div>
-                            <div class="d-flex gap-2 mb-3">
-                                <a href="{{ route('room_reservation.show', $room->id) }}"
-                                    class="btn btn-primary d-block">Pinjam Sekarang</a>
-                                <a href="{{ route('rooms.show', $room->id) }}" class="btn btn-secondary d-block">Detail</a>
-                            </div>
-                            <small class="text-muted"><i class="bx bx-calendar-check"></i>
-                                {{ $room->roomReservations->where('status', 'returned')->count() }}x dipinjam</small>
+                            <h5 class="text-truncate">{{ $room->building_name }}
+                                <div class="d-flex gap-2 mb-3">
+                                    <span class="badge bg-label-primary"></span>
+                                    <span class="badge bg-label-primary"></span>
+                                </div>
+                                <div class="d-flex gap-2 mb-3">
+                                    <a href="/all-ruangan/{{ $room->id }}" class="btn btn-primary d-block">Daftar
+                                        Ruangan</a>
+                                </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -88,7 +82,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body text-center p-5">
-                        <h2 class="text-primary">Data Ruangan Kosong!</h2>
+                        <h2 class="text-primary">Data Gedung Kosong!</h2>
                         <p class="mb-5">Ups! 😥 silahkan hubungi admin untuk menambahkan ruangan.</p>
                         <img src="{{ asset('assets/img/illustrations/page-misc-error-light.png') }}" alt=""
                             class="img-fluid" width="500">

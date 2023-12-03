@@ -12,6 +12,8 @@ use App\Http\Controllers\dashboard\YearsController;
 use App\Http\Controllers\dashboard\SessionController;
 use App\Http\Controllers\dashboard\ReservationController;
 use App\Http\Controllers\authentications\SocialiteController;
+use App\Http\Controllers\dashboard\BuildingViewController;
+use App\Http\Controllers\dashboard\BuildingController;
 use App\Http\Controllers\dashboard\RoomReservationController;
 
 /*
@@ -57,6 +59,7 @@ Route::resource('departments', DepartmentController::class)->middleware(['auth',
 Route::resource('years', YearsController::class)->middleware(['auth', 'role:admin']);
 Route::resource('sessions', SessionController::class)->middleware(['auth', 'role:admin']);
 Route::resource('users', UserController::class)->middleware(['auth', 'role:admin']);
+Route::resource('building', BuildingController::class)->middleware(['auth', 'role:admin']);
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware(['auth', 'role:admin']);
 Route::get('/profile/{slug}', [UserController::class, 'profile'])->name('profile')->middleware('auth');
 
@@ -74,7 +77,9 @@ Route::get('/cancel/{id}/{room_id}', [ReservationController::class, 'cancel'])->
 Route::post('/complete_personal_data/{id}', [RoomReservationController::class, 'complete_personal_data'])->middleware('auth');
 
 // peminjaman
+Route::resource('building_view', BuildingViewController::class)->middleware('auth');
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
+Route::get('/all-ruangan/{id}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
@@ -92,3 +97,5 @@ Route::get('/delete_signature', [UserController::class, 'delete_signature'])->mi
 // tahunajaran
 Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->name('set-tahun-ajaran');
 
+//building
+Route::get('set/{id}', [BuildingController::class, 'set'])->middleware('auth')->name('building-name');

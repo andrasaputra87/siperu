@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
         'slug' => 'admin-siperu',
         'email' => 'admin@gmail.com',
         'phone_number' => '081314697305',
-        'password' => bcrypt('123123'),
+        'password' => bcrypt('1234567890'),
         'role' => 'admin',
         'avatar' => 'avatars/' . $avatarFileName
       ],
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         'email' => 'anndrzq32@gmail.com',
         'phone_number' => '12313213132',
         'department_id' => '1',
-        'password' => bcrypt('123123'),
+        'password' => bcrypt('1234567890'),
         'role' => 'head_baak',
         'avatar' => 'avatars/' . $avatarFileName
       ],

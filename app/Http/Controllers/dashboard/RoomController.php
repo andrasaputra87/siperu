@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\dashboard;
 
+use App\Models\Building;
 use App\Models\Room;
 use App\Models\RoomImages;
 use Illuminate\Http\Request;
@@ -18,13 +19,16 @@ class RoomController extends Controller
      */
     public function index()
     {
-        
+
         return view('content.dashboard.rooms', [
-            'rooms' => Room::orderBy('id', 'desc')->get(),
+            'building' => Building::orderBy('id', 'desc')->get(),
+            'rooms' => Room::with('building')->orderBy('id', 'desc')->get(),
+
             'room_edit' => '',
             'room_available' => Room::where('availability', '1')->count(),
             'room_not_available' => Room::where('availability', '0')->count(),
         ]);
+        // var_dump(Room::with('building')->orderBy('id', 'desc')->toSql());
     }
 
     /**
@@ -38,20 +42,28 @@ class RoomController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'capacity' => 'required',
-            'location' => 'required',
+            // 'location' => 'required',
             'description' => 'required',
             'ownership' => 'required',
+
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
+        if ($request->input('location') == NULL) {
+            $data['location'] = "";
+        } else {
+            $data['location'] = $request->input('location');
+        }
 
+        $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = time() . '_' . $thumbnail->getClientOriginalName();
             $thumbnail->move(public_path('room_images'), $thumbnailName);
-            
+
             $data['thumbnail'] = 'room_images/' . $thumbnailName;
         }
 
+        // var_dump($data);
         Room::create($data);
 
         return redirect('rooms')->with('message', 'Data berhasil dimasukkan!👍');
@@ -83,7 +95,8 @@ class RoomController extends Controller
         if ($room) {
             return view('content.dashboard.rooms', [
                 'room_edit' => $room,
-                'rooms' => Room::orderBy('id', 'desc')->get(),
+                'building' => Building::orderBy('id', 'desc')->get(),
+                'rooms' => Room::with('building')->orderBy('id', 'desc')->get(),
                 'room_available' => Room::where('availability', '1')->count(),
                 'room_not_available' => Room::where('availability', '0')->count(),
             ]);
@@ -100,27 +113,32 @@ class RoomController extends Controller
     public function update(UpdateRoomRequest $request, Room $room)
     {
         $data = $request->validate([
-            'name' =>'required',
-            'capacity' =>'required',
-            'location' =>'required',
-            'description' =>'required',
-            'ownership' =>'required',
+            'name' => 'required',
+            'capacity' => 'required',
+            // 'location' => 'required',
+            'description' => 'required',
+            'ownership' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
-
+        if ($request->input('location') == NULL) {
+            $data['location'] = "";
+        } else {
+            $data['location'] = $request->input('location');
+        }
+        $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
-           // Hapus gambar lama jika ada
+            // Hapus gambar lama jika ada
             if ($room->thumbnail) {
                 // Hapus gambar lama dari sistem penyimpanan;
                 if (file_exists(public_path($room->thumbnail))) {
                     unlink(public_path($room->thumbnail));
                 }
             }
-            
+
             $thumbnail = $request->file('thumbnail');
             $thumbnailName = time() . '_' . $thumbnail->getClientOriginalName();
             $thumbnail->move(public_path('room_images'), $thumbnailName);
-            
+
             $data['thumbnail'] = 'room_images/' . $thumbnailName;
         }
 
@@ -139,12 +157,12 @@ class RoomController extends Controller
     {
         $data = Room::findOrFail($room->id);
 
-            if ($data->thumbnail) {
-                // Hapus gambar lama dari sistem penyimpanan;
-                if (file_exists(public_path($data->thumbnail))) {
-                    unlink(public_path($data->thumbnail));
-                }
+        if ($data->thumbnail) {
+            // Hapus gambar lama dari sistem penyimpanan;
+            if (file_exists(public_path($data->thumbnail))) {
+                unlink(public_path($data->thumbnail));
             }
+        }
 
         $data->delete();
 
@@ -154,7 +172,7 @@ class RoomController extends Controller
     public function add_slider($id)
     {
         return view('content.dashboard.add_slider', [
-            'room' => Room::with(['roomImages' => function($query) {
+            'room' => Room::with(['roomImages' => function ($query) {
                 $query->orderBy('id', 'desc');
             }])->findOrFail($id)
         ]);
@@ -163,11 +181,11 @@ class RoomController extends Controller
     public function upload_slider(Request $request, $id)
     {
         $image = $request->file('file');
-        $imageName = time() . rand(1,100) . '.' . $image->extension();
+        $imageName = time() . rand(1, 100) . '.' . $image->extension();
         $image->move(public_path('slider-images'), $imageName);
 
         $data = [
-            'filename' =>'slider-images/'. $imageName,
+            'filename' => 'slider-images/' . $imageName,
             'room_id' => $id
         ];
 

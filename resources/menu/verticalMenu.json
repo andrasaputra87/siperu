@@ -18,12 +18,20 @@
       "roles": ["admin"]
     },
     {
+      "name": "Data Gedung",
+      "icon": "menu-icon tf-icons bx bx-buildings",
+      "slug": ["building.index", "building.edit"],
+      "url": "/building",
+      "roles": ["admin"]
+    },
+    {
       "name": "Data Ruangan",
       "icon": "menu-icon tf-icons bx bx-buildings",
       "slug": ["rooms.index", "rooms.edit", "add-slider"],
       "url": "/rooms",
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
+   
     {
       "name": "Data Tahun Ajaran",
       "icon": "menu-icon tf-icons bx bx-calendar-plus",
@@ -67,6 +75,12 @@
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": ["room_reservation.index", "room_reservation.show", "rooms.show"],
       "url": "/room_reservation"
+    },
+    {
+      "name": "Pinjam Gedung",
+      "icon": "menu-icon tf-icons bx bx-calendar-check",
+      "slug": ["buildingview.index", "buildingview.show", "rooms.show"],
+      "url": "/building_view"
     },
     {
       "name": "Peminjaman Saya",

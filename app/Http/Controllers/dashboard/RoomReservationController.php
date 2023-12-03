@@ -29,7 +29,16 @@ class RoomReservationController extends Controller
     return view('content.dashboard.room_reservation', [
       'rooms' => Room::latest()->where('name', 'like', "%" . $request->keyword . "%")
         ->orWhere('ownership', 'like', "%" . $request->keyword . "%")
-        ->orWhere('location', 'like', "%" . $request->keyword . "%")->get(),
+        ->orWhere('location', 'like', "%" . $request->keyword . "%")
+      ->where('building_id', $request->building_id)->get(),
+    ]);
+  }
+
+  public function allruangan(Request $request, $id)
+  {
+    return view('content.dashboard.room_reservation', [
+      'rooms' => Room::latest()->where('building_id', $id)->get(),
+      'building_id'=>$id
     ]);
   }
 
@@ -103,21 +112,21 @@ class RoomReservationController extends Controller
     }
 
     $start_time = Session::findOrFail($request->start_time);
-    if($request->sks==2){
+    if ($request->sks == 2) {
       $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();
-    }elseif($request->sks==3){
+    } elseif ($request->sks == 3) {
       $end_time = Carbon::parse($start_time->start)->addMinutes(135)->toTimeString();
-    }else{
+    } else {
       $end_time = Carbon::parse($start_time->start)->addMinutes(180)->toTimeString();
     }
     $temp_date = $request->reservation_date;
     $data['end_time'] = $end_time;
-    if ( $request->has('recurring')) {
+    if ($request->has('recurring')) {
       $tahun_ajaran = TahunAjaran::findOrFail($start_time->id_tahun_ajaran);
       $recurring = $request->reservation_date;
 
-      for ($i=0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) { 
-        if(RoomReservation::where('reservation_date',$temp_date)->where('start_time',$request->start_time)->count()==0){
+      for ($i = 0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) {
+        if (RoomReservation::where('reservation_date', $temp_date)->where('start_time', $request->start_time)->count() == 0) {
           $data['reservation_date'] = $temp_date;
           $data['recurring'] = $recurring;
           RoomReservation::create($data);
@@ -126,7 +135,7 @@ class RoomReservationController extends Controller
         $temp_date = Carbon::parse($temp_date)->addDays(7)->toDateString();
       }
       return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
-    }else{
+    } else {
       RoomReservation::create($data);
       return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     }
@@ -166,37 +175,35 @@ class RoomReservationController extends Controller
   {
   }
 
-  public function get(Request $request){
+  public function get(Request $request)
+  {
     $date = Carbon::parse($request->date)->format('d-m-Y');
-    $dayName = strtolower(substr(Carbon::parse($date)->dayName,0,3));
-    if(HariLibur::date($date)->isHoliday() )
-    {
+    $dayName = strtolower(substr(Carbon::parse($date)->dayName, 0, 3));
+    if (HariLibur::date($date)->isHoliday()) {
       return response()->json([
         'success' => false,
-        'data'    => 'Tanggal yang dipilih tanggal merah yaitu "'.HariLibur::date($date)->getInfo().'"' 
+        'data'    => 'Tanggal yang dipilih tanggal merah yaitu "' . HariLibur::date($date)->getInfo() . '"'
       ]);
-    } elseif($dayName=='sun'){
+    } elseif ($dayName == 'sun') {
       return response()->json([
         'success' => false,
-        'data'    => 'Tanggal yang dipilih tanggal merah yaitu Hari Minggu' 
+        'data'    => 'Tanggal yang dipilih tanggal merah yaitu Hari Minggu'
       ]);
-    } else{
-      $get = RoomReservation::leftjoin('sessions','room_reservations.start_time','=','sessions.id')
-      ->where('reservation_date', '=', $request->date)
-      ->get(['sessions.id']);   
-      $data = Session::select('*')->whereNotIn('id',RoomReservation::leftjoin('sessions','room_reservations.start_time','=','sessions.id')
-                                              ->where('reservation_date', '=', $request->date)
-                                              ->get(['sessions.id']))
-                                  ->where($dayName,'=','1')
-                                  ->get();
+    } else {
+      $get = RoomReservation::leftjoin('sessions', 'room_reservations.start_time', '=', 'sessions.id')
+        ->where('reservation_date', '=', $request->date)
+        ->get(['sessions.id']);
+      $data = Session::select('*')->whereNotIn('id', RoomReservation::leftjoin('sessions', 'room_reservations.start_time', '=', 'sessions.id')
+        ->where('reservation_date', '=', $request->date)
+        ->get(['sessions.id']))
+        ->where($dayName, '=', '1')
+        ->get();
 
       return response()->json([
         'success' => true,
-        'data'    => $data  
+        'data'    => $data
       ]);
     }
-
-    
   }
 
   /**

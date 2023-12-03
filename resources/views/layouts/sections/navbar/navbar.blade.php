@@ -48,6 +48,38 @@ $navbarDetached = ($navbarDetached ?? '');
         </div>
         <!-- /Search -->
         @endif
+
+        @if(request()->is('building_view'))
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form action="/building_view" method="GET">
+            <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" name="keyword" class="form-control border-0 shadow-none" placeholder="Cari..(mis:gedung merah putih)" aria-label="Cari..(mis:gedung merah putih)" autofocus>
+            </div>
+          </form>
+        </div>
+        <!-- /Search -->
+        @endif
+       
+        @if(request()->is('all-ruangan/*'))
+              
+        <!-- Search -->
+        <div class="navbar-nav align-items-center">
+          <form action="/room_reservation" method="GET">
+            <div class="nav-item d-flex align-items-center">
+                <i class="bx bx-search fs-4 lh-0"></i>
+                <input type="text" name="keyword" class="form-control border-0 shadow-none" placeholder="Cari..(mis:ruang merah putih)" aria-label="Cari..(mis:gedung merah putih)" autofocus>
+                @foreach ($rooms as $room)
+                <input type="hidden" name="building_id" value="{{ $room->building_id }}">
+                @endforeach
+              </div>
+          </form>
+        </div>
+        @endif
+        
+        <!-- /Search -->
+        
         <ul class="navbar-nav flex-row align-items-center ms-auto">
           <!-- User -->
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
