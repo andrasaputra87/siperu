@@ -77,24 +77,18 @@
     {
       "menuHeader": "Peminjaman"
     },
+    
     {
-      "name": "Pinjam Ruangan",
-      "icon": "menu-icon tf-icons bx bx-calendar-check",
-      "slug": ["room_reservation.index", "room_reservation.show", "rooms.show"],
-      "url": "/room_reservation"
-    },
-    {
-<<<<<<< HEAD
       "name": "Pinjam Gedung",
       "icon": "menu-icon tf-icons bx bx-calendar-check",
-      "slug": ["buildingview.index", "buildingview.show", "rooms.show"],
+      "slug": ["buildingview.index", "room_reservation.show", "rooms.show"],
       "url": "/building_view"
-=======
+    },
+    {
       "name": "Pinjam Ruangan Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
       "slug": ["room_reservation_conditional.index", "room_reservation_conditional.show", "rooms.show"],
       "url": "/room_reservation_conditional"
->>>>>>> c317f37939c39835a93fb37115347e4164dd1793
     },
     {
       "name": "Peminjaman Saya",
