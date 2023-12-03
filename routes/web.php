@@ -104,6 +104,7 @@ Route::get('/delete_signature', [UserController::class, 'delete_signature'])->mi
 Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->name('set-tahun-ajaran');
 
 //building
+// building
 Route::get('/set/{id}', [BuildingController::class, 'set'])->middleware('auth')->name('building-name');
 // conditional
 Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
@@ -114,4 +115,5 @@ Route::get('/reservation_conditional', [ReservationConditionalController::class,
 Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 
 // open calendar
+Route::get('/calendar', [CalendarController::class, 'index'])->name('reservation_conditional');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('reservation_conditional');
