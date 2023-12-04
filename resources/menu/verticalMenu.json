@@ -79,7 +79,7 @@
     },
     
     {
-      "name": "Pinjam Gedung",
+      "name": "Pinjam Ruangan",
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": ["buildingview.index", "room_reservation.show", "rooms.show"],
       "url": "/building_view"

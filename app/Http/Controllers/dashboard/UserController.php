@@ -161,6 +161,14 @@ class UserController extends Controller
             $data['avatar'] = 'avatars/' . $avatarName;
         }
 
+        if ($request->hasFile('dokumen')) {
+            $dokumen = $request->file('dokumen');
+            $dokumenName = time() . '_' . $dokumen->getClientOriginalName();
+            $dokumen->move(public_path('dokumen'), $dokumenName);
+            
+            $data['dokumen'] = 'dokumens/' . $dokumenName;
+        }
+
         if($request->has('signature')) {
             $request->validate([
                 'signature' => 'required',
