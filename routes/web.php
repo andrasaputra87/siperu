@@ -105,7 +105,7 @@ Route::get('/set/{id}', [YearsController::class, 'set'])->middleware('auth')->na
 
 //building
 // building
-Route::get('/set/{id}', [BuildingController::class, 'set'])->middleware('auth')->name('building-name');
+Route::get('/set2/{id}', [BuildingController::class, 'set'])->middleware('auth')->name('building-name');
 // conditional
 Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
 Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');

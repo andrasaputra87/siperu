@@ -164,9 +164,9 @@ class UserController extends Controller
         if ($request->hasFile('dokumen')) {
             $dokumen = $request->file('dokumen');
             $dokumenName = time() . '_' . $dokumen->getClientOriginalName();
-            $dokumen->move(public_path('dokumen'), $dokumenName);
+            $dokumen->move(public_path('storage'), $dokumenName);
             
-            $data['dokumen'] = 'dokumens/' . $dokumenName;
+            $data['dokumen'] = 'storage/' . $dokumenName;
         }
 
         if($request->has('signature')) {

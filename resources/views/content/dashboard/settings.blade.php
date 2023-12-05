@@ -167,11 +167,11 @@
                             @error('dokumen_id')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
-                            <iframe src={{ asset(auth()->user()->dokumen) }} width="200" height="100"></iframe>
+
                         </div>
                         <div class="row">
                             @if (!auth()->user()->signature)
-                                <div class="col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3 mt-3">
+                                <div class="mb-3 col-md-6">
                                     <div class="row g-3">
                                         <div class="col-12 custom-col">
                                             <label class="form-label" for="signature">Tanda Tangan</label>
@@ -186,9 +186,10 @@
                                                 TTD</button>
                                         </div>
                                     </div>
+
                                 </div>
                             @else
-                                <div class="col-12">
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label" for="signature">Tanda Tangan</label><br>
                                     <img src="{{ asset(auth()->user()->signature) }}"
                                         alt="TTD {{ auth()->user()->fullname }}" style="width: 220px; height: 140px;"
@@ -196,6 +197,10 @@
                                     <a href="/delete_signature" class="btn btn-danger btn-sm mt-2">Ganti TTD</a>
                                 </div>
                             @endif
+                            <div class="mb-3 col-md-6">
+                                <embed src="{{ asset(auth()->user()->dokumen) }}" type="application/pdf" width="100%"
+                                    height="200px" />
+                            </div>
                         </div>
                     </div>
                     <div class="mt-2">
