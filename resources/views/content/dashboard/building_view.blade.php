@@ -56,8 +56,8 @@
 
     <!-- DataTable with Buttons -->
     <div class="row">
-        @if (!$rooms->isEmpty())
-            @foreach ($rooms as $room)
+        @if (!$total_ruang->isEmpty())
+            @foreach ($total_ruang as $room)
                 <div class="col-12 col-md-6 col-lg-4 col-xxl-3 mb-3">
                     <div class="card overflow-hidden">
                         <img src="{{ asset($room->thumbnail) }}" alt="" class="img-fluid"
@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <h5 class="text-truncate">{{ $room->building_name }}
                                 <div class="d-flex gap-2 mb-3">
-                                    <span class="badge bg-label-primary"></span>
+                                    <span class="badge bg-label-primary">Total Ruangan : {{ $room->jumlah_ruang }}</span>
                                     <span class="badge bg-label-primary"></span>
                                 </div>
                                 <div class="d-flex gap-2 mb-3">
