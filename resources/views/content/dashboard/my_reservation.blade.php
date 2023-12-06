@@ -314,6 +314,10 @@
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
                                                 @elseif ($reservation->status == 'wait')
                                                     <span class="badge bg-warning">Menunggu DiKembalikan</span>
+                                                @elseif ($reservation->status == 'opened')
+                                                    <span class="badge bg-info">Kelas Dibuka</span>
+                                                @elseif ($reservation->status == 'off-day')
+                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
@@ -330,6 +334,10 @@
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
                                                 @elseif ($reservation->status == 'wait')
                                                     <span class="badge bg-warning">Menunggu DiKembalikan</span>
+                                                @elseif ($reservation->status == 'opened')
+                                                    <span class="badge bg-info">Kelas Dibuka</span>
+                                                @elseif ($reservation->status == 'off-day')
+                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif

@@ -115,5 +115,4 @@ Route::get('/reservation_conditional', [ReservationConditionalController::class,
 Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 
 // open calendar
-Route::resource('calendar', CalendarController::class);
-Route::get('calendar/events', [CalendarController::class, 'events'])->name('calendar.events');
+Route::resource('jadwal', CalendarController::class);
