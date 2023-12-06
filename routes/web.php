@@ -78,14 +78,14 @@ Route::get('/returned/{id}', [ReservationController::class, 'returned'])->name('
 Route::get('/return/{id}/{room_id}', [ReservationController::class, 'return'])->name('return')->middleware('auth');
 Route::get('/cancel/{id}/{room_id}', [ReservationController::class, 'cancel'])->name('cancel')->middleware('auth');
 Route::post('/complete_personal_data/{id}', [RoomReservationController::class, 'complete_personal_data'])->middleware('auth');
-Route::get('/open/{id}', [ReservationController::class, 'open'])->name('open')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
-Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offday')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/open/{id}', [ReservationController::class, 'open'])->name('open')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
+Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offday')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 
 // peminjaman
-Route::resource('building_view', BuildingViewController::class)->middleware('auth');
+Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
 Route::get('/all-ruangan/{id}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/reschedule/{id}', [ReservationController::class, 'show'])->middleware('auth')->name('reschedule');
