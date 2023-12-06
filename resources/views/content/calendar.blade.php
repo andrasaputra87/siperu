@@ -42,23 +42,7 @@ body {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
             },
-          events: [
-            {
-                id: 1,
-                title: 'siapa',
-                start: '2023-12-02'
-            },
-            {
-                id: 2,
-                title: 'siapa',
-                start: '2023-12-02'
-            },
-            {
-                id: 3,
-                title: 'siapa',
-                start: '2023-12-02'
-            },
-          ]
+          events: `{{ route('calendar.events') }}`
         });
         calendar.render();
       });
