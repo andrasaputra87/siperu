@@ -162,10 +162,10 @@ class ReservationController extends Controller
     ]);
   }
 
-  public function detail($date)
+  public function detail($date, $start_time)
   {
     return view('content.dashboard.detail', [
-      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('recurring', $date)->get(),
+      'reservations' => RoomReservation::with(['user', 'room','session'])->orderBy('id', 'desc')->where('recurring', $date)->where('start_time',$start_time)->get(),
       'reservations_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'approved')->count(),
       'reservations_not_approved' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'not approved')->count(),
       'reservations_cancelled' => RoomReservation::where('user_id', Auth()->user()->id)->where('status', 'cancelled')->count(),

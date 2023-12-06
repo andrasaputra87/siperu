@@ -271,7 +271,7 @@
                                     $no=1;
                                 @endphp
                                 @foreach ($reservations as $reservation)
-                                @if($reservation->recurring==NULL || $reservation->recurring==$reservation->reservation_date)
+                                @if($reservation->recurring==NULL || ($reservation->recurring==$reservation->reservation_date))
                                     <tr>
                                         <td class="text-center">{{ $no++ }}</td>
                                         <td>{{ $reservation->room->name }}</td>
@@ -279,7 +279,7 @@
                                             @if ($reservation->recurring==NULL)
                                                 {{ $reservation->reservation_date }}
                                             @else
-                                                <a href="/detail/{{ $reservation->reservation_date }}"
+                                                <a href="/detail/{{ $reservation->reservation_date }}/{{ $reservation->start_time }}"
                                                 class="btn btn-sm btn-info">{{ $reservation->reservation_date }}</a>
                                             @endif 
                                         </td>

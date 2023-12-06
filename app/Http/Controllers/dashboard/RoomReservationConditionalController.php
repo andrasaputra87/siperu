@@ -169,6 +169,7 @@ class RoomReservationConditionalController extends Controller
           ->get(['sessions.id']);   
           $data = Session::select('*')->whereIn('id',RoomReservation::leftjoin('sessions','room_reservations.start_time','=','sessions.id')
                                                   ->where('reservation_date', '=', $request->date)
+                                                  ->where('room_id', '=', $request->id_room)
                                                   ->get(['sessions.id']))
                                       ->where($dayName,'=','1')
                                       ->get();
