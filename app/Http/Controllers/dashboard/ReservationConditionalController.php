@@ -17,47 +17,47 @@ class ReservationConditionalController extends Controller
     {
         if (auth()->user()->role == 'admin') {
             $reservations = RoomReservation::with(['user', 'room', 'termohon'])->where('conditional','!=',0)->orderBy('status', 'asc')->orderBy('id', 'asc')->get();
-            $reservation_total = RoomReservation::count();
-            $reservation_approved = RoomReservation::where('status', 'approved')->count();
-            $reservation_not_approved = RoomReservation::where('status', 'not approved')->count();
-            $reservation_cancelled = RoomReservation::where('status', 'cancelled')->count();
-            $reschedule = RoomReservation::where('status','reschedule')->count();
+            $reservation_total = RoomReservation::where('conditional','!=',0)->count();
+            $reservation_approved = RoomReservation::where('status', 'approved')->where('conditional','!=',0)->count();
+            $reservation_not_approved = RoomReservation::where('status', 'not approved')->where('conditional','!=',0)->count();
+            $reservation_cancelled = RoomReservation::where('status', 'cancelled')->where('conditional','!=',0)->count();
+            $reschedule = RoomReservation::where('status','reschedule')->where('conditional','!=',0)->count();
           } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
-            $reservations = RoomReservation::with(['user', 'room','session'])->whereHas('room', function ($query) {
+            $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'baak');
             })->orderBy('id', 'desc')->get();
-            $reservation_total = RoomReservation::whereHas('room', function ($query) {
+            $reservation_total = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'baak');
             })->count();
-            $reservation_approved = RoomReservation::whereHas('room', function ($query) {
+            $reservation_approved = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'baak');
             })->where('status', 'approved')->count();
-            $reservation_not_approved = RoomReservation::whereHas('room', function ($query) {
+            $reservation_not_approved = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'baak');
             })->where('status', 'not approved')->count();
-            $reservation_cancelled = RoomReservation::whereHas('room', function ($query) {
+            $reservation_cancelled = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'baak');
             })->where('status', 'cancelled')->count();
-            $reschedule = RoomReservation::whereHas('room', function($query){
+            $reschedule = RoomReservation::where('conditional','!=',0)->whereHas('room', function($query){
               $query->where('ownership', 'baak');
             })->where('status', 'reschedule')->count();
           } else {
-            $reservations = RoomReservation::with(['user', 'room','session'])->whereHas('room', function ($query) {
+            $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'bm');
             })->orderBy('id', 'desc')->get();
-            $reservation_total = RoomReservation::whereHas('room', function ($query) {
+            $reservation_total = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'bm');
             })->count();
-            $reservation_approved = RoomReservation::whereHas('room', function ($query) {
+            $reservation_approved = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'bm');
             })->where('status', 'approved')->count();
-            $reservation_not_approved = RoomReservation::whereHas('room', function ($query) {
+            $reservation_not_approved = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'bm');
             })->where('status', 'not approved')->count();
-            $reservation_cancelled = RoomReservation::whereHas('room', function ($query) {
+            $reservation_cancelled = RoomReservation::where('conditional','!=',0)->whereHas('room', function ($query) {
               $query->where('ownership', 'bm');
             })->where('status', 'cancelled')->count();
-            $reschedule = RoomReservation::whereHas('room', function($query){
+            $reschedule = RoomReservation::where('conditional','!=',0)->whereHas('room', function($query){
               $query->where('ownership', 'bm');
             })->where('status', 'reschedule')->count();
           }
