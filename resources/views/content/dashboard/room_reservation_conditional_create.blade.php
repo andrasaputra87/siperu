@@ -118,12 +118,13 @@
 
         function myFunction() {
             let date = document.getElementById("reservation_date").value;
+            let id_room = {{ $room->id }};
             // alert(date);
             $.ajax({
                 type:'POST',
                 url:'/get_conditional',
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data:'date='+date,
+                data:{date:date,id_room:id_room},
                 success:function(html){
                     // console.log(html.data)
                     if (html.success) {
