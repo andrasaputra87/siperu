@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\Building;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,8 @@ class BuildingController extends Controller
     public function index(){
         return view('content.dashboard.buildings', [
             'building' => Building::orderBy('id', 'desc')->get(),
+            'pengelola' => User::where('role', 'pengelola_gedung')->get(),
+            
             'building_edit' => '',
         ]);
     }
@@ -29,6 +32,7 @@ class BuildingController extends Controller
         $data['building_name'] = $request->name;
         $data['checkfloor'] = $request->input('checkfloor',1);
         $data['floor'] = $request->input('lantai');
+        $data['id_user'] = $request->input('pengelola_id');
 
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
@@ -66,6 +70,7 @@ class BuildingController extends Controller
             return view('content.dashboard.buildings', [
                 'building_edit' => $building,
                 'building' => Building::orderBy('id', 'desc')->get(),
+                'pengelola' => User::where('role', 'pengelola_gedung')->get(),
                 
             ]);
         }
@@ -83,6 +88,7 @@ class BuildingController extends Controller
         $data['building_name'] = $request->name;
         $data['checkfloor'] = $request->input('checkfloor',1);
         $data['floor'] = $request->input('lantai');
+        $data['id_user'] = $request->input('pengelola_id');
 
         if ($request->hasFile('thumbnail')) {
            // Hapus gambar lama jika ada
