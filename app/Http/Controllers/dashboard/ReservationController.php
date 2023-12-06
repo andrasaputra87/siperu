@@ -51,7 +51,7 @@ class ReservationController extends Controller
         ->leftjoin('buildings','rooms.building_id','=','buildings.id')
         ->where('conditional',0)
         ->where('buildings.id_user',auth()->user()->id)
-        ->orderBy('status', 'asc')->orderBy('room_reservations.id', 'asc')->get();
+        ->orderBy('status', 'asc')->orderBy('room_reservations.id', 'asc')->get(['*','room_reservations.id as id_rr']);
       $reservation_total = RoomReservation::
         leftjoin('rooms','room_reservations.room_id','=','rooms.id')
         ->leftjoin('buildings','rooms.building_id','=','buildings.id')

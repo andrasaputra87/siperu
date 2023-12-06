@@ -431,7 +431,7 @@
                                                 @endphp
                                                 @if($date->format('Y-m-d') == $reservation->reservation_date && $date->toTimeString()>$reservation->session->start && $date->toTimeString()<$reservation->end_time)
                                                 <div class="d-flex gap-2">
-                                                    <a href="/open/{{ $reservation->id }}"
+                                                    <a href="/open/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-primary "><i
                                                             class='bx bx-check'></i> Buka Kelas</a>
                                                     <a href="/offday/{{ $reservation->id }}"

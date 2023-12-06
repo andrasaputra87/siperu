@@ -65,7 +65,7 @@
       "icon": "menu-icon tf-icons bx bx-calendar-event",
       "slug": ["reservation_conditional"],
       "url": "/reservation_conditional",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak", "pengelola_gedung"]
     },
     {
       "name": "Laporan",
