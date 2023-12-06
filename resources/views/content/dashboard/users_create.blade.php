@@ -98,6 +98,7 @@
                                     <option value="staff_baak" {{ old('role') == 'staff_baak' ? 'selected' : '' }}>Staff BAAK</option>
                                     <option value="head_bm" {{ old('role') == 'head_bm' ? 'selected' : '' }}>Kepala BM</option>
                                     <option value="staff_bm" {{ old('role') == 'staff_bm' ? 'selected' : '' }}>Staff BM</option>
+                                    <option value="pengelola_gedung" {{ old('role') == 'pengelola_gedung' ? 'selected' : '' }}>Pengelola Gedung</option>
                                 </select>
                                 @error('role')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
