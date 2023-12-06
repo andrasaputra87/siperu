@@ -178,11 +178,11 @@
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nim">NIM <span class="text-danger fw-bold">*</span></label>
+                                    <label for="nim">NIP <span class="text-danger fw-bold">*</span></label>
                                     <input type="number" name="nim"
-                                        class="form-control @error('nim') invalid @enderror"
+                                        class="form-control @error('nip') invalid @enderror"
                                         value="{{ auth()->user()->nim ?? old('nim') }}">
-                                    @error('nim')
+                                    @error('nip')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -271,7 +271,7 @@
                                     <label class="form-label" for="recurring">Pinjam Berulang</label>
                                     <input type="checkbox" id="recurring" name="recurring" value="{{ old('recurring') }}" />
                                 </div>
-                                
+                               
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
                                     <!-- <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"

@@ -68,8 +68,8 @@
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6 custom-col">
-                                <label class="form-label" for="nim">NIM</label>
-                                <input type="number" id="nim" name="nim" class="form-control @error('nim') border-danger @enderror" value="{{ old('nim') }}" placeholder="Masukkan NIM"/>
+                                <label class="form-label" for="nim">NIP</label>
+                                <input type="number" id="nim" name="nim" class="form-control @error('nim') border-danger @enderror" value="{{ old('nim') }}" placeholder="Masukkan NIP"/>
                             </div>
                             <div class="col-12 col-lg-6 custom-col">
                                 <label class="form-label" for="phone_number">No. Telepon <span class="text-danger fw-bold">*</span></label>

@@ -171,7 +171,7 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="nim">NIM <span class="text-danger fw-bold">*</span></label>
+                                    <label for="nim">NIP <span class="text-danger fw-bold">*</span></label>
                                     <input type="number" name="nim"
                                         class="form-control @error('nim') invalid @enderror"
                                         value="{{ auth()->user()->nim ?? old('nim') }}">

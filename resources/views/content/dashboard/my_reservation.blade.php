@@ -259,7 +259,7 @@
                                     <th>Waktu Selesai</th>
                                     {{-- <th>Sisa Waktu</th> --}}
                                     <th>Keperluan</th>
-                                    <th>Jaminan</th>
+                                    {{-- <th>Jaminan</th> --}}
                                     <th>Status</th>
                                     <th>Jadwal Berulang</th>
                                     <th>Peminjaman Kondisional</th>
@@ -299,7 +299,7 @@
                                             @endif
                                         </td> --}}
                                         <td>{{ $reservation->necessary }}</td>
-                                        <td>{{ strtoupper($reservation->guarantee) }}</td>
+                                        {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status == 'approved')

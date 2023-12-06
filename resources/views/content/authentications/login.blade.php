@@ -77,7 +77,7 @@
             </div>
           </form>
 
-          <p class="text-center">
+          {{-- <p class="text-center">
             <span>Pengguna baru?</span>
             <a href="{{url('register')}}">
               <span>Daftar sekarang</span>
@@ -86,7 +86,7 @@
 
           <div class="divider my-4">
             <div class="divider-text">atau</div>
-          </div>
+          </div> --}}
 
           <div class="d-flex justify-content-center">
             {{-- <a href="/auth/facebook" class="btn btn-icon btn-label-facebook me-3">
