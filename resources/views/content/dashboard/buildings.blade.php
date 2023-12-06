@@ -216,7 +216,19 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
+                                    <select name="pengelola_id" id="pengelola_id" class="form-select">
+                                        <option value="" disabled selected>-- Pilih Pengelola --</option>
+                                        @foreach ($pengelola as $peng)
+                                            <option value="{{ $peng->id }}"
+                                                {{ $building_edit->id_user == $peng->id ? 'selected' : '' }}>
+                                                {{ $peng->fullname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <img src="{{ asset($building_edit->thumbnail) }}" alt="{{ $building_edit->building_name }}"
                                 class=" rounded mb-3 shadow-sm" style="width: 70%; height: 40%; border: 1px solid #d9dee3;">
                             <div class="row mb-3">
@@ -277,7 +289,18 @@
                                 </div>
                             </div>
 
-
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
+                                    <select name="pengelola_id" id="pengelola_id" class="form-select">
+                                        <option value="" disabled selected>-- Pilih Pengelola --</option>
+                                        @foreach ($pengelola as $peng)
+                                            <option value="{{ $peng->id }}">
+                                                {{ $peng->fullname }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail <span
                                         class="text-danger fw-bold">*</span></label>
