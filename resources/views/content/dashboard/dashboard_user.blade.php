@@ -225,7 +225,7 @@
                                                                 ? 'Telah membatalkan'
                                                                 : 'SIPERU menolak peminjaman'))) }}
                                                 ruangan {{ $reservation->room->name }} dari jam
-                                                {{ date('H:i', strtotime($reservation->start_time)) }} -
+                                                {{ date('H:i', strtotime($reservation->session->start)) }} -
                                                 {{ date('H:i', strtotime($reservation->end_time)) }}</p>
                                             <div class="d-flex flex-wrap">
                                                 <div class="avatar me-3">

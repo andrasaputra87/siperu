@@ -87,6 +87,7 @@ class RoomReservationController extends Controller
       $data['logistic_officer'] = $request->logistic_officer;
       $data['etc_officer'] = $request->etc_officer;
       $data['note'] = $request->note;
+      $data['day'] = date('D',strtotime($request->reservation_date));
 
       if ($request->has('signature')) {
         $request->validate([
@@ -138,7 +139,9 @@ class RoomReservationController extends Controller
       }
       return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     } else {
+      var_dump($data);
       RoomReservation::create($data);
+      
       return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     }
     // $room = Room::findOrFail($data['room_id']);

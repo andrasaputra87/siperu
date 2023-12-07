@@ -30,6 +30,6 @@ class RoomReservation extends Model
 
     public function session()
     {
-        return $this->belongsTo(Session::class,'start_time');
+        return $this->belongsTo(Session::class,'start_time','id');
     }
 }

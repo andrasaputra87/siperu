@@ -533,7 +533,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        {{ date('H:i', strtotime($item->start_time)) }} &nbsp;-&nbsp;
+                                        {{ date('H:i', strtotime($item->session->start)) }} &nbsp;-&nbsp;
                                         {{ date('H:i', strtotime($item->end_time)) }}
                                     </td>
                                     <td>

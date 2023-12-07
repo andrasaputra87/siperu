@@ -110,11 +110,11 @@
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
             <div class="content-left">
-              <span>Mahasiswa</span>
+              <span>Pengguna</span>
               <div class="d-flex align-items-end mt-2">
                 <h4 class="mb-0 me-2">{{ $users->where('role', 'user')->count() }}</h4>
               </div>
-              <small>Total Mahasiswa</small>
+              <small>Total Pengguna</small>
             </div>
             <span class="badge bg-label-primary rounded p-2">
               <i class="bx bx-user bx-sm"></i>
@@ -159,7 +159,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6 col-xxl-3">
+    {{-- <div class="col-sm-6 col-xxl-3">
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
@@ -176,7 +176,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
 </div>
 <div class="row">
     <div class="col-12">

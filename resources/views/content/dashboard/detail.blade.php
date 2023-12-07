@@ -158,7 +158,7 @@
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
                                     <th>Keperluan</th>
-                                    <th>Jaminan</th>
+                                    {{-- <th>Jaminan</th> --}}
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -176,7 +176,7 @@
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                         <td>{{ $reservation->necessary }}</td>
-                                        <td>{{ strtoupper($reservation->guarantee) }}</td>
+                                        {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status == 'approved')

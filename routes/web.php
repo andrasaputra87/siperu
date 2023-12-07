@@ -83,9 +83,9 @@ Route::get('/open/{id}', [ReservationController::class, 'open'])->name('open')->
 Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offday')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 
 // peminjaman
-// Route::resource('building_view', BuildingViewController::class)->middleware('auth');
+Route::resource('building_view', BuildingViewController::class)->middleware('auth');
 Route::resource('building_view_con', BuildingViewConditionalController::class)->middleware('auth');
-Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+// Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
 Route::get('/all-ruangan/{id}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
