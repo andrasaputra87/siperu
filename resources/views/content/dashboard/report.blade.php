@@ -173,7 +173,7 @@
                                   <th>Waktu Mulai</th>
                                   <th>Waktu Selesai</th>
                                   <th>Keperluan</th>
-                                  <th>Jaminan</th>
+                                  {{-- <th>Jaminan</th> --}}
                                   <th>Status</th>
                                   <th>Aksi</th>
                               </tr>
@@ -206,7 +206,7 @@
                                               {{ $reservation->necessary }}
                                           @endif
                                       </td>
-                                      <td>{{ strtoupper($reservation->guarantee) }}</td>
+                                      {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                       <td>
                                           @if ($reservation->room->ownership == 'baak')
                                               @if ($reservation->status == 'approved')

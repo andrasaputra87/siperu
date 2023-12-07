@@ -50,7 +50,7 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
         return [
             'No',
             'Peminjam',
-            'NIM',
+            'NIP',
             'Tanggal',
             'Waktu Mulai',
             'Waktu Selesai',

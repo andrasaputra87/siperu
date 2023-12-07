@@ -136,10 +136,10 @@ class RoomReservationController extends Controller
         // var_dump($data);
         $temp_date = Carbon::parse($temp_date)->addDays(7)->toDateString();
       }
-      return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
+      return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     } else {
       RoomReservation::create($data);
-      return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
+      return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     }
     // $room = Room::findOrFail($data['room_id']);
     // $room->availability = 0;

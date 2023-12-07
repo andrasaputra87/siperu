@@ -87,8 +87,8 @@
     {
       "name": "Pinjam Ruangan Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
-      "slug": ["room_reservation_conditional.index", "room_reservation_conditional.show", "rooms.show"],
-      "url": "/room_reservation_conditional"
+      "slug": ["buildingviewconditonal.index", "room_reservation_conditional.show", "rooms.show"],
+      "url": "/building_view_con"
     },
     {
       "name": "Peminjaman Saya",

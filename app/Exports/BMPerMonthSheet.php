@@ -56,7 +56,7 @@ class BMPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, Wi
         return [
             'No',
             'Peminjam',
-            'NIM',
+            'NIP',
             'Tanggal',
             'Waktu Mulai',
             'Waktu Selesai',

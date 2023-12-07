@@ -252,7 +252,7 @@
                                                 <option>Pilih SKS</option>
                                                 <option value='2'>2 SKS</option>
                                                 <option value='3'>3 SKS</option>
-                                                <option value='4'>4 SKS</option>
+                                                {{-- <option value='4'>4 SKS</option> --}}
                                             </select>
                                             @error('sks')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>

@@ -52,7 +52,7 @@ class ReservationPerMonthSheet implements FromCollection, ShouldAutoSize, WithMa
         return [
             'No',
             'Peminjam',
-            'NIM',
+            'NIP',
             'Tanggal',
             'Waktu Mulai',
             'Waktu Selesai',

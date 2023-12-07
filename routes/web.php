@@ -14,6 +14,7 @@ use App\Http\Controllers\dashboard\SessionController;
 use App\Http\Controllers\dashboard\ReservationController;
 use App\Http\Controllers\authentications\SocialiteController;
 use App\Http\Controllers\dashboard\BuildingViewController;
+use App\Http\Controllers\dashboard\BuildingViewConditionalController;
 use App\Http\Controllers\dashboard\BuildingController;
 use App\Http\Controllers\dashboard\RoomReservationController;
 use App\Http\Controllers\dashboard\RoomReservationConditionalController;
@@ -83,6 +84,7 @@ Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offd
 
 // peminjaman
 Route::resource('building_view', BuildingViewController::class)->middleware('auth');
+Route::resource('building_view_con', BuildingViewConditionalController::class)->middleware('auth');
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
 Route::get('/all-ruangan/{id}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
@@ -109,6 +111,7 @@ Route::get('/set2/{id}', [BuildingController::class, 'set'])->middleware('auth')
 // conditional
 Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
 Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');
+Route::get('/all-ruangan-con/{id}',[RoomReservationConditionalController::class,'allruangan'])->middleware('auth')->name('all-ruangan-con');
 
 // peminjaman kondisoinal
 Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);

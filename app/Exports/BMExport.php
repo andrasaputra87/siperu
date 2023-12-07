@@ -50,7 +50,7 @@ class BMExport implements FromCollection, ShouldAutoSize, WithMapping, WithHeadi
         return [
             'No',
             'Peminjam',
-            'NIM',
+            'NIP',
             'Tanggal',
             'Waktu Mulai',
             'Waktu Selesai',

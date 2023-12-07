@@ -56,7 +56,7 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
         return [
             'No',
             'Peminjam',
-            'NIM',
+            'NIP',
             'Tanggal',
             'Waktu Mulai',
             'Waktu Selesai',
