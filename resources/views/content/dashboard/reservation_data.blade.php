@@ -397,7 +397,6 @@
                                         
                                         <td>{{ $reservation->conditional==0?'Bukan':'Ya' }}</td>
                                         <td>
-                                            
                                             @if ($reservation->status == 'wait')
                                                 @if (auth()->user()->signature)
                                                     <a href="/returned/{{ $reservation->id }}"
@@ -405,7 +404,7 @@
                                                         Acc Pengembalian</a>
                                                 @endif
                                             @elseif ($reservation->status == 'pending')
-                                                @if (auth()->user()->signature)
+                                                @if (auth()->user()->signature && auth()->user()->role!='pengelola_gedung')
                                                     <div class="d-flex gap-2">
                                                         <a href="/approve/{{ $reservation->id }}"
                                                             class="btn btn-sm btn-primary setuju"><i
@@ -416,7 +415,7 @@
                                                             class="btn btn-sm btn-danger"><i class='bx bx-x'></i> Tidak
                                                             Setuju</button>
                                                     </div>
-                                                @else
+                                                @elseif(!auth()->user()->signature)
                                                     <a href="/settings" class="btn btn-sm btn-primary">Lengkapi TTD untuk
                                                         melanjutkan</a>
                                                 @endif
@@ -432,7 +431,7 @@
                                                 @endphp
                                                 @if($date->format('Y-m-d') == $reservation->reservation_date && $date->toTimeString()>$reservation->session->start && $date->toTimeString()<$reservation->end_time)
                                                 <div class="d-flex gap-2">
-                                                    <a href="/open/{{ $reservation->id }}"
+                                                    <a href="/open/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-primary "><i
                                                             class='bx bx-check'></i> Buka Kelas</a>
                                                     <a href="/offday/{{ $reservation->id }}"
