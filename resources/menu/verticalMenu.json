@@ -22,7 +22,7 @@
       "icon": "menu-icon tf-icons bx bx-buildings",
       "slug": ["building.index", "building.edit"],
       "url": "/building",
-      "roles": ["admin"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
     {
       "name": "Data Ruangan",
@@ -90,9 +90,7 @@
       "name": "Pinjam Ruangan Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
       "slug": ["buildingviewconditonal.index", "room_reservation_conditional.show", "rooms.show"],
-      "url": "/building_view_con"
-      "slug": ["room_reservation_conditional.index", "room_reservation_conditional.show", "rooms.show"],
-      "url": "/room_reservation_conditional",
+      "url": "/building_view_con",
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
     },
     {

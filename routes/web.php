@@ -63,7 +63,7 @@ Route::resource('departments', DepartmentController::class)->middleware(['auth',
 Route::resource('years', YearsController::class)->middleware(['auth', 'role:admin']);
 Route::resource('sessions', SessionController::class)->middleware(['auth', 'role:admin']);
 Route::resource('users', UserController::class)->middleware(['auth', 'role:admin']);
-Route::resource('building', BuildingController::class)->middleware(['auth', 'role:admin']);
+Route::resource('building', BuildingController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak'])->except('show');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware(['auth', 'role:admin']);
 Route::get('/profile/{slug}', [UserController::class, 'profile'])->name('profile')->middleware('auth');
 
@@ -83,7 +83,7 @@ Route::get('/open/{id}', [ReservationController::class, 'open'])->name('open')->
 Route::get('/offday/{id}', [ReservationController::class, 'offday'])->name('offday')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 
 // peminjaman
-Route::resource('building_view', BuildingViewController::class)->middleware('auth');
+// Route::resource('building_view', BuildingViewController::class)->middleware('auth');
 Route::resource('building_view_con', BuildingViewConditionalController::class)->middleware('auth');
 Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
