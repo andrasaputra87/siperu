@@ -348,7 +348,7 @@
                                         <td class="text-center">
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if (
-                                                    $reservation->status == 'approved' &&
+                                                    $reservation->status == 'opened' &&
                                                         \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
                                                     @if (!$reservation->key_status)
                                                         <a href="/return/{{ $reservation->id }}/{{ $reservation->room_id }}"
@@ -379,7 +379,7 @@
                                                 @endif
                                             @else
                                                 @if (
-                                                    $reservation->status == 'approved' &&
+                                                    $reservation->status == 'opened' &&
                                                         \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->start_time)->isPast())
                                                     @if (!$reservation->key_status)
                                                         <a href="/return/{{ $reservation->id }}"
@@ -409,7 +409,7 @@
                                                     -
                                                 @endif
                                             @endif
-                                            @if(($reservation->recurring==NULL || $reservation->recurring=$reservation->reservation_date) && $reservation->key_status!='cancelled' && $reservation->status!='returned')
+                                            @if(($reservation->recurring==NULL || $reservation->recurring=$reservation->reservation_date) && $reservation->key_status!='cancelled' && $reservation->status!='returned' && $reservation->status!='opened' && $reservation->status!='off-day' && $reservation->status!='wait')
                                             <a href="{{ route('change-sks', ['id' => $reservation->id]) }}"
                                                 class="btn btn-sm btn-warning "><i
                                                     class='bx bx-calendar'></i>Ubah SKS</a>
