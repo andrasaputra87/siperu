@@ -45,7 +45,6 @@ class RoomController extends Controller
             // 'location' => 'required',
             'description' => 'required',
             'ownership' => 'required',
-
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
         if ($request->input('location') == NULL) {

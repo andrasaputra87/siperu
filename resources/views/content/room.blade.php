@@ -178,6 +178,13 @@
     </header>
     <div class="main">
       <div id="btn-toggle" class="btn btn-primary">Show / Hide Pencarian</div>
+      @if ($building->floor>0)  
+        <div class="text-center">
+        @for ($i = 1; $i <= $building->floor; $i++)
+        <a class="btn btn-primary" href="/get_room/{{ $building_id }}/Lantai {{$i}}" role="button">Lantai {{$i}}</a>
+        @endfor
+        <br><br>
+      @endif
       <div class="row main-row">
         <div class="col-2 col-menu">
           <div class="menu-wrap">
@@ -195,6 +202,7 @@
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
         @if (count($rooms)>0)
@@ -209,6 +217,9 @@
                     <div class="card-body">
                       <h5 class="card-title">{{ $room->name }}</h5>
                       <span class="badge bg-danger">Kapasitas : {{ $room->capacity }}</span>
+                      @if ($room->location!='')
+                        <span class="badge bg-success">Lantai : {{ $room->location }}</span>
+                      @endif
                       <p class="card-text">{{ count($room->roomReservations) }} Jadwal Peminjaman Ruangan</p>
                       <a class="btn btn-primary" href="/get_jadwal/{{ $room->id }}">Lihat Jadwal</a>
                     </div>
@@ -228,11 +239,18 @@
             <h1>
                 Oops!</h1>
             <h2>
+              @if ($cari!="")
                 Hasil Pencarian "{{ $cari }}" Tidak Ditemukan</h2>
-            <div class="error-details">
-                Maaf, coba cari dengan kata kunci lain!
-            </div>
-            <a class="btn btn-primary" href="/jadwal" role="button">Ke Data Gedung</a>
+                <div class="error-details">
+                    Maaf, coba cari dengan kata kunci lain!
+              </div>
+              @else
+                Data "{{ $floor }}" Tidak Ditemukan</h2>
+              <div class="error-details">
+                  Maaf, coba cari di lantai lain!
+              </div>
+            @endif
+            {{-- <a class="btn btn-primary" href="/jadwal" role="button">Ke Data Gedung</a> --}}
         </div>
           </div>
           @endif

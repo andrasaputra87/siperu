@@ -4,6 +4,7 @@ namespace App\Http\Controllers\dashboard;
 
 use Carbon\Carbon;
 use App\Models\Room;
+use App\Models\Building;
 use App\Models\User;
 use App\Models\Session;
 use App\Models\Department;
@@ -34,12 +35,23 @@ class RoomReservationController extends Controller
     ]);
   }
 
-  public function allruangan(Request $request, $id)
-  {
-    return view('content.dashboard.room_reservation', [
-      'rooms' => Room::latest()->where('building_id', $id)->get(),
-      'building_id'=>$id
-    ]);
+  public function allruangan(Request $request, $id, $floor=NULL)
+  { 
+    $building = Building::find($id);
+    if($floor!=NULL){
+      return view('content.dashboard.room_reservation', [
+        'rooms' => Room::latest()->where('building_id', $id)->where('location',$floor)->get(),
+        'building_id'=>$id,
+        'building'=>$building
+      ]);
+    }else{
+      return view('content.dashboard.room_reservation', [
+        'rooms' => Room::latest()->where('building_id', $id)->get(),
+        'building_id'=>$id,
+        'building'=>$building
+      ]);
+    }
+    
   }
 
   /**

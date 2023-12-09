@@ -376,9 +376,9 @@
                                 <div class="col mb-3">
                                     <label for="building" class="form-label">Gedung <span
                                             class="text-danger fw-bold">*</span></label>
-                                    <select name="building" id="building"
+                                    <select name="building" id="building" onchange="myFunction()"
                                         class="form-select @error('building') border-danger @enderror">
-                                        <option value="" selected disabled>-- Pilih Lokasi --</option>
+                                        <option value="" selected disabled>-- Pilih Gedung --</option>
 
                                         @foreach ($building as $build)
                                             <option value="{{ $build->id }}">{{ $build->building_name }}</option>
