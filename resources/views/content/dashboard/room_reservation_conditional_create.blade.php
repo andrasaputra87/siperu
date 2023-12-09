@@ -162,6 +162,12 @@
         </div>
     @endif
 
+    @if ($building->floor>0)  
+        <div class="pull-right">
+        @for ($i = 1; $i <= $building->floor; $i++)
+        <a class="btn btn-primary" href="/all-ruangan-con/{{ $building_id }}/Lantai {{$i}}" role="button">Lantai {{$i}}</a>
+        @endfor
+    @endif
     <!-- DataTable with Buttons -->
     <div class="row">
         <div class="col-12 col-md-6 col-xl-7 col-xxl-8 mb-3">

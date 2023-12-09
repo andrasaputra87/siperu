@@ -87,7 +87,7 @@ Route::resource('building_view', BuildingViewController::class)->middleware('aut
 Route::resource('building_view_con', BuildingViewConditionalController::class)->middleware('auth');
 // Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
-Route::get('/all-ruangan/{id}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
+Route::get('/all-ruangan/{id}/{floor?}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
 Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
@@ -112,7 +112,7 @@ Route::get('/set2/{id}', [BuildingController::class, 'set'])->middleware('auth')
 // conditional
 Route::resource('room_reservation_conditional', RoomReservationConditionalController::class)->middleware('auth');
 Route::post('/get_conditional', [RoomReservationConditionalController::class, 'get'])->middleware('auth')->name('get');
-Route::get('/all-ruangan-con/{id}',[RoomReservationConditionalController::class,'allruangan'])->middleware('auth')->name('all-ruangan-con');
+Route::get('/all-ruangan-con/{id}/{floor?}',[RoomReservationConditionalController::class,'allruangan'])->middleware('auth')->name('all-ruangan-con');
 
 // peminjaman kondisoinal
 Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);

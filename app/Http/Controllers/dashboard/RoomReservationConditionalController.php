@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Room;
+use App\Models\Building;
 use App\Models\RoomReservation;
 use App\Models\Department;
 use App\Models\User;
@@ -29,12 +30,23 @@ class RoomReservationConditionalController extends Controller
     ]);
   }
 
-  public function allruangan(Request $request, $id)
+  public function allruangan(Request $request, $id, $floor=NULL)
   {
-    return view('content.dashboard.room_reservation_conditional', [
-      'rooms' => Room::latest()->where('building_id', $id)->get(),
-      'building_id' => $id
-    ]);
+    $building = Building::find($id);
+    if($floor!=NULL){
+      return view('content.dashboard.room_reservation', [
+        'rooms' => Room::latest()->where('building_id', $id)->where('location',$floor)->get(),
+        'building_id'=>$id,
+        'building'=>$building
+      ]);
+    }else{
+      return view('content.dashboard.room_reservation', [
+        'rooms' => Room::latest()->where('building_id', $id)->get(),
+        'building_id'=>$id,
+        'building'=>$building
+      ]);
+    }
+    
   }
   /**
    * Show the form for creating a new resource.
