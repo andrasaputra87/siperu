@@ -68,19 +68,25 @@ class CalendarController extends Controller
         return view('content.calendar', compact('events','reservations', 'opened', 'off_day', 'room','cari'));
     }
 
-    public function room(Request $request, $id){
+    public function room(Request $request, $id, $floor=NULL){
         $cari = $request->cari;
         $building = Building::find($id);
+        $building_id = $id;
         if($cari){
             $rooms = Room::with(['roomReservations'])
-                ->where('building_id',$id)
+                ->where('building_id',$building_id)
                 ->where('name','like',"%".$cari."%")
                 ->orderBy('name','asc')->paginate(8);
+        }elseif($floor!=NULL){
+            $rooms = $rooms = Room::with(['roomReservations'])
+                ->where('building_id',$building_id)
+                ->where('location',$floor)
+                ->orderBy('name','asc')->paginate(8);
         }else{
-            $rooms = Room::with(['roomReservations'])->where('building_id',$id)->orderBy('name','asc')->paginate(8);
+            $rooms = Room::with(['roomReservations'])->where('building_id',$building_id)->orderBy('name','asc')->paginate(8);
         }
         // var_dump(count($buildings->room));
-        return view('content.room', compact('rooms','cari','building'));
+        return view('content.room', compact('rooms','cari','building','building_id', 'floor'));
     }
 
 }
