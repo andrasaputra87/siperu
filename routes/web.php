@@ -88,7 +88,7 @@ Route::resource('building_view_con', BuildingViewConditionalController::class)->
 // Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
 Route::get('/all-ruangan/{id}/{floor?}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
-Route::get('/reservation', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
+Route::get('/reservation/{id?}', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/reschedule/{id}', [ReservationController::class, 'show'])->middleware('auth')->name('reschedule');
@@ -115,7 +115,7 @@ Route::post('/get_conditional', [RoomReservationConditionalController::class, 'g
 Route::get('/all-ruangan-con/{id}/{floor?}',[RoomReservationConditionalController::class,'allruangan'])->middleware('auth')->name('all-ruangan-con');
 
 // peminjaman kondisoinal
-Route::get('/reservation_conditional', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
+Route::get('/reservation_conditional/{id?}', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
 Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 
 // open calendar
