@@ -194,7 +194,16 @@
                   </div>
                 </div>
               </div>
+              <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Pilih Lantai
+                </button>
+                <ul class="dropdown-menu">
+                  
+                </ul>
+              </div>
             </div>
+            
           </div>
         </div>
         @if (count($rooms)>0)

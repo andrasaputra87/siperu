@@ -122,3 +122,5 @@ Route::get('/approve_conditional/{id}', [ReservationConditionalController::class
 Route::resource('jadwal', CalendarController::class);
 Route::get('/get_room/{id}', [CalendarController::class,'room'])->name('get_room');
 Route::get('/get_jadwal/{id}', [CalendarController::class,'calendar'])->name('get_jadwal');
+Route::post('/get_lantai', [CalendarController::class, 'get'])->middleware('auth')->name('get_lantai');
+
