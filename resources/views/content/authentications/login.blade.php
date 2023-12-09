@@ -76,7 +76,12 @@
               <button class="btn btn-primary d-grid w-100" type="submit">Masuk</button>
             </div>
           </form>
-
+          <p class="text-center">
+            <span>Daftar Penggunaan Gedung</span>
+            <a href="{{url('jadwal')}}">
+              <span>KLIK</span>
+            </a>
+          </p>
           {{-- <p class="text-center">
             <span>Pengguna baru?</span>
             <a href="{{url('register')}}">

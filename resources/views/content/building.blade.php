@@ -170,7 +170,7 @@
         <img src="{{ asset('assets/img/backgrounds/Logo_Universitas_Palangka_Raya.png') }}" width="100px" height="100px" alt="logo">
       </div>
       <div class="col-8">
-        <h1 class="tg-h1">Data Penjadwalan Peminjaman Ruangan</h1>
+        <h1 class="tg-h1">Data Penggunaan Ruangan</h1>
         <h2 class="tg-h2">Daftar Gedung</h2>
         <a class="btn btn-dark" href="/jadwal" role="button">Home</a>
       </div>
