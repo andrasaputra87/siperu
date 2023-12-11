@@ -245,8 +245,8 @@
                                                     <a href="/profile/{{ $reservation->user->slug }}"
                                                         class="text-body text-truncate">
                                                         <span
-                                                            class="fw-semibold">{{ $reservation->user->fullname }}</span></a>
-                                                    <small class="text-muted">{{ $reservation->user->nim }}</small>
+                                                            class="fw-semibold">{{ $reservation->pemohon_name }}</span></a>
+                                                    <small class="text-muted">{{ $reservation->pemohon_nim }}</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -263,8 +263,8 @@
                                                     <a href="/profile/{{ $reservation->user->slug }}"
                                                         class="text-body text-truncate">
                                                         <span
-                                                            class="fw-semibold">{{ $reservation->user->fullname }}</span></a>
-                                                    <small class="text-muted">{{ $reservation->user->nim }}</small>
+                                                            class="fw-semibold">{{ $reservation->termohon_name }}</span></a>
+                                                    <small class="text-muted">{{ $reservation->termohon_nim }}</small>
                                                 </div>
                                             </div>
                                         </td>
@@ -286,33 +286,33 @@
                                         {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
                                             @if ($reservation->room->ownership == 'baak')
-                                                @if ($reservation->status == 'approved')
+                                                @if ($reservation->status_conditional == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status == 'not approved')
+                                                @elseif ($reservation->status_conditional == 'not approved')
                                                     <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status == 'cancelled')
+                                                @elseif($reservation->status_conditional == 'cancelled')
                                                     <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status == 'wait')
+                                                @elseif ($reservation->status_conditional == 'wait')
                                                     <span class="badge bg-success">Menunggu Dikembalikan</span>
-                                                @elseif ($reservation->status == 'returned')
+                                                @elseif ($reservation->status_conditional == 'returned')
                                                     <span class="badge bg-success">Dikembalikan</span>
-                                                @elseif ($reservation->status == 'reschedule')
+                                                @elseif ($reservation->status_conditional == 'reschedule')
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
                                             @else
-                                                @if ($reservation->status == 'approved')
+                                                @if ($reservation->status_conditional == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status == 'not approved')
+                                                @elseif ($reservation->status_conditional == 'not approved')
                                                     <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status == 'cancelled')
+                                                @elseif($reservation->status_conditional == 'cancelled')
                                                     <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status == 'wait')
+                                                @elseif ($reservation->status_conditional == 'wait')
                                                     <span class="badge bg-success">Menunggu Dikembalikan</span>
-                                                @elseif ($reservation->status == 'returned')
+                                                @elseif ($reservation->status_conditional == 'returned')
                                                     <span class="badge bg-success">Dikembalikan</span>
-                                                @elseif ($reservation->status == 'reschedule')
+                                                @elseif ($reservation->status_conditional == 'reschedule')
                                                     <span class="badge bg-warning">Jadwal Ulang</span>
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
@@ -322,20 +322,20 @@
                                         
                                         <td>
                                             
-                                            @if ($reservation->status == 'wait')
+                                            @if ($reservation->status_conditional == 'wait')
                                                 @if (auth()->user()->signature)
                                                     <a href="/returned/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-primary setuju"><i class='bx bx-check'></i>
                                                         Acc Pengembalian</a>
                                                 @endif
-                                            @elseif ($reservation->status == 'pending')
+                                            @elseif ($reservation->status_conditional == 'pending')
                                                 @if (auth()->user()->signature)
                                                     <div class="d-flex gap-2">
-                                                        <a href="/approve_conditional/{{ $reservation->id }}"
+                                                        <a href="/approve_conditional/{{ $reservation->id_rr }}"
                                                             class="btn btn-sm btn-primary setuju"><i
                                                                 class='bx bx-check'></i> Setuju</a>
                                                         <button id="delete-btn"
-                                                            data-reservation_id="{{ $reservation->id }}"
+                                                            data-reservation_id="{{ $reservation->id_rr }}"
                                                             data-room_id="{{ $reservation->room->id }}"
                                                             class="btn btn-sm btn-danger"><i class='bx bx-x'></i> Tidak
                                                             Setuju</button>
@@ -373,7 +373,7 @@
                     <h5 class="modal-title">Catatan</h5>
                 </div>
                 <div class="modal-body">
-                    <form action="/not_approve" method="POST" id="formModal">
+                    <form action="/not_approve_conditional" method="POST" id="formModal">
                         @csrf
                         <input type="hidden" name="reservation_id" id="reservation_id">
                         <input type="hidden" name="room_id" id="room_id">

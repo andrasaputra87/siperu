@@ -59,9 +59,9 @@
                 <a class="btn btn-primary" href="/all-ruangan/{{ $building_id }}/Lantai {{ $i }}"
                     role="button">Lantai {{ $i }}</a>
             @endfor
+            </div>
     @endif
 
-    </div>
     <br>
 
 
