@@ -168,12 +168,13 @@
                               <tr>
                                   <th>No</th>
                                   <th>Peminjam</th>
+                                  <th>Gedung</th>
                                   <th>Ruangan</th>
                                   <th>Tanggal Peminjaman</th>
                                   <th>Waktu Mulai</th>
                                   <th>Waktu Selesai</th>
                                   <th>Keperluan</th>
-                                  {{-- <th>Jaminan</th> --}}
+                                  
                                   <th>Status</th>
                                   <th>Aksi</th>
                               </tr>
@@ -195,9 +196,10 @@
                                                   </div>
                                               </div>
                                       </td>
+                                      <td>{{ $reservation->room->building->building_name }}</td>
                                       <td>{{ $reservation->room->name }}</td>
                                       <td>{{ $reservation->reservation_date }}</td>
-                                      <td>{{ substr($reservation->start_time, 0, 5) }}</td>
+                                      <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                       <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                       <td>
                                           @if(strlen($reservation->necessary) > 35)
@@ -206,7 +208,7 @@
                                               {{ $reservation->necessary }}
                                           @endif
                                       </td>
-                                      {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
+                                     
                                       <td>
                                           @if ($reservation->room->ownership == 'baak')
                                               @if ($reservation->status == 'approved')

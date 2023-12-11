@@ -34,13 +34,13 @@ class RoomReservationConditionalController extends Controller
   {
     $building = Building::find($id);
     if($floor!=NULL){
-      return view('content.dashboard.room_reservation', [
+      return view('content.dashboard.room_reservation_conditional', [
         'rooms' => Room::latest()->where('building_id', $id)->where('location',$floor)->get(),
         'building_id'=>$id,
         'building'=>$building
       ]);
     }else{
-      return view('content.dashboard.room_reservation', [
+      return view('content.dashboard.room_reservation_conditional', [
         'rooms' => Room::latest()->where('building_id', $id)->get(),
         'building_id'=>$id,
         'building'=>$building
@@ -144,7 +144,7 @@ class RoomReservationConditionalController extends Controller
     //   return redirect('room_reservation')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     // }else{
     RoomReservation::create($data);
-    return redirect('building_view_conditonal')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
+    return redirect('building_view_con')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     // }
   }
 

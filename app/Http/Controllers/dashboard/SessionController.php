@@ -137,6 +137,9 @@ class SessionController extends Controller
         // var_dump($session->id_tahun_ajaran);
         $data->delete();
   
-        return redirect('sessions.show/'.$session->id_tahun_ajaran)->with('message', 'Data berhasil dihapus!🙌');
+        return redirect('sessions/'.$session->id_tahun_ajaran)->with('message', 'Data berhasil dihapus!🙌');
+    //     return redirect()->route('sessions.show', ['id_tahun_ajaran' => $session->id_tahun_ajaran])
+    // ->with('message', 'Data berhasil dihapus!🙌');
+
     }
 }

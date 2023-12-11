@@ -16,7 +16,7 @@ class Room extends Model
 
     public function roomReservations()
     {
-        return $this->hasMany(RoomReservation::class);
+        return $this->hasMany(RoomReservation::class, 'room_id','id');
     }
 
     public function roomImages()
@@ -26,6 +26,6 @@ class Room extends Model
 
     public function building()
     {
-        return $this->belongsTo(Building::class);
+        return $this->belongsTo(Building::class, 'building_id','id' );
     }
 }

@@ -58,6 +58,29 @@
                 </div>
             </div>
         @endif
+        @if (auth()->user()->role == 'user')
+            
+        
+        <div class="col-lg-12 mb-4 order-0">
+            <div class="card">
+              <div class="d-flex align-items-end row">
+                <div class="col-sm-7">
+                  <div class="card-body">
+                    <h5 class="card-title text-primary">Selamat Datang {{ Auth()->user()->fullname }} 🎉</h5>
+                    <p class="mb-4">Ayo mulai pinjam ruangan dengan mudah dan nyaman.</p>
+        
+                    <a href="building_view" class="btn btn-sm btn-outline-primary">Pinjam Ruangan</a>
+                  </div>
+                </div>
+                <div class="col-sm-5 text-center text-sm-left">
+                  <div class="card-body pb-0 px-0 px-md-4">
+                    <img src="{{asset('assets/img/illustrations/man-with-laptop-light.png')}}" height="140" alt="View Badge User" data-app-dark-img="illustrations/man-with-laptop-dark.png" data-app-light-img="illustrations/man-with-laptop-light.png">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
 
         <div class="col-12 order-1">
             <div class="row">

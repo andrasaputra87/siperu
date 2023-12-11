@@ -54,6 +54,16 @@
         </div>
     @endif
 
+    @if ($building->floor > 0)
+        <div class="pull-right">
+            @for ($i = 1; $i <= $building->floor; $i++)
+                <a class="btn btn-primary" href="/all-ruangan-con/{{ $building_id }}/Lantai {{ $i }}"
+                    role="button">Lantai {{ $i }}</a>
+            @endfor
+    @endif
+
+    </div>
+    <br>
     <!-- DataTable with Buttons -->
     <div class="row">
         @if (!$rooms->isEmpty())

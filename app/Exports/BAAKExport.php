@@ -37,11 +37,12 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
             $reservation->user->fullname,
             $reservation->user->nim,
             $reservation->reservation_date,
-            $reservation->start_time,
+            $reservation->session->start,
             $reservation->end_time,
             $reservation->necessary,
             $reservation->status,
-            $reservation->room->name
+            $reservation->room->name,
+            $reservation->room->building->building_name
         ];
     }
 
@@ -56,7 +57,8 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
             'Waktu Selesai',
             'Keperluan',
             'Status',
-            'Ruangan'
+            'Ruangan',
+            'Gedung'
         ];
     }
 
@@ -64,7 +66,7 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                $event->sheet->getStyle('A2:I2')->applyFromArray([
+                $event->sheet->getStyle('A2:J2')->applyFromArray([
                     'font' => [
                         'bold' => true
                     ],
@@ -81,7 +83,7 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
 
                 // Mengatur border pada seluruh data
                 $lastRow = $event->sheet->getHighestRow();
-                $event->sheet->getStyle('A2:I' . $lastRow)->applyFromArray([
+                $event->sheet->getStyle('A2:J' . $lastRow)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => Border::BORDER_THIN,

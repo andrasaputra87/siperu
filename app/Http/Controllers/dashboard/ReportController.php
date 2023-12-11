@@ -19,20 +19,32 @@ class ReportController extends Controller
         $endDate = $request->input('end_date');
 
         if (empty($startDate) || empty($endDate)) {
-            if(auth()->user()->role == 'admin') {
-                $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'desc')->get();
-            } elseif(auth()->user()->role == 'baak' || auth()->user()->role == 'staff_baak') {
-                $reservations = RoomReservation::with(['user', 'room'])->whereHas('room', function ($query) { $query->where('ownership', 'baak'); })->orderBy('id', 'desc')->get();
+            if (auth()->user()->role == 'admin') {
+                // $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'desc')->get();
+                $reservations = RoomReservation::with(['room.building', 'user'])
+                    ->orderBy('id', 'desc')
+                    ->get();
+                // echo '<pre>' . var_export($reservations, true) . '</pre>';
+            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
+                $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
+                    $query->where('ownership', 'baak');
+                })->orderBy('id', 'desc')->get();
             } else {
-                $reservations = RoomReservation::with(['user', 'room'])->whereHas('room', function ($query) { $query->where('ownership', 'bm'); })->orderBy('id', 'desc')->get();
+                $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
+                    $query->where('ownership', 'bm');
+                })->orderBy('id', 'desc')->get();
             }
         } else {
-            if(auth()->user()->role == 'admin') {
-                $reservations = RoomReservation::with(['user', 'room'])->whereBetween('reservation_date', [$startDate, $endDate])->orderBy('id', 'desc')->get();
-            } elseif(auth()->user()->role == 'baak' || auth()->user()->role == 'staff_baak') {
-                $reservations = RoomReservation::with(['user', 'room'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) { $query->where('ownership', 'baak'); })->orderBy('id', 'desc')->get();
+            if (auth()->user()->role == 'admin') {
+                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->orderBy('id', 'desc')->get();
+            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
+                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
+                    $query->where('ownership', 'baak');
+                })->orderBy('id', 'desc')->get();
             } else {
-                $reservations = RoomReservation::with(['user', 'room'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) { $query->where('ownership', 'bm'); })->orderBy('id', 'desc')->get();
+                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
+                    $query->where('ownership', 'bm');
+                })->orderBy('id', 'desc')->get();
             }
         }
 
@@ -41,14 +53,13 @@ class ReportController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
-
     }
 
-    public function export() 
+    public function export()
     {
-        if(auth()->user()->role == 'admin') {
+        if (auth()->user()->role == 'admin') {
             return (new MultipleExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
-        } elseif(auth()->user()->role == 'baak') {
+        } elseif (auth()->user()->role == 'head_baak') {
             return (new MultipleBAAKExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
         } else {
             return (new MultipleBMExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');

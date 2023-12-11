@@ -31,11 +31,12 @@ class ReservationExport implements FromCollection, ShouldAutoSize, WithMapping, 
             $reservation->user->fullname,
             $reservation->user->nim,
             $reservation->reservation_date,
-            $reservation->start_time,
+            $reservation->session->start,
             $reservation->end_time,
             $reservation->necessary,
             $reservation->status,
-            $reservation->room->name
+            $reservation->room->name,
+            $reservation->room->building->building_name
         ];
     }
 
@@ -50,7 +51,8 @@ class ReservationExport implements FromCollection, ShouldAutoSize, WithMapping, 
             'Waktu Selesai',
             'Keperluan',
             'Status',
-            'Ruangan'
+            'Ruangan',
+            'Gedung'
         ];
     }
 

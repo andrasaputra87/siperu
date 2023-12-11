@@ -49,7 +49,7 @@
     <div class="col-12">
       <div class="card mb-4">
         <div class="user-profile-header-banner">
-          <img src="{{ asset('assets/img/backgrounds/jgu.jpg') }}" alt="Banner image" class="rounded-top" style="object-fit: cover; object-position: bottom;">
+          <img src="{{ asset('assets/img/backgrounds/upr_back.png') }}" alt="Banner image" class="rounded-top" style="object-fit: cover; object-position: bottom;">
         </div>
         <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
           <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">

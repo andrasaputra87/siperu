@@ -328,7 +328,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-xxl-6 mb-3">
+                                        {{-- <div class="col-xxl-6 mb-3">
                                             <div
                                                 class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
                                                 <label class="form-check-label custom-option-content" for="radioBM">
@@ -342,7 +342,7 @@
                                                         {{ $room_edit->ownership == 'bm' ? 'checked' : '' }} />
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     @error('ownership')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -456,7 +456,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-xxl-6 mb-3">
+                                        {{-- <div class="col-xxl-6 mb-3">
                                             <div
                                                 class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
                                                 <label class="form-check-label custom-option-content" for="radioBM">
@@ -470,7 +470,7 @@
                                                         {{ old('ownership') == 'bm' ? 'checked' : '' }} />
                                                 </label>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     @error('ownership')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>

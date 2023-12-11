@@ -12,7 +12,7 @@
 
     {{-- <a href="{{url('/')}}" class="app-brand-link">
       <span class="app-brand-logo demo">
-        <img src="{{ asset('assets/img/favicon/jgu.png') }}" alt="" width="70px">
+        <img src="{{ asset('assets/img/favicon/upr_back.png') }}" alt="" width="70px">
       </span>
       <span class="fs-4 demo menu-text fw-bold ms-2">{{config('variables.templateName')}}</span>
     </a> --}}

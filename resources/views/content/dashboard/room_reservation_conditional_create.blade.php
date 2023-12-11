@@ -162,12 +162,7 @@
         </div>
     @endif
 
-    @if ($building->floor>0)  
-        <div class="pull-right">
-        @for ($i = 1; $i <= $building->floor; $i++)
-        <a class="btn btn-primary" href="/all-ruangan-con/{{ $building_id }}/Lantai {{$i}}" role="button">Lantai {{$i}}</a>
-        @endfor
-    @endif
+   
     <!-- DataTable with Buttons -->
     <div class="row">
         <div class="col-12 col-md-6 col-xl-7 col-xxl-8 mb-3">
@@ -258,7 +253,7 @@
                                                 <option>Pilih SKS</option>
                                                 <option value='2'>2 SKS</option>
                                                 <option value='3'>3 SKS</option>
-                                                <option value='4'>4 SKS</option>
+                                                {{-- <option value='4'>4 SKS</option> --}}
                                             </select>
                                             @error('sks')
                                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -283,7 +278,7 @@
                                 </div>
                             </form>
                         @else
-                            <form action="{{ route('room_reservation.store') }}" method="POST" class="row g-3">
+                            <form action="{{ route('room_reservation_conditional.store') }}" method="POST" class="row g-3">
                                 @csrf
                                 <input type="hidden" name="bm">
                                 <input type="hidden" name="room_id" value="{{ $room->id }}">

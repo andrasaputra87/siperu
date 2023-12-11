@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Building;
 use App\Http\Controllers\Controller;
 use App\Models\RoomReservation;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ class Dashboard extends Controller
           ->orderBy('id', 'desc')
           ->limit(7)
           ->get(),
+        'total_gedung' => Building::count(),
         'total_ruangan' => Room::count(),
         'total_pengguna' => User::count(),
         'departments' => Department::with('users')->get(),
