@@ -123,6 +123,7 @@ Route::post('/not_approve_conditional', [ReservationConditionalController::class
 Route::resource('jadwal', CalendarController::class);
 Route::get('/get_room/{id}/{floor?}', [CalendarController::class,'room'])->name('get_room');
 Route::get('/get_jadwal/{id}/{id_building}', [CalendarController::class,'calendar'])->name('get_jadwal');
+Route::get('/get_jadwal_building/{id}', [CalendarController::class,'get_jadwal_building'])->name('get_jadwal_building');
 Route::post('/get_lantai', [CalendarController::class, 'get'])->middleware('auth')->name('get_lantai');
 Route::post('/get-ruangan', [CalendarController::class, 'cariroom']);
 
