@@ -206,7 +206,36 @@
     <div class="main">
         {{-- <div id="btn-toggle" class="btn btn-primary">Show / Hide Pencarian</div> --}}
         <div class="row main-row">
-            <div class="col-12 col-cards">
+            <div class="col-3 col-menu">
+                <div class="menu-wrap">
+                    <div class="menu">
+                        <h6 class="filter-title">Pilih Ruangan</h6>
+                        <form action="{{ $urlRoute }}" method="GET">
+                            @csrf
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <select name="dropdown3">
+                                            <option value="" selected disabled>-- Pilih Status --</option>
+                                                <option value="approved">Disetujui
+                                                </option>
+                                                <option value="not approved">Belum Disetujui
+                                                </option>
+                                                <option value="opened">Kelas Dibuka
+                                                </option>
+                                                <option value="off-day">Kelas Batal
+                                                </option>
+                                        </select>
+                                        <button type="submit">Cari</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9 col-cards">
                 <div class="card border-warning mb-3">
                     <div class="card-body text-primary ">
                         <div id='calendar'></div>

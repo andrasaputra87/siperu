@@ -123,7 +123,7 @@ class CalendarController extends Controller
 
     public function get_jadwal_building(Request $request, $id)
     {
-        if($request->input('dropdown2') == NULL){
+        if($request->input('dropdown3') == NULL){
             $urlRoute = route('get_jadwal_building', ['id' => $id]);
             $events = [];
             $building = Building::find($id);
@@ -139,21 +139,6 @@ class CalendarController extends Controller
                 ->where('status', '!=', 'wait')
                 ->where('buildings.id', $id)
                 ->get(['*', 'departments.name as dapartment_name', 'buildings.building_name as building_name', 'room_reservations.id as rr_id']);
-            $opened = RoomReservation::with(['room', 'user', 'session'])
-                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
-                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
-                ->where('reservation_date', Carbon::today()->format('Y-m-d'))
-                ->where('status', 'opened')
-                ->where('buildings.id', $id)
-                ->get(['*', 'buildings.building_name as building_name']);
-
-            $off_day = RoomReservation::with(['room', 'user', 'session'])
-                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
-                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
-                ->where('reservation_date', Carbon::today()->format('Y-m-d'))
-                ->where('status', 'off-day')
-                ->where('buildings.id', $id)
-                ->get(['*', 'buildings.building_name as building_name']);
 
             foreach ($reservations as $reservation) {
                 $events[] = [
@@ -164,13 +149,11 @@ class CalendarController extends Controller
                     'backgroundColor'  => $reservation->status == 'approved' ? '#1ce852' : ($reservation->status == 'pending' ? '#c70e0e' : ($reservation->status == 'opened' ? '#11baed' : ($reservation->status == 'off-day' ? 'yellow' : ($reservation->status == 'reschedule' ? '#ed11b2' : ($reservation->status == 'returned' ? '##0d9482' : 'black'))))),
                 ];
             }
-
-            return view('content.calendarGedung', compact('events', 'reservations', 'opened', 'off_day', 'cari', 'building','urlRoute'));
+            return view('content.calendarGedung', compact('events', 'reservations',  'cari', 'building','urlRoute'));
         }else{
-            $urlRoute = route('get_jadwal', ['id' => $request->input('dropdown2'), 'id_building' => $id_building]);
+            $urlRoute = route('get_jadwal_building', ['id' => $id]);
             $events = [];
-            $room = Room::find($request->input('dropdown2'));
-            $room2 = Building::find($id_building);
+            $building = Building::find($id);
             $cari = $request->cari;
 
             $reservations = RoomReservation::with(['room', 'user', 'session'])
@@ -178,26 +161,10 @@ class CalendarController extends Controller
                 ->leftjoin('departments', 'departments.id', '=', 'department_id')
                 ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
                 ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
-                ->where('status', '!=', 'not approved')
-                ->where('status', '!=', 'cancelled')
-                ->where('status', '!=', 'wait')
-                ->where('room_id', $request->input('dropdown2'))
+                ->where('status', $request->input('dropdown3'))
+                ->where('buildings.id', $id)
                 ->get(['*', 'departments.name as dapartment_name', 'buildings.building_name as building_name', 'room_reservations.id as rr_id']);
-            $opened = RoomReservation::with(['room', 'user', 'session'])
-                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
-                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
-                ->where('reservation_date', Carbon::today()->format('Y-m-d'))
-                ->where('status', 'opened')
-                ->where('room_id', $request->input('dropdown2'))
-                ->get(['*', 'buildings.building_name as building_name']);
-
-            $off_day = RoomReservation::with(['room', 'user', 'session'])
-                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
-                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
-                ->where('reservation_date', Carbon::today()->format('Y-m-d'))
-                ->where('status', 'off-day')
-                ->where('room_id', $request->input('dropdown2'))
-                ->get(['*', 'buildings.building_name as building_name']);
+                // var_dump($reservations);
 
             foreach ($reservations as $reservation) {
                 $events[] = [
@@ -209,7 +176,7 @@ class CalendarController extends Controller
                 ];
             }
 
-            return view('content.calendar', compact('events', 'reservations', 'opened', 'off_day', 'room', 'cari', 'room2','urlRoute'));
+            return view('content.calendarGedung', compact('events', 'reservations', 'cari', 'building','urlRoute'));
         }
     }
     
