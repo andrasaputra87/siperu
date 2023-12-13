@@ -27,7 +27,7 @@ class ReservationController extends Controller
           ->leftjoin('buildings','buildings.id','building_id')
           ->where('buildings.id',$id);
       }
-      $reservations = $query->get();
+      $reservations = $query->get(['*','room_reservations.id as id_rr']);
       if($id!=NULL){
         $reservation_total = RoomReservation::leftjoin('rooms','rooms.id','room_id')
           ->leftjoin('buildings','buildings.id','building_id')
@@ -62,7 +62,7 @@ class ReservationController extends Controller
         })->leftjoin('rooms','rooms.id','room_id')
         ->leftjoin('buildings','buildings.id','building_id')
         ->where('buildings.id',$id)
-        ->orderBy('room_reservations.id', 'desc')->get();
+        ->orderBy('room_reservations.id', 'desc')->get(['*','room_reservations.id as id_rr']);
         $reservation_total = RoomReservation::where('conditional',0)->whereHas('room', function ($query) {
           $query->where('ownership', 'baak');
         })->leftjoin('rooms','rooms.id','room_id')
@@ -91,7 +91,7 @@ class ReservationController extends Controller
       }else{
         $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional',0)->whereHas('room', function ($query) {
           $query->where('ownership', 'baak');
-        })->orderBy('id', 'desc')->get();
+        })->orderBy('id', 'desc')->get(['*','room_reservations.id as id_rr']);
         $reservation_total = RoomReservation::where('conditional',0)->whereHas('room', function ($query) {
           $query->where('ownership', 'baak');
         })->count();
@@ -215,12 +215,24 @@ class ReservationController extends Controller
     // }
   }
 
-  public function open($id)
-  {
-    $reservation = RoomReservation::findOrFail($id);
-    $reservation->update(['status' => 'opened']);
-    return redirect('/reservation')->with('message', 'Reservasi berhasil dibuka!👍');
+  // public function open(Request $request)
+  // {
+  //   $reservation = RoomReservation::findOrFail($request->id);
+  //   $reservation->update(['status' => 'opened']);
+  //   return redirect('/reservation')->with('message', 'Reservasi berhasil dibuka!👍');
       
+  // }
+
+  public function open(Request $request)
+  {
+    $validatedData = $request->validate([
+      'dosen' => 'nullable'
+    ]);
+
+    $validatedData['status'] = 'opened';
+
+    RoomReservation::findOrFail($request->input('reservation_id'))->update($validatedData);
+    return redirect('/reservation')->with('message', 'Peminjaman berhasil di buka!👍');
   }
 
   public function offday($id)

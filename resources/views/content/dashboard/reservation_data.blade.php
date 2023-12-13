@@ -146,6 +146,19 @@
             showModal(reservation_id, room_id);
         });
 
+        // Fungsi untuk menampilkan modal dengan data dari tombol Add yang diklik
+        function showOpenModal(reservation_id) {
+            $("#reservation_open_id").val(reservation_id);
+            $("#openModal").modal("show");
+        }
+
+        // Event listener untuk tombol Add
+        $(document).on("click", "#open-btn", function() {
+            const reservation_open_id = $(this).data("reservation_open_id");
+            console.log(reservation_open_id);
+            showOpenModal(reservation_open_id);
+        });
+
         // Menangani pengiriman formulir
         var form = document.querySelector('#formModal');
         form.onsubmit = function(event) {
@@ -322,6 +335,7 @@
                                     {{-- <th>Jaminan</th> --}}
                                     <th>Status</th>
                                     <th>Permohonan Kondisional</th>
+                                    <th>Dosen Masuk</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -412,6 +426,7 @@
                                         </td>
                                         
                                         <td>{{ $reservation->conditional==0?'Bukan':'Ya' }}</td>
+                                        <td>{{ $reservation->dosen==NULL?'-':$reservation->dosen }}</td>
                                         <td>
                                             @if ($reservation->status == 'wait')
                                                 @if (auth()->user()->signature)
@@ -447,9 +462,13 @@
                                                 @endphp
                                                 @if($date->format('Y-m-d') == $reservation->reservation_date && $date->toTimeString()>$reservation->session->start && $date->toTimeString()<$reservation->end_time)
                                                 <div class="d-flex gap-2">
-                                                    <a href="/open/{{ $reservation->id_rr }}"
+                                                <button id="open-btn"
+                                                            data-reservation_open_id="{{ $reservation->id_rr }}"
+                                                            class="btn btn-sm btn-primary"><i class='bx bx-check'></i> Buka Kelas
+                                                            </button>
+                                                    <!-- <a href="/open/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-primary "><i
-                                                            class='bx bx-check'></i> Buka Kelas</a>
+                                                            class='bx bx-check'></i> Buka Kelas</a> -->
                                                     <a href="/offday/{{ $reservation->id }}"
                                                         class="btn btn-sm btn-warning "><i
                                                             class='bx bx-check'></i> Batal Masuk</a>
@@ -515,6 +534,27 @@
                         <!-- Input tersembunyi untuk menyimpan konten editor -->
                         <input type="hidden" name="note_admin" id="quill-content">
                         <small class="text-primary">*Kosongkan jika tidak ada catatan.</small>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal -->
+     <div class="modal" id="openModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nama Dosen</h5>
+                </div>
+                <div class="modal-body">
+                    <form action="/open" method="POST" id="formModal">
+                        @csrf
+                        <input type="hidden" name="reservation_id" id="reservation_open_id">
+                        <input type="text" class="form-control" name="dosen" placeholder="Masukkan Nama Dosen" required>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button>
