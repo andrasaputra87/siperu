@@ -211,6 +211,7 @@
                       <span class="badge bg-danger">Admin : {{ ucwords($building->user->fullname) }}</span>
                       <p class="card-text">{{ count($building->room) }} Ruangan</p>
                       <a class="btn btn-primary" href="get_room/{{ $building->id }}">Lihat Ruangan</a>
+                      <a class="btn btn-warning" href="/get_jadwal_building/{{ $building->id }}">Lihat Jadwal</a>
                     </div>
                   </div>
                 </div>

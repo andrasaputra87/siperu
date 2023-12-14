@@ -120,6 +120,65 @@ class CalendarController extends Controller
         return view('content.calendar', compact('events', 'reservations', 'opened', 'off_day', 'room', 'cari', 'room2','urlRoute'));
     }
     }
+
+    public function get_jadwal_building(Request $request, $id)
+    {
+        if($request->input('dropdown3') == NULL){
+            $urlRoute = route('get_jadwal_building', ['id' => $id]);
+            $events = [];
+            $building = Building::find($id);
+            $cari = $request->cari;
+
+            $reservations = RoomReservation::with(['room', 'user', 'session'])
+                ->leftjoin('users', 'users.id', '=', 'user_id')
+                ->leftjoin('departments', 'departments.id', '=', 'department_id')
+                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
+                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
+                ->where('status', '!=', 'not approved')
+                ->where('status', '!=', 'cancelled')
+                ->where('status', '!=', 'wait')
+                ->where('buildings.id', $id)
+                ->get(['*', 'departments.name as dapartment_name', 'buildings.building_name as building_name', 'room_reservations.id as rr_id']);
+
+            foreach ($reservations as $reservation) {
+                $events[] = [
+                    'id' =>  $reservation->rr_id,
+                    'title' => ucwords($reservation->user->fullname),
+                    'start' => $reservation->reservation_date . ' ' . $reservation->session->start,
+                    'end' => $reservation->reservation_date . ' ' . $reservation->end_time,
+                    'backgroundColor'  => $reservation->status == 'approved' ? '#1ce852' : ($reservation->status == 'pending' ? '#c70e0e' : ($reservation->status == 'opened' ? '#11baed' : ($reservation->status == 'off-day' ? 'yellow' : ($reservation->status == 'reschedule' ? '#ed11b2' : ($reservation->status == 'returned' ? '##0d9482' : 'black'))))),
+                ];
+            }
+            return view('content.calendarGedung', compact('events', 'reservations',  'cari', 'building','urlRoute'));
+        }else{
+            $urlRoute = route('get_jadwal_building', ['id' => $id]);
+            $events = [];
+            $building = Building::find($id);
+            $cari = $request->cari;
+
+            $reservations = RoomReservation::with(['room', 'user', 'session'])
+                ->leftjoin('users', 'users.id', '=', 'user_id')
+                ->leftjoin('departments', 'departments.id', '=', 'department_id')
+                ->leftjoin('rooms', 'rooms.id', '=', 'room_id')
+                ->leftjoin('buildings', 'buildings.id', '=', 'building_id')
+                ->where('status', $request->input('dropdown3'))
+                ->where('buildings.id', $id)
+                ->get(['*', 'departments.name as dapartment_name', 'buildings.building_name as building_name', 'room_reservations.id as rr_id']);
+                // var_dump($reservations);
+
+            foreach ($reservations as $reservation) {
+                $events[] = [
+                    'id' =>  $reservation->rr_id,
+                    'title' => ucwords($reservation->user->fullname),
+                    'start' => $reservation->reservation_date . ' ' . $reservation->session->start,
+                    'end' => $reservation->reservation_date . ' ' . $reservation->end_time,
+                    'backgroundColor'  => $reservation->status == 'approved' ? '#1ce852' : ($reservation->status == 'pending' ? '#c70e0e' : ($reservation->status == 'opened' ? '#11baed' : ($reservation->status == 'off-day' ? 'yellow' : ($reservation->status == 'reschedule' ? '#ed11b2' : ($reservation->status == 'returned' ? '##0d9482' : 'black'))))),
+                ];
+            }
+
+            return view('content.calendarGedung', compact('events', 'reservations', 'cari', 'building','urlRoute'));
+        }
+    }
     
 
     public function room(Request $request, $id, $floor = NULL)
