@@ -18,20 +18,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run()
   {
-    DB::table('departments')->insert(
-      [
-        'name' => 'Teknik Informatika',
-        'head_of_department' => 'Untung Suprihadi',
-      ]
-    );
-
-    DB::table('departments')->insert(
-      [
-        'name' => 'Teknik Sipil',
-        'head_of_department' => 'Siapa',
-      ]
-    );
-
+  
     // Menggunakan GuzzleHttp\Client untuk mengunduh gambar
     $client = new Client();
 
@@ -62,11 +49,7 @@ class DatabaseSeeder extends Seeder
         'slug' => 'ade-chandra-2',
         'email' => 'adechandra@it.upr.ac.id',
         'phone_number' => '12313213132',
-<<<<<<< HEAD
-        'department_id' => '1',
-=======
         'department_id' => '2',
->>>>>>> c317f37939c39835a93fb37115347e4164dd1793
         'password' => bcrypt('1234567890'),
         'role' => 'head_baak',
         'avatar' => 'avatars/' . $avatarFileName

@@ -11,6 +11,13 @@
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","pengelola_gedung"]
     },
     {
+      "name": "Data Fakultas",
+      "icon": "menu-icon tf-icons bx bx-building",
+      "slug": ["faculties.index", "faculties.edit"],
+      "url": "/faculties",
+      "roles": ["admin","fakultas"]
+    },
+    {
       "name": "Data Jurusan",
       "icon": "menu-icon tf-icons bx bx-building",
       "slug": ["departments.index", "departments.edit"],
