@@ -1,8 +1,8 @@
 <?php
 // Variables
 return [
-  "creatorName" => "ACS",
-  "Redesign" => "ACS",
+  "creatorName" => "BAAK UPR",
+  "Redesign" => "BAAK UPR",
   "creatorUrl" => "https://themeselection.com",
   "templateName" => "SIPERU",
   "templateDescription" => "Sistem peminjaman ruangan UPR",

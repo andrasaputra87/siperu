@@ -97,13 +97,13 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="cardOpt6">
-                                        <a class="dropdown-item" href="/room_reservation">Lihat Selengkapnya</a>
+                                        <a class="dropdown-item" href="/building_view">Lihat Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
-                            <span class="fw-semibold d-block mb-1">Ruangan Tersedia</span>
+                            <span class="fw-semibold d-block mb-1">Ruangan</span>
                             <h3 class="card-title text-nowrap mb-2">{{ $ruangan_tersedia }}</h3>
-                            <small>Ruangan tersedia saat ini</small>
+                            <small>Total Ruangan </small>
                         </div>
                     </div>
                 </div>

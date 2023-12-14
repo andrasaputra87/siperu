@@ -52,11 +52,11 @@ https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js
                     <div class="col-md-8">
                         <h3 class="text-primary">{{ $room->name }}</h3>
                         <div class="d-flex gap-2 mb-3">
-                            @if ($room->availability == 1)
+                            {{-- @if ($room->availability == 1)
                                 <span class="badge bg-label-success">Tersedia</span>
                             @else
                             <span class="badge bg-label-danger">Tidak Tersedia</span>
-                            @endif
+                            @endif --}}
                             <span class="badge bg-label-primary">{{ $room->location }}</span>
                             <span class="badge bg-label-primary">{{ $room->capacity }} Orang</span>
                         </div>

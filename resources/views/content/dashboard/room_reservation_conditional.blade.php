@@ -77,7 +77,7 @@
                             <h5 class="text-truncate">{{ $room->name }} <span
                                     class="badge rounded-pill bg-label-secondary text-sm">{{ $room->ownership }}</span></h5>
                             <div class="d-flex gap-2 mb-3">
-                                <span class="badge bg-label-success">Tersedia</span>
+                                {{-- <span class="badge bg-label-success">Tersedia</span> --}}
                                 <span class="badge bg-label-primary">{{ $room->location }}</span>
                                 <span class="badge bg-label-primary">{{ $room->capacity }} Orang</span>
                             </div>

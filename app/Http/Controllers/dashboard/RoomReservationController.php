@@ -151,7 +151,7 @@ class RoomReservationController extends Controller
       }
       return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     } else {
-      var_dump($data);
+      // var_dump($data);
       RoomReservation::create($data);
       
       return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');

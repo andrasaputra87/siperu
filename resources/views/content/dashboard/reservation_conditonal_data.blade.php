@@ -223,7 +223,7 @@
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
                                     <th>Keperluan</th>
-                                    {{-- <th>Jaminan</th> --}}
+                                   
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -236,13 +236,13 @@
                                             <div class="d-flex justify-content-start align-items-center user-name">
                                                 <div class="avatar-wrapper">
                                                     <div class="avatar avatar-sm me-3">
-                                                        <img src="{{ asset($reservation->user->avatar) }}"
+                                                        <img src="{{ asset($reservation->pemohon_avatar) }}"
                                                             alt="{{ $reservation->user->fullname }}" class="rounded-circle"
                                                             style="object-fit: cover">
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a href="/profile/{{ $reservation->user->slug }}"
+                                                    <a href="/profile/{{ $reservation->pemohon_slug }}"
                                                         class="text-body text-truncate">
                                                         <span
                                                             class="fw-semibold">{{ $reservation->pemohon_name }}</span></a>
@@ -283,7 +283,7 @@
                                                 {{ $reservation->necessary }}
                                             @endif
                                         </td>
-                                        {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
+                                      
                                         <td>
                                             @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status_conditional == 'approved')
