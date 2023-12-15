@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\RoomImages;
 use App\Models\RoomReservation;
 use App\Models\Building;
+use App\Models\Faculty;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -27,5 +28,10 @@ class Room extends Model
     public function building()
     {
         return $this->belongsTo(Building::class, 'building_id','id' );
+    }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id','id' );
     }
 }

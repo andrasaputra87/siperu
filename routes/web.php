@@ -76,8 +76,8 @@ Route::get('/export', [ReportController::class, 'export'])->middleware(['auth', 
 Route::get('/export_view', [RoomReservationController::class, 'export_view'])->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);;
 
 // aksi peminjama
-Route::get('/approve/{id}', [ReservationController::class, 'approve'])->name('approve')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
-Route::post('/not_approve', [ReservationController::class, 'not_approve'])->name('not_approve')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/approve/{id}', [ReservationController::class, 'approve'])->name('approve')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,admin_fakultas']);
+Route::post('/not_approve', [ReservationController::class, 'not_approve'])->name('not_approve')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,admin_fakultas']);
 Route::get('/returned/{id}', [ReservationController::class, 'returned'])->name('returned')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::get('/return/{id}/{room_id}', [ReservationController::class, 'return'])->name('return')->middleware('auth');
 Route::get('/cancel/{id}/{room_id}', [ReservationController::class, 'cancel'])->name('cancel')->middleware('auth');
@@ -91,7 +91,7 @@ Route::resource('building_view_con', BuildingViewConditionalController::class)->
 // Route::resource('building_view', BuildingViewController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
 Route::resource('room_reservation', RoomReservationController::class)->middleware('auth');
 Route::get('/all-ruangan/{id}/{floor?}',[RoomReservationController::class,'allruangan'])->middleware('auth')->name('all-ruangan');
-Route::get('/reservation/{id?}', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
+Route::get('/reservation/{id?}', [ReservationController::class, 'index'])->name('reservation')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung,admin_fakultas']);
 Route::get('/my_reservation', [ReservationController::class, 'my_reservation'])->name('my_reservation')->middleware('auth');
 Route::get('/history', [ReservationController::class, 'history'])->name('history')->middleware('auth');
 Route::get('/reschedule/{id}', [ReservationController::class, 'show'])->middleware('auth')->name('reschedule');
@@ -118,9 +118,9 @@ Route::post('/get_conditional', [RoomReservationConditionalController::class, 'g
 Route::get('/all-ruangan-con/{id}/{floor?}',[RoomReservationConditionalController::class,'allruangan'])->middleware('auth')->name('all-ruangan-con');
 
 // peminjaman kondisoinal
-Route::get('/reservation_conditional/{id?}', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung']);
-Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
-Route::post('/not_approve_conditional', [ReservationConditionalController::class, 'not_approve_conditional'])->name('not_approve_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);
+Route::get('/reservation_conditional/{id?}', [ReservationConditionalController::class, 'index'])->name('reservation_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,pengelola_gedung,admin_fakultas']);
+Route::get('/approve_conditional/{id}', [ReservationConditionalController::class, 'approve_conditional'])->name('approve_conditonal')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,admin_fakultas']);
+Route::post('/not_approve_conditional', [ReservationConditionalController::class, 'not_approve_conditional'])->name('not_approve_conditional')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak,admin_fakultas']);
 
 // open calendar
 Route::resource('jadwal', CalendarController::class);

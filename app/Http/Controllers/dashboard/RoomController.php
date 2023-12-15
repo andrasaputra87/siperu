@@ -4,6 +4,7 @@ namespace App\Http\Controllers\dashboard;
 
 use App\Models\Building;
 use App\Models\Room;
+use App\Models\Faculty;
 use App\Models\RoomImages;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +23,8 @@ class RoomController extends Controller
 
         return view('content.dashboard.rooms', [
             'building' => Building::orderBy('id', 'desc')->get(),
-            'rooms' => Room::with('building')->orderBy('id', 'desc')->get(),
-
+            'rooms' => Room::with(['building','faculty'])->orderBy('id', 'desc')->get(),
+            'faculties' => Faculty::orderBy('id', 'desc')->get(),
             'room_edit' => '',
             'room_available' => Room::where('availability', '1')->count(),
             'room_not_available' => Room::where('availability', '0')->count(),
@@ -51,6 +52,12 @@ class RoomController extends Controller
             $data['location'] = "";
         } else {
             $data['location'] = $request->input('location');
+        }
+
+        if ($request->input('faculty_id') == NULL) {
+            $data['faculty_id'] = "";
+        } else {
+            $data['faculty_id'] = $request->input('faculty_id');
         }
 
         $data['building_id'] = $request->input('building');
@@ -95,6 +102,7 @@ class RoomController extends Controller
             return view('content.dashboard.rooms', [
                 'room_edit' => $room,
                 'building' => Building::orderBy('id', 'desc')->get(),
+                'faculties' => Faculty::orderBy('id', 'desc')->get(),
                 'rooms' => Room::with('building')->orderBy('id', 'desc')->get(),
                 'room_available' => Room::where('availability', '1')->count(),
                 'room_not_available' => Room::where('availability', '0')->count(),
@@ -123,6 +131,11 @@ class RoomController extends Controller
             $data['location'] = "";
         } else {
             $data['location'] = $request->input('location');
+        }
+        if ($request->input('faculty_id') == NULL) {
+            $data['faculty_id'] = "";
+        } else {
+            $data['faculty_id'] = $request->input('faculty_id');
         }
         $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
