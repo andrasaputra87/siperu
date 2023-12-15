@@ -68,6 +68,7 @@ Route::resource('users', UserController::class)->middleware(['auth', 'role:admin
 Route::resource('building', BuildingController::class)->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak'])->except('show');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy')->middleware(['auth', 'role:admin']);
 Route::get('/profile/{slug}', [UserController::class, 'profile'])->name('profile')->middleware('auth');
+Route::post('/get_jurusan', [UserController::class, 'get'])->middleware('auth')->name('get');
 
 // report
 Route::get('/report', [ReportController::class, 'index'])->name('report')->middleware(['auth', 'role:admin,head_baak,head_bm,staff_bm,staff_baak']);;

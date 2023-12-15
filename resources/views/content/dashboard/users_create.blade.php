@@ -21,6 +21,41 @@
         toast.toast('hide');
         }, 2500);
     });
+
+    function myFunction() {
+            let faculty_id = document.getElementById("faculty_id").value;
+            // alert(date);
+            $.ajax({
+                type:'POST',
+                url:'/get_jurusan',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                data:{faculty_id:faculty_id},
+                success:function(html){
+                    console.log(html.data)
+                    if (html.success) {
+                        $("#department_id").empty();
+                        $("#department_id").append('<option>Pilih Jurusan</option>');
+                        $.each(html.data, function (key, value) {
+
+                            $("#department_id").append('<option value="' + value[
+                                    "id"] + '">' + value["name"] +' </option>');
+                        });
+                    }else{
+                        alert(html.data);
+                    }
+                }
+            })
+        }
+
+        function tutupJurusan() {
+            let role = document.getElementById("role").value;
+            if(role=='admin_fakultas'){
+                $("#div_jurusan").css('display','none');
+                $("#department_id").val("");
+            }else{
+                $("#div_jurusan").css('display','block');
+            }
+        }
 </script>
 @endsection
 
@@ -79,17 +114,8 @@
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6 custom-col">
-                                <label class="form-label" for="department_id">Jurusan</label>
-                                <select name="department_id" id="department_id" class="form-select">
-                                    <option value="" disabled selected>-- Pilih Jurusan --</option>
-                                    @foreach ($departments as $department)
-                                        <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-12 col-lg-6 custom-col">
                                 <label class="form-label" for="role">Role <span class="text-danger fw-bold">*</span></label>
-                                <select name="role" id="role" class="form-select @error('role') border-danger @enderror">
+                                <select name="role" id="role" class="form-select @error('role') border-danger @enderror" onchange="tutupJurusan()">
                                     <option value="" disabled selected>-- Pilih Role --</option>
                                     <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Pengguna</option>
                                     {{-- <option value="lecturer" {{ old('role') == 'lecturer' ? 'selected' : '' }}>Dosen</option> --}}
@@ -99,11 +125,32 @@
                                     {{-- <option value="head_bm" {{ old('role') == 'head_bm' ? 'selected' : '' }}>Kepala BM</option>
                                     <option value="staff_bm" {{ old('role') == 'staff_bm' ? 'selected' : '' }}>Staff BM</option> --}}
                                     <option value="pengelola_gedung" {{ old('role') == 'pengelola_gedung' ? 'selected' : '' }}>Pengelola Gedung</option>
+                                    <option value="admin_fakultas" {{ old('role') == 'admin_fakultas' ? 'selected' : '' }}>Admin Fakultas</option>
                                 </select>
                                 @error('role')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
+                            
+                            <div class="col-12 col-lg-6 custom-col" >
+                                <label class="form-label" for="faculty_id">Fakultas</label>
+                                <select name="faculty_id" id="faculty_id" class="form-select" onchange="myFunction()">
+                                    <option value="" disabled selected>-- Pilih Fakultas --</option>
+                                    @foreach ($faculties as $faculty)
+                                        <option value="{{ $faculty->id }}" {{ old('faculty_id') == $faculty->id ? 'selected' : '' }}>{{ $faculty->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 custom-col" id="div_jurusan" >
+                                <label class="form-label" for="department_id">Jurusan</label>
+                                <select name="department_id" id="department_id" class="form-select">
+                                    <option value="" disabled selected>-- Pilih Jurusan --</option>
+                                    @foreach ($departments as $department)
+                                        <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>{{ $department->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            
                             <div class="col-12 col-lg-6 custom-col">
                                 <label class="form-label" for="password">Kata Sandi <span class="text-danger fw-bold">*</span></label>
                                 <input type="password" id="password" name="password" class="form-control @error('password') border-danger @enderror" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"/>
