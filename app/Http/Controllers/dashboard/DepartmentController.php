@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\Department;
+use App\Models\Faculty;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,8 @@ class DepartmentController extends Controller
     public function index()
     {
         return view('content.dashboard.departments', [
-            'departments' => Department::orderBy('id', 'desc')->get(),
+            'departments' => Department::with(['faculty'])->orderBy('id', 'desc')->get(),
+            'fakulty' => Faculty::get(),
             'department_edit' => '',
         ]);
     }
@@ -42,6 +44,7 @@ class DepartmentController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'head_of_department' => 'required',
+            'faculty_id' => 'required',
         ]);
 
         Department::create($data);
@@ -72,6 +75,7 @@ class DepartmentController extends Controller
         if ($department) {
             return view('content.dashboard.departments', [
                 'department_edit' => $department,
+                'fakulty' => Faculty::get(),
                 'departments' => Department::orderBy('id', 'desc')->get(),
             ]);
         }
@@ -89,6 +93,7 @@ class DepartmentController extends Controller
         $data = $request->validate([
             'name' =>'required',
             'head_of_department' =>'required',
+            'faculty_id' => 'required',
         ]);
 
         $department->update($data);

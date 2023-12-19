@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Models\User;
 use GuzzleHttp\Client;
 use App\Models\Department;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -23,9 +24,22 @@ class UserController extends Controller
     public function create()
     {
         return view('content.dashboard.users_create', [
-            'departments' => Department::all()
+            'departments' => Department::all(),
+            'faculties' => Faculty::all()
         ]);
     }
+
+    public function get(Request $request)
+  {
+    echo $request->faculty_i;
+      $data = Department::where('faculty_id', $request->faculty_id)->get();
+
+      return response()->json([
+        'success' => true,
+        'data'    => $data
+      ]);
+    
+  }
 
     public function store(Request $request)
     {
@@ -52,7 +66,10 @@ class UserController extends Controller
         // Simpan nama file avatar ke dalam data pengguna
         $data["avatar"] = 'avatars/' . $avatarFileName;
         $data["nim"] = $request->input('nim');
-        $data["department_id"] = $request->input('department_id');
+        if($request->input('department_id')!="Pilih Jurusan"){
+            $data["department_id"] = $request->input('department_id');
+        }
+        $data["faculty_id"] = $request->input('faculty_id');
 
         $data['password'] = bcrypt($data['password']); // Mengenkripsi password sebelum menyimpann
 
@@ -77,6 +94,7 @@ class UserController extends Controller
             'nim' =>'nullable',
             'phone_number' =>'nullable',
             'deparment_id' =>'nullable',
+            'faculty_id' =>'nullable',
             'role' =>'required',
             'avatar' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048|nullable',
             'password' => 'nullable|confirmed'

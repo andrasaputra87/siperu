@@ -8,7 +8,14 @@
     },
     {
       "menuHeader": "Data Master",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","pengelola_gedung"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","pengelola_gedung","admin_fakultas"]
+    },
+    {
+      "name": "Data Fakultas",
+      "icon": "menu-icon tf-icons bx bx-building",
+      "slug": ["faculties.index", "faculties.edit"],
+      "url": "/faculties",
+      "roles": ["admin"]
     },
     {
       "name": "Data Jurusan",
@@ -58,14 +65,14 @@
       "icon": "menu-icon tf-icons bx bx-calendar",
       "slug": ["reservation"],
       "url": "/reservation",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak", "pengelola_gedung"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak", "pengelola_gedung","admin_fakultas"]
     },
     {
       "name": "Data Peminjaman Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-event",
       "slug": ["reservation_conditional"],
       "url": "/reservation_conditional",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak", "pengelola_gedung"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak", "pengelola_gedung","admin_fakultas"]
     },
     {
       "name": "Laporan",

@@ -33,6 +33,12 @@ class Dashboard extends Controller
         'total_department' => Department::count(),
         'total_reservation' => RoomReservation::where('status', 'approved')->count(),
       ]);
+    } elseif(auth()->user()->role=='admin_fakultas'){
+      return view('content.dashboard.dashboard_user', [
+        'ruangan_tersedia' => Room::where('availability', '1')->where('faculty_id',auth()->user()->faculty_id)->count(),
+        // 'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->get(),
+        'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->with('session')->get(),
+      ]);
     } else {
       //   $hasil = DB::table('room_reservations')
       // ->select('room_reservations.*', 'sessions.start')

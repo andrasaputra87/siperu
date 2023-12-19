@@ -248,6 +248,25 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
+                                    <label for="building" class="form-label">Fakultas <span
+                                            class="text-danger fw-bold">*</span></label>
+                                    <select name="faculty_id" id="faculty_id"
+                                        class="form-select @error('faculty_id') border-danger @enderror">
+                                        <option value="" selected disabled>-- Pilih Fakultas --</option>
+
+                                        @foreach ($faculties as $faculty)
+                                            <option value="{{ $faculty->id }}"
+                                                {{ $faculty->id == $room_edit->faculty_id ? 'selected' : '' }}>
+                                                {{ $faculty->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('faculty_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
                                     <label for="name" class="form-label">Nama Ruangan <span
                                             class="text-danger fw-bold">*</span></label>
                                     <input type="text" name="name" id="name"
@@ -389,6 +408,24 @@
                                     @enderror
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="building" class="form-label">Fakultas <span
+                                            class="text-danger fw-bold">*</span></label>
+                                    <select name="faculty_id" id="faculty_id"
+                                        class="form-select @error('faculty_id') border-danger @enderror">
+                                        <option value="" selected disabled>-- Pilih Fakultas --</option>
+
+                                        @foreach ($faculties as $faculty)
+                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('faculty_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="name" class="form-label">Nama Ruangan <span
@@ -512,6 +549,7 @@
                                     <th>Kapasitas</th>
                                     <th>Gedung</th>
                                     <th>Lokasi</th>
+                                    <th>Fakultas</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -534,6 +572,7 @@
                                                 {{ $room->location }}
                                             @endif
                                         </td>
+                                        <td>{{ $room->faculty->name }}</td>
                                         <td>
                                             @if ($room->availability == '1')
                                                 <span class="badge bg-success">Tersedia</span>

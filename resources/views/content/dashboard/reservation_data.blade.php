@@ -303,22 +303,25 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pilih Gedung
-                          </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach ($buildings as $building)
-                                <li><a class="dropdown-item" href="/reservation/{{ $building->id }}">{{ $building->building_name }}</a></li>
-                            @endforeach
-                            
-                        </ul>
-                        @if ($id!=NULL)
-                        <div class="alert alert-primary" role="alert">
-                            {{ $buildingx->building_name }}
-                          </div>
-                        @endif
-                    </div>
+                    @if (Auth::user()->role=='admin' || Auth::user()->role=='head_baak' || Auth::user()->role=='staff_baak')
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Pilih Gedung
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @foreach ($buildings as $building)
+                                    <li><a class="dropdown-item" href="/reservation/{{ $building->id }}">{{ $building->building_name }}</a></li>
+                                @endforeach
+                                
+                            </ul>
+                            @if ($id!=NULL)
+                            <div class="alert alert-primary" role="alert">
+                                {{ $buildingx->building_name }}
+                            </div>
+                            @endif
+                        </div>
+                    @endif
+
                     {{-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bx bx-plus"></i> Tambah Ruangan</button> --}}
                     {{-- <hr> --}}
                     <div class="card-datatable table-responsive">

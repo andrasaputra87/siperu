@@ -104,11 +104,11 @@
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
             <div class="content-left">
-              <span>Jurusan</span>
+              <span>Fakultas</span>
               <div class="d-flex align-items-end mt-2">
-                <h4 class="mb-0 me-2">{{ count($departments) }}</h4>
+                <h4 class="mb-0 me-2">{{ count($faculties) }}</h4>
               </div>
-              <small>Total jurusan keseluruhan</small>
+              <small>Total fakultas keseluruhan</small>
             </div>
             <span class="badge bg-label-primary rounded p-2">
               <i class="bx bx-building bx-sm"></i>
@@ -123,27 +123,14 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                @if ($department_edit)
-                    <form action="{{ route('departments.update', $department_edit) }}" method="POST">
+                @if ($faculty_edit)
+                    <form action="{{ route('faculties.update', $faculty_edit) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="row">
                             <div class="col mb-3">
-                                <label class="form-label" for="faculty_id">Fakultas</label>
-                                <select name="faculty_id" id="faculty_id" class="form-select">
-                                    <option value="" disabled selected>-- Pilih Fakultas --</option>
-                                    @foreach ($fakulty as $fak)
-                                        <option value="{{ $fak->id }}"
-                                            {{ $department_edit->faculty_id == $fak->id ? 'selected' : '' }}>
-                                            {{ $fak->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $department_edit->name }}">
+                                <label for="name" class="form-label">Nama Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $faculty_edit->name }}">
                                 @error('name')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -151,9 +138,9 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="head_of_department" class="form-label">Ketua Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="head_of_department" id="head_of_department" class="form-control @error('head_of_department') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $department_edit->head_of_department }}">
-                                @error('head_of_department')
+                                <label for="dekan" class="form-label">Ketua Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="dekan" id="dekan" class="form-control @error('dekan') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $faculty_edit->dekan }}">
+                                @error('dekan')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -162,24 +149,12 @@
                         <button type="reset" class="btn btn-danger btn-sm">Reset</button>
                     </form>
                 @else
-                    <form action="{{ route('departments.store') }}" method="POST">
+                    <form action="{{ route('faculties.store') }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col mb-3">
-                                <label class="form-label" for="faculty_id">Fakultas</label>
-                                <select name="faculty_id" id="faculty_id" class="form-select">
-                                    <option value="" disabled selected>-- Pilih Fakultas --</option>
-                                    @foreach ($fakulty as $fak)
-                                        <option value="{{ $fak->id }}">
-                                            {{ $fak->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama jurusan" value="{{ old('name') }}">
+                                <label for="name" class="form-label">Nama Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama fakultas" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -187,9 +162,9 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="head_of_department" class="form-label">Ketua Jurusan <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="head_of_department" id="head_of_department" class="form-control @error('head_of_department') border-danger @enderror" placeholder="Masukkan ketua jurusan" value="{{ old('head_of_deparment') }}">
-                                @error('head_of_department')
+                                <label for="dekan" class="form-label">Ketua Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="dekan" id="dekan" class="form-control @error('dekan') border-danger @enderror" placeholder="Masukkan dekan" value="{{ old('head_of_deparment') }}">
+                                @error('dekan')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -212,22 +187,20 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Ketua Jurusan</th>
-                                <th>Fakultas</th>
+                                <th>Dekan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($departments as $department)
+                            @foreach ($faculties as $faculty)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $department->name }}</td>
-                                    <td>{{ $department->head_of_department }}</td>
-                                    <td>{{ $department->faculty->name }}</td>
+                                    <td>{{ $faculty->name }}</td>
+                                    <td>{{ $faculty->dekan }}</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a href="{{ route('departments.edit', $department) }}" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
-                                            <form action="{{ route('departments.destroy', $department) }}" id="delete-form-{{ $department->id }}" method="POST">
+                                            <a href="{{ route('faculties.edit', $faculty) }}" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
+                                            <form action="{{ route('faculties.destroy', $faculty) }}" id="delete-form-{{ $faculty->id }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-icon tombol-hapus"><i class="bx bx-trash"></i></button>
