@@ -209,7 +209,7 @@
             <div class="col-3 col-menu">
                 <div class="menu-wrap">
                     <div class="menu">
-                        <h6 class="filter-title">Pilih Ruangan</h6>
+                        <h6 class="filter-title">Pilih Status Ruangan</h6>
                         <form action="{{ $urlRoute }}" method="GET">
                             @csrf
                             <div class="input-group mb-3">
