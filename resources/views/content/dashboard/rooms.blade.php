@@ -248,25 +248,6 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="building" class="form-label">Fakultas <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <select name="faculty_id" id="faculty_id"
-                                        class="form-select @error('faculty_id') border-danger @enderror">
-                                        <option value="" selected disabled>-- Pilih Fakultas --</option>
-
-                                        @foreach ($faculties as $faculty)
-                                            <option value="{{ $faculty->id }}"
-                                                {{ $faculty->id == $room_edit->faculty_id ? 'selected' : '' }}>
-                                                {{ $faculty->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('faculty_id')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
                                     <label for="name" class="form-label">Nama Ruangan <span
                                             class="text-danger fw-bold">*</span></label>
                                     <input type="text" name="name" id="name"
@@ -327,7 +308,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Kepemilikan <span
                                             class="text-danger fw-bold">*</span></label>
@@ -347,27 +328,12 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-xxl-6 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioBM">
-                                                    <span class="custom-option-body">
-                                                        <i class='bx bx-building'></i>
-                                                        <span class="custom-option-title"> BM </span>
-                                                        <small> Building Management </small>
-                                                    </span>
-                                                    <input name="ownership" class="form-check-input" type="radio"
-                                                        value="bm" id="radioBM"
-                                                        {{ $room_edit->ownership == 'bm' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                     @error('ownership')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <img src="{{ asset($room_edit->thumbnail) }}" alt="{{ $room_edit->name }}"
                                 class=" rounded mb-3 shadow-sm"
@@ -404,24 +370,6 @@
                                         @endforeach
                                     </select>
                                     @error('building')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="building" class="form-label">Fakultas <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <select name="faculty_id" id="faculty_id"
-                                        class="form-select @error('faculty_id') border-danger @enderror">
-                                        <option value="" selected disabled>-- Pilih Fakultas --</option>
-
-                                        @foreach ($faculties as $faculty)
-                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('faculty_id')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -473,47 +421,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">Kepemilikan <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <div class="row">
-                                        <div class="col-xxl-6 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioBAAK">
-                                                    <span class="custom-option-body">
-                                                        <i class="bx bx-user-voice"></i>
-                                                        <span class="custom-option-title">BAAK</span>
-                                                        <small> Biro Administrasi Akademik </small>
-                                                    </span>
-                                                    <input name="ownership" class="form-check-input" type="radio"
-                                                        value="baak" id="radioBAAK"
-                                                        {{ old('ownership') == 'baak' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-xxl-6 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioBM">
-                                                    <span class="custom-option-body">
-                                                        <i class='bx bx-building'></i>
-                                                        <span class="custom-option-title"> BM </span>
-                                                        <small> Building Management </small>
-                                                    </span>
-                                                    <input name="ownership" class="form-check-input" type="radio"
-                                                        value="bm" id="radioBM"
-                                                        {{ old('ownership') == 'bm' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div> --}}
-                                    </div>
-                                    @error('ownership')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="row mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail <span
                                         class="text-danger fw-bold">*</span></label>
@@ -549,7 +456,6 @@
                                     <th>Kapasitas</th>
                                     <th>Gedung</th>
                                     <th>Lokasi</th>
-                                    <th>Fakultas</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -560,8 +466,9 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td><img src="{{ asset($room->thumbnail) }}" alt="{{ $room->name }}"
                                                 style="width: 70px; height: 70px; object-fit:cover"></td>
-                                        <td><b>{{ $room->name }}</b><small
-                                                class="text-muted d-block">({{ strtoupper($room->ownership) }})</small>
+                                        <td><b>{{ $room->name }}</b>
+                                            {{-- <small
+                                                class="text-muted d-block">({{ strtoupper($room->ownership) }})</small> --}}
                                         </td>
                                         <td>{{ $room->capacity }} Orang</td>
                                         <td>{{ $room->building->building_name }}</td>
@@ -572,7 +479,6 @@
                                                 {{ $room->location }}
                                             @endif
                                         </td>
-                                        <td>{{ $room->faculty->name }}</td>
                                         <td>
                                             @if ($room->availability == '1')
                                                 <span class="badge bg-success">Tersedia</span>

@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         return view('content.dashboard.users', [
-            'users' => User::with('department')->orderBy('id', 'desc')->get(),
+            'users' => User::with('department','faculty')->orderBy('id', 'desc')->get(),
             'users_verified' => User::whereNotNull('email_verified_at')->count(),
         ]);
     }

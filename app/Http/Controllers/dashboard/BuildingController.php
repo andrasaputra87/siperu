@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Models\Building;
+use App\Models\Faculty;
+use App\Models\Room;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,8 +16,8 @@ class BuildingController extends Controller
         return view('content.dashboard.buildings', [
             'building' => Building::orderBy('id', 'desc')->get(),
             'pengelola' => User::where('role', 'pengelola_gedung')->get(),
-            
             'building_edit' => '',
+            'faculties' => Faculty::orderBy('id', 'desc')->get(),
         ]);
     }
 
@@ -23,7 +25,7 @@ class BuildingController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            // 'checkfloor' =>'required',
+            'faculty_id' =>'required',
             // 'floor' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
             
@@ -69,9 +71,10 @@ class BuildingController extends Controller
         if ($building) {
             return view('content.dashboard.buildings', [
                 'building_edit' => $building,
-                'building' => Building::orderBy('id', 'desc')->get(),
+                'building' => Building::with(['faculty','user'])->orderBy('id', 'desc')->get(),
                 'pengelola' => User::where('role', 'pengelola_gedung')->get(),
-                
+                'faculties' => Faculty::orderBy('id', 'desc')->get(),
+                'building_edit' => $building,
             ]);
         }
     }

@@ -23,8 +23,8 @@ class RoomController extends Controller
 
         return view('content.dashboard.rooms', [
             'building' => Building::orderBy('id', 'desc')->get(),
-            'rooms' => Room::with(['building','faculty'])->orderBy('id', 'desc')->get(),
-            'faculties' => Faculty::orderBy('id', 'desc')->get(),
+            'rooms' => Room::with(['building'])
+            ->orderBy('id', 'desc')->get(),
             'room_edit' => '',
             'room_available' => Room::where('availability', '1')->count(),
             'room_not_available' => Room::where('availability', '0')->count(),
@@ -45,19 +45,12 @@ class RoomController extends Controller
             'capacity' => 'required',
             // 'location' => 'required',
             'description' => 'required',
-            'ownership' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
         if ($request->input('location') == NULL) {
             $data['location'] = "";
         } else {
             $data['location'] = $request->input('location');
-        }
-
-        if ($request->input('faculty_id') == NULL) {
-            $data['faculty_id'] = "";
-        } else {
-            $data['faculty_id'] = $request->input('faculty_id');
         }
 
         $data['building_id'] = $request->input('building');
@@ -102,7 +95,6 @@ class RoomController extends Controller
             return view('content.dashboard.rooms', [
                 'room_edit' => $room,
                 'building' => Building::orderBy('id', 'desc')->get(),
-                'faculties' => Faculty::orderBy('id', 'desc')->get(),
                 'rooms' => Room::with('building')->orderBy('id', 'desc')->get(),
                 'room_available' => Room::where('availability', '1')->count(),
                 'room_not_available' => Room::where('availability', '0')->count(),
@@ -124,7 +116,6 @@ class RoomController extends Controller
             'capacity' => 'required',
             // 'location' => 'required',
             'description' => 'required',
-            'ownership' => 'required',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
         ]);
         if ($request->input('location') == NULL) {
@@ -132,11 +123,7 @@ class RoomController extends Controller
         } else {
             $data['location'] = $request->input('location');
         }
-        if ($request->input('faculty_id') == NULL) {
-            $data['faculty_id'] = "";
-        } else {
-            $data['faculty_id'] = $request->input('faculty_id');
-        }
+
         $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar lama jika ada

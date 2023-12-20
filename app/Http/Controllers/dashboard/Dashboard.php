@@ -35,7 +35,9 @@ class Dashboard extends Controller
       ]);
     } elseif(auth()->user()->role=='admin_fakultas'){
       return view('content.dashboard.dashboard_user', [
-        'ruangan_tersedia' => Room::where('availability', '1')->where('faculty_id',auth()->user()->faculty_id)->count(),
+        'ruangan_tersedia' => Room::where('availability', '1')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->count(),
         // 'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->get(),
         'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->with('session')->get(),
       ]);

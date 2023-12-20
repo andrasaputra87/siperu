@@ -21,5 +21,9 @@ class Building extends Model
     {
         return $this->hasMany(Room::class,'building_id','id');
     }
-    
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculty_id','id' );
+    }
 }

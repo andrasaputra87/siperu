@@ -57,6 +57,11 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function faculty()
+    {
+        return $this->belongsTo(faculty::class);
+    }
     
     public function room_reservations()
     {

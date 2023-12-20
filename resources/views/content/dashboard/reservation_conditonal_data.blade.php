@@ -193,22 +193,24 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Pilih Gedung
-                          </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach ($buildings as $building)
-                                <li><a class="dropdown-item" href="/reservation_conditional/{{ $building->id }}">{{ $building->building_name }}</a></li>
-                            @endforeach
-                            
-                        </ul>
-                        @if ($id!=NULL)
-                        <div class="alert alert-primary" role="alert">
-                            {{ $buildingx->building_name }}
-                          </div>
-                        @endif
-                    </div>
+                    @if (Auth::user()->role=='admin' || Auth::user()->role=='head_baak' || Auth::user()->role=='staff_baak')
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Pilih Gedung
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                @foreach ($buildings as $building)
+                                    <li><a class="dropdown-item" href="/reservation_conditional/{{ $building->id }}">{{ $building->building_name }}</a></li>
+                                @endforeach
+                                
+                            </ul>
+                            @if ($id!=NULL)
+                            <div class="alert alert-primary" role="alert">
+                                {{ $buildingx->building_name }}
+                            </div>
+                            @endif
+                        </div>
+                    @endif
                     {{-- <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate"><i class="bx bx-plus"></i> Tambah Ruangan</button> --}}
                     {{-- <hr> --}}
                     <div class="card-datatable table-responsive">
@@ -271,7 +273,7 @@
                                         <td>
                                             {{ $reservation->room->name }}
                                             <small
-                                                class="text-muted d-block">({{ strtoupper($reservation->room->ownership) }})</small>
+                                                class="text-muted d-block">({{ strtoupper($reservation->faculty_name) }})</small>
                                         </td>
                                         <td>{{ $reservation->reservation_date }}</td>
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
@@ -285,7 +287,6 @@
                                         </td>
                                       
                                         <td>
-                                            @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status_conditional == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
                                                 @elseif ($reservation->status_conditional == 'not approved')
@@ -301,23 +302,6 @@
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
-                                            @else
-                                                @if ($reservation->status_conditional == 'approved')
-                                                    <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status_conditional == 'not approved')
-                                                    <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status_conditional == 'cancelled')
-                                                    <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status_conditional == 'wait')
-                                                    <span class="badge bg-success">Menunggu Dikembalikan</span>
-                                                @elseif ($reservation->status_conditional == 'returned')
-                                                    <span class="badge bg-success">Dikembalikan</span>
-                                                @elseif ($reservation->status_conditional == 'reschedule')
-                                                    <span class="badge bg-warning">Jadwal Ulang</span>
-                                                @else
-                                                    <span class="badge bg-warning">Pending</span>
-                                                @endif
-                                            @endif
                                         </td>
                                         
                                         <td>

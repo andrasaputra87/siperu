@@ -301,7 +301,6 @@
                                         <td>{{ $reservation->necessary }}</td>
                                         {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
-                                            @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
                                                 @elseif ($reservation->status == 'not approved')
@@ -321,32 +320,11 @@
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
-                                            @else
-                                                @if ($reservation->status == 'approved')
-                                                    <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status == 'not approved')
-                                                    <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status == 'cancelled')
-                                                    <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status == 'returned')
-                                                    <span class="badge bg-success">DiKembalikan</span>
-                                                @elseif ($reservation->status == 'reschedule')
-                                                    <span class="badge bg-warning">Jadwal Ulang</span>
-                                                @elseif ($reservation->status == 'wait')
-                                                    <span class="badge bg-warning">Menunggu DiKembalikan</span>
-                                                @elseif ($reservation->status == 'opened')
-                                                    <span class="badge bg-info">Kelas Dibuka</span>
-                                                @elseif ($reservation->status == 'off-day')
-                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
-                                                @else
-                                                    <span class="badge bg-warning">Pending</span>
-                                                @endif
-                                            @endif
                                         </td>
                                         <td>{{ $reservation->recurring!=NULL? 'Ya' : 'Bukan' }}</td>
                                         <td>{{ $reservation->conditional!=0? 'Ya' : 'Bukan' }}</td>
                                         <td class="text-center">
-                                            @if ($reservation->room->ownership == 'baak')
+                                            {{-- @if ($reservation->room->ownership == 'baak') --}}
                                                 @if (
                                                     $reservation->status == 'opened' &&
                                                         \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->session->start)->isPast())
@@ -377,7 +355,7 @@
                                                 @else
                                                     -
                                                 @endif
-                                            @else
+                                            {{-- @else
                                                 @if (
                                                     $reservation->status == 'opened' &&
                                                         \Illuminate\Support\Carbon::parse($reservation->reservation_date . ' ' . $reservation->start_time)->isPast())
@@ -407,8 +385,8 @@
                                                         Catatan</button>
                                                 @else
                                                     -
-                                                @endif
-                                            @endif
+                                                @endif --}}
+                                            {{-- @endif --}}
                                             @if(($reservation->recurring==NULL || $reservation->recurring=$reservation->reservation_date) && $reservation->key_status!='cancelled' && $reservation->status!='returned' && $reservation->status!='opened' && $reservation->status!='off-day' && $reservation->status!='wait')
                                             <a href="{{ route('change-sks', ['id' => $reservation->id]) }}"
                                                 class="btn btn-sm btn-warning "><i

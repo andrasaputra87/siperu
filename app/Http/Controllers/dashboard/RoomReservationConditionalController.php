@@ -25,7 +25,7 @@ class RoomReservationConditionalController extends Controller
   {
     return view('content.dashboard.room_reservation_conditional', [
       'rooms' => Room::latest()->where('name', 'like', "%" . $request->keyword . "%")
-        ->orWhere('ownership', 'like', "%" . $request->keyword . "%")
+        // ->orWhere('ownership', 'like', "%" . $request->keyword . "%")
         ->orWhere('location', 'like', "%" . $request->keyword . "%")->get(),
     ]);
   }

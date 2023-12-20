@@ -15,7 +15,7 @@ class BuildingViewConditionalController extends Controller
         ->select('u.*', DB::raw('COUNT(uh.building_id) AS jumlah_ruang'))
         ->where('u.building_name', 'like', "%" . $request->keyword . "%")
         ->leftJoin('rooms as uh', 'u.id', '=', 'uh.building_id')
-        ->groupBy('u.id', 'u.building_name','u.checkfloor','u.floor','u.thumbnail','u.created_at','u.updated_at','u.id_user') 
+        ->groupBy('u.id', 'u.building_name','u.checkfloor','u.floor','u.thumbnail','u.created_at','u.updated_at','u.id_user','u.faculty_id') 
         ->orderBy('jumlah_ruang')
         ->get();
     

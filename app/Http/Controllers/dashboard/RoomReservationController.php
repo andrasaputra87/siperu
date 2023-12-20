@@ -29,7 +29,7 @@ class RoomReservationController extends Controller
   {
     return view('content.dashboard.room_reservation', [
       'rooms' => Room::latest()->where('name', 'like', "%" . $request->keyword . "%")
-        ->orWhere('ownership', 'like', "%" . $request->keyword . "%")
+        // ->orWhere('ownership', 'like', "%" . $request->keyword . "%")
         ->orWhere('location', 'like', "%" . $request->keyword . "%")
       ->where('building_id', $request->building_id)->get(),
     ]);
