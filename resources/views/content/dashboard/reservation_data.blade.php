@@ -371,7 +371,7 @@
                                         <td>
                                             {{ $reservation->room->name }}
                                             <small
-                                                class="text-muted d-block">({{ strtoupper($reservation->room->ownership) }})</small>
+                                                class="text-muted d-block">({{ strtoupper($reservation->faculty_name) }})</small>
                                         </td>
                                         <td>{{ $reservation->reservation_date }}</td>
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
@@ -385,7 +385,6 @@
                                         </td>
                                         {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
-                                            @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
                                                 @elseif ($reservation->status == 'not approved')
@@ -405,27 +404,6 @@
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
-                                            @else
-                                                @if ($reservation->status == 'approved')
-                                                    <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status == 'not approved')
-                                                    <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status == 'cancelled')
-                                                    <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status == 'wait')
-                                                    <span class="badge bg-success">Menunggu Dikembalikan</span>
-                                                @elseif ($reservation->status == 'returned')
-                                                    <span class="badge bg-success">Dikembalikan</span>
-                                                @elseif ($reservation->status == 'reschedule')
-                                                    <span class="badge bg-warning">Jadwal Ulang</span>
-                                                @elseif ($reservation->status == 'opened')
-                                                    <span class="badge bg-info">Kelas Dibuka</span>
-                                                @elseif ($reservation->status == 'off-day')
-                                                    <span class="badge bg-warning">Kelas Dibatalkan</span>
-                                                @else
-                                                    <span class="badge bg-warning">Pending</span>
-                                                @endif
-                                            @endif
                                         </td>
                                         
                                         <td>{{ $reservation->conditional==0?'Bukan':'Ya' }}</td>

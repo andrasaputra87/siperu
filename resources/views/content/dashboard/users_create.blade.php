@@ -49,7 +49,7 @@
 
         function tutupJurusan() {
             let role = document.getElementById("role").value;
-            if(role=='admin_fakultas'){
+            if(role=='admin_fakultas' || role=='head_baak'){
                 $("#div_jurusan").css('display','none');
                 $("#department_id").val("");
             }else{
@@ -125,7 +125,7 @@
                                     {{-- <option value="head_bm" {{ old('role') == 'head_bm' ? 'selected' : '' }}>Kepala BM</option>
                                     <option value="staff_bm" {{ old('role') == 'staff_bm' ? 'selected' : '' }}>Staff BM</option> --}}
                                     <option value="pengelola_gedung" {{ old('role') == 'pengelola_gedung' ? 'selected' : '' }}>Pengelola Gedung</option>
-                                    <option value="admin_fakultas" {{ old('role') == 'admin_fakultas' ? 'selected' : '' }}>Admin Fakultas</option>
+                                    <option value="admin_fakultas" {{ old('role') == 'admin_fakultas' ? 'selected' : '' }}>Admin Fakultas/BAAK</option>
                                 </select>
                                 @error('role')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -133,9 +133,9 @@
                             </div>
                             
                             <div class="col-12 col-lg-6 custom-col" >
-                                <label class="form-label" for="faculty_id">Fakultas</label>
+                                <label class="form-label" for="faculty_id">Fakultas/BAAK</label>
                                 <select name="faculty_id" id="faculty_id" class="form-select" onchange="myFunction()">
-                                    <option value="" disabled selected>-- Pilih Fakultas --</option>
+                                    <option value="" disabled selected>-- Pilih Fakultas/BAAK --</option>
                                     @foreach ($faculties as $faculty)
                                         <option value="{{ $faculty->id }}" {{ old('faculty_id') == $faculty->id ? 'selected' : '' }}>{{ $faculty->name }}</option>
                                     @endforeach

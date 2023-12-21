@@ -174,6 +174,25 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="col mb-3">
+                                    <label for="building" class="form-label">Fakultas/BAAK <span
+                                            class="text-danger fw-bold">*</span></label>
+                                    <select name="faculty_id" id="faculty_id"
+                                        class="form-select @error('faculty_id') border-danger @enderror">
+                                        <option value="" selected disabled>-- Pilih Fakultas/BAAK --</option>
+
+                                        @foreach ($faculties as $faculty)
+                                            <option value="{{ $faculty->id }}"
+                                                {{ $faculty->id == $building_edit->faculty_id ? 'selected' : '' }}>
+                                                {{ $faculty->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('faculty_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
                                     {{-- {{ $building_edit->name }} --}}
                                     <label for="name" class="form-label">Nama Gedung <span
                                             class="text-danger fw-bold">*</span></label>
@@ -216,6 +235,7 @@
                                     @enderror
                                 </div>
                             </div>
+                            
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
@@ -250,6 +270,23 @@
                     @else
                         <form action="{{ route('building.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="building" class="form-label">Fakultas/BAAK <span
+                                            class="text-danger fw-bold">*</span></label>
+                                    <select name="faculty_id" id="faculty_id"
+                                        class="form-select @error('faculty_id') border-danger @enderror">
+                                        <option value="" selected disabled>-- Pilih Fakultas/BAAK --</option>
+
+                                        @foreach ($faculties as $faculty)
+                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('faculty_id')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="name" class="form-label">Nama Gedung <span
@@ -334,6 +371,8 @@
                                     <th>Thumbnail</th>
                                     <th>Nama</th>
                                     <th>Jumlah Lantai</th>
+                                    <th>Fakultas/BAAK</th>
+                                    <th>Pengelola Gedung</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -345,6 +384,8 @@
                                                 style="width: 70px; height: 70px; object-fit:cover"></td>
                                         <td><b>{{ $building->building_name }}</b></td>
                                         <td>{{ $building->floor }} </td>
+                                        <td>{{ $building->faculty->name }} </td>
+                                        <td>{{ $building->user->fullname }} </td>
 
                                         <td>
                                             <div class="d-flex">

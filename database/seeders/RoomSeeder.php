@@ -26,7 +26,7 @@ class RoomSeeder extends Seeder
         	'availability' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-        	'ownership' => 'BAAK'
+        	'building_id' => 1
         ]);
     }
 }

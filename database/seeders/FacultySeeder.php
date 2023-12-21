@@ -17,6 +17,7 @@ class FacultySeeder extends Seeder
     {
         DB::table('faculties')->insert(
             [
+                'id' => 1,
                 'name' => 'Teknik',
                 'dekan' => 'Andika',
             ]
@@ -24,6 +25,7 @@ class FacultySeeder extends Seeder
 
         DB::table('faculties')->insert(
             [
+                'id' => 2,
                 'name' => 'FKIP',
                 'dekan' => 'Bunga',
             ]

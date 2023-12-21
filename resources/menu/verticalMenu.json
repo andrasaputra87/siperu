@@ -11,7 +11,7 @@
       "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","pengelola_gedung","admin_fakultas"]
     },
     {
-      "name": "Data Fakultas",
+      "name": "Data Fakultas/BAAK",
       "icon": "menu-icon tf-icons bx bx-building",
       "slug": ["faculties.index", "faculties.edit"],
       "url": "/faculties",

@@ -193,6 +193,7 @@
                                 <th>Email</th>
                                 <th>No. Telepon</th>
                                 <th>Jurusan</th>
+                                <th>Fakultas/BAAK</th>
                                 <th>Role</th>
                                 <th>Aksi</th>
                             </tr>
@@ -218,6 +219,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->phone_number }}</td>
                                     <td>{{ isset($user->department->name) ? $user->department->name : '-' }}</td>
+                                    <td>{{ isset($user->faculty->name) ? $user->faculty->name : '-' }}</td>
                                     <td>{{ strtoupper(str_replace('_', ' ', $user->role)) }}</td>
                                     <td>
                                         <div class="d-flex">

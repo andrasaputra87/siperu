@@ -74,8 +74,10 @@
                         <img src="{{ asset($room->thumbnail) }}" alt="" class="img-fluid"
                             style="height: 200px; object-fit: cover;">
                         <div class="card-body">
-                            <h5 class="text-truncate">{{ $room->name }} <span
-                                    class="badge rounded-pill bg-label-secondary text-sm">{{ $room->ownership }}</span></h5>
+                            <h5 class="text-truncate">{{ $room->name }} 
+                                {{-- <span
+                                    class="badge rounded-pill bg-label-secondary text-sm">{{ $room->ownership }}</span> --}}
+                                </h5>
                             <div class="d-flex gap-2 mb-3">
                                 {{-- <span class="badge bg-label-success">Tersedia</span> --}}
                                 <span class="badge bg-label-primary">{{ $room->location }}</span>

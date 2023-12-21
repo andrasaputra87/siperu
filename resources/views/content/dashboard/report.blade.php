@@ -210,7 +210,6 @@
                                       </td>
                                      
                                       <td>
-                                          @if ($reservation->room->ownership == 'baak')
                                               @if ($reservation->status == 'approved')
                                               <span class="badge bg-success">Disetujui</span>
                                               @elseif ($reservation->status == 'not approved')
@@ -220,17 +219,6 @@
                                               @else
                                                   <span class="badge bg-warning">Pending</span>
                                               @endif
-                                          @else
-                                              @if ($reservation->status == 'approved')
-                                              <span class="badge bg-success">Disetujui</span>
-                                              @elseif ($reservation->status == 'not approved')
-                                                  <span class="badge bg-danger">Ditolak</span>
-                                              @elseif($reservation->status == 'cancelled')
-                                                  <span class="badge bg-danger">Dibatalkan</span>
-                                              @else
-                                                  <span class="badge bg-warning">Pending</span>
-                                              @endif
-                                          @endif
                                       </td>
                                       <td>
                                           -

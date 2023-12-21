@@ -29,9 +29,4 @@ class Room extends Model
     {
         return $this->belongsTo(Building::class, 'building_id','id' );
     }
-
-    public function faculty()
-    {
-        return $this->belongsTo(Faculty::class, 'faculty_id','id' );
-    }
 }

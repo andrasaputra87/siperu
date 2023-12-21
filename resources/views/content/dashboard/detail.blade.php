@@ -178,7 +178,6 @@
                                         <td>{{ $reservation->necessary }}</td>
                                         {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
-                                            @if ($reservation->room->ownership == 'baak')
                                                 @if ($reservation->status == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
                                                 @elseif ($reservation->status == 'not approved')
@@ -194,23 +193,7 @@
                                                 @else
                                                     <span class="badge bg-warning">Pending</span>
                                                 @endif
-                                            @else
-                                                @if ($reservation->status == 'approved')
-                                                    <span class="badge bg-success">Disetujui</span>
-                                                @elseif ($reservation->status == 'not approved')
-                                                    <span class="badge bg-danger">Ditolak</span>
-                                                @elseif($reservation->status == 'cancelled')
-                                                    <span class="badge bg-danger">Dibatalkan</span>
-                                                @elseif ($reservation->status == 'returned')
-                                                    <span class="badge bg-success">DiKembalikan</span>
-                                                @elseif ($reservation->status == 'reschedule')
-                                                    <span class="badge bg-warning">Jadwal Ulang</span>
-                                                @elseif ($reservation->status == 'wait')
-                                                    <span class="badge bg-warning">Menunggu DiKembalikan</span>
-                                                @else
-                                                    <span class="badge bg-warning">Pending</span>
-                                                @endif
-                                            @endif
+
                                         </td>
                                         
                                     </tr>

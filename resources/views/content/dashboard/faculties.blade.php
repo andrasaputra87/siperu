@@ -104,11 +104,11 @@
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
             <div class="content-left">
-              <span>Fakultas</span>
+              <span>Fakultas/BAAK</span>
               <div class="d-flex align-items-end mt-2">
                 <h4 class="mb-0 me-2">{{ count($faculties) }}</h4>
               </div>
-              <small>Total fakultas keseluruhan</small>
+              <small>Total Fakultas/BAAK keseluruhan</small>
             </div>
             <span class="badge bg-label-primary rounded p-2">
               <i class="bx bx-building bx-sm"></i>
@@ -129,7 +129,7 @@
                         @method('PUT')
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <label for="name" class="form-label">Nama Fakultas/BAAK <span class="text-danger fw-bold">*</span></label>
                                 <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $faculty_edit->name }}">
                                 @error('name')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="dekan" class="form-label">Ketua Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <label for="dekan" class="form-label">Ketua Fakultas/BAAK <span class="text-danger fw-bold">*</span></label>
                                 <input type="text" name="dekan" id="dekan" class="form-control @error('dekan') border-danger @enderror" placeholder="Masukkan nama ruangan" value="{{ $faculty_edit->dekan }}">
                                 @error('dekan')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -153,8 +153,8 @@
                         @csrf
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="name" class="form-label">Nama Fakultas <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama fakultas" value="{{ old('name') }}">
+                                <label for="name" class="form-label">Nama Fakultas/BAAK <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" name="name" id="name" class="form-control @error('name') border-danger @enderror" placeholder="Masukkan nama Fakultas/BAAK" value="{{ old('name') }}">
                                 @error('name')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
@@ -162,7 +162,7 @@
                         </div>
                         <div class="row">
                             <div class="col mb-3">
-                                <label for="dekan" class="form-label">Ketua Fakultas <span class="text-danger fw-bold">*</span></label>
+                                <label for="dekan" class="form-label">Ketua Fakultas/BAAK <span class="text-danger fw-bold">*</span></label>
                                 <input type="text" name="dekan" id="dekan" class="form-control @error('dekan') border-danger @enderror" placeholder="Masukkan dekan" value="{{ old('head_of_deparment') }}">
                                 @error('dekan')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
