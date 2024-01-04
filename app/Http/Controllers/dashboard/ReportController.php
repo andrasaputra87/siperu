@@ -27,7 +27,7 @@ class ReportController extends Controller
                 // echo '<pre>' . var_export($reservations, true) . '</pre>';
             } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
-                    $query->where('ownership', 'baak');
+                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
                 })->orderBy('id', 'desc')->get();
             } else {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
@@ -39,15 +39,15 @@ class ReportController extends Controller
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->orderBy('id', 'desc')->get();
             } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
-                    $query->where('ownership', 'baak');
-                })->orderBy('id', 'desc')->get();
+                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
+                })->orderBy('id', 'desc')->toSql();
             } else {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
                     $query->where('ownership', 'bm');
                 })->orderBy('id', 'desc')->get();
             }
         }
-
+        // var_dump($reservations);
         return view('content.dashboard.report', [
             'reservations' => $reservations,
             'startDate' => $startDate,
@@ -59,7 +59,7 @@ class ReportController extends Controller
     {
         if (auth()->user()->role == 'admin') {
             return (new MultipleExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
-        } elseif (auth()->user()->role == 'head_baak') {
+        } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
             return (new MultipleBAAKExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
         } else {
             return (new MultipleBMExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');

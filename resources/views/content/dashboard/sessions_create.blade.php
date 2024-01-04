@@ -301,7 +301,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('sessions.edit', $session) }}" class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
-                                                <a href="/set/{{$session->id}}" class="btn btn-sm btn-icon item-check-circle"><i class="bx bxs-check-circle"></i></a>
+                                                {{-- <a href="/set/{{$session->id}}" class="btn btn-sm btn-icon item-check-circle"><i class="bx bxs-check-circle"></i></a> --}}
                                                 <form action="{{ route('sessions.destroy', $session) }}" id="delete-form-{{ $session->id }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')

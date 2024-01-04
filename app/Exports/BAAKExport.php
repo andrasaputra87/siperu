@@ -25,7 +25,7 @@ class BAAKExport implements FromCollection, ShouldAutoSize, WithMapping, WithHea
     {
         return RoomReservation::with(['user', 'room'])
         ->whereHas('room', function ($query) {
-            $query->where('ownership', 'baak');
+            $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
         })
         ->get();
     }

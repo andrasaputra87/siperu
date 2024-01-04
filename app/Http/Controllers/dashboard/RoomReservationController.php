@@ -87,8 +87,6 @@ class RoomReservationController extends Controller
         'start_time' => 'required',
         'necessary' => 'required',
         'room_id' => 'required',
-        'organization_name' => 'required',
-        'total_participants' => 'required',
         'sks' => 'required',
       ]);
 
@@ -135,10 +133,11 @@ class RoomReservationController extends Controller
     $temp_date = $request->reservation_date;
     $data['end_time'] = $end_time;
     if ($request->has('recurring')) {
-      $tahun_ajaran = TahunAjaran::findOrFail($start_time->id_tahun_ajaran);
+      $tahun_ajaran = TahunAjaran::where('id',$start_time->id_tahun_ajaran)->where('status','1')->first();
+      // var_dump($tahun_ajaran);
       $recurring = $request->reservation_date;
       $recurring_time = $request->start_time;
-
+      
       for ($i = 0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) {
         if (RoomReservation::where('reservation_date', $temp_date)->where('start_time', $request->start_time)->count() == 0) {
           $data['reservation_date'] = $temp_date;
@@ -156,9 +155,6 @@ class RoomReservationController extends Controller
       
       return redirect('building_view')->with('message', 'Berhasil meminjam ruangan! Silahkan menunggu untuk dikonfirmasi.');
     }
-    // $room = Room::findOrFail($data['room_id']);
-    // $room->availability = 0;
-    // $room->save();
   }
 
   /**

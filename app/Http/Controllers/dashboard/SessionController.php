@@ -79,7 +79,7 @@ class SessionController extends Controller
     public function show($id)
     {
         return view('content.dashboard.sessions_create', [
-            'sessions' => Session::orderBy('id', 'desc')->get(),
+            'sessions' => Session::orderBy('id', 'desc')->where('id_tahun_ajaran',$id)->get(),
             'tahun_ajaran_id' => $id,
             'sessions_edit' => '',
         ]);
