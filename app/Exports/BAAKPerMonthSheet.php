@@ -31,7 +31,7 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
         return RoomReservation::whereYear('created_at', $this->year)
         ->whereMonth('created_at', $this->month)
         ->whereHas('room', function ($query) {
-            $query->where('ownership', 'baak');
+            $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
         })
         ->get();
     }

@@ -59,7 +59,8 @@ class ReservationController extends Controller
       }
     } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
       if($id!=NULL){
-        $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional',0)
+        ->leftjoin('rooms','rooms.id','room_id')
         ->leftjoin('buildings','buildings.id','building_id')
         ->leftjoin('faculties','faculties.id','faculty_id')
         ->where('buildings.id',$id)
@@ -83,13 +84,26 @@ class ReservationController extends Controller
         ->where('buildings.id',$id)->where('status', 'reschedule')->count();
       }else{
         $reservations = RoomReservation::with(['user', 'room','session'])->where('conditional',0)
+        ->leftjoin('rooms','rooms.id','room_id')
         ->leftjoin('buildings','buildings.id','building_id')
-        ->leftjoin('faculties','faculties.id','faculty_id')->orderBy('id', 'desc')->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);
-        $reservation_total = RoomReservation::where('conditional',0)->count();
-        $reservation_approved = RoomReservation::where('conditional',0)->where('status', 'approved')->count();
-        $reservation_not_approved = RoomReservation::where('conditional',0)->where('status', 'not approved')->count();
-        $reservation_cancelled = RoomReservation::where('conditional',0)->where('status', 'cancelled')->count();
-        $reschedule = RoomReservation::where('conditional',0)->where('status', 'reschedule')->count();
+        ->leftjoin('faculties','faculties.id','faculty_id')->orderBy('room_reservations.id', 'desc')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)
+        ->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);
+        $reservation_total = RoomReservation::where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->count();
+        $reservation_approved = RoomReservation::where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->where('status', 'approved')->count();
+        $reservation_not_approved = RoomReservation::where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->where('status', 'not approved')->count();
+        $reservation_cancelled = RoomReservation::where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->where('status', 'cancelled')->count();
+        $reschedule = RoomReservation::where('conditional',0)->leftjoin('rooms','rooms.id','room_id')
+        ->leftjoin('buildings','buildings.id','building_id')
+        ->where('buildings.faculty_id',auth()->user()->faculty_id)->where('status', 'reschedule')->count();
       }
     } elseif (auth()->user()->role == 'pengelola_gedung') {
       $reservations = RoomReservation::with(['user', 'room'])

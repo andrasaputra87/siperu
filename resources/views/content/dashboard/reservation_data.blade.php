@@ -411,19 +411,19 @@
                                         <td>
                                             @if ($reservation->status == 'wait')
                                                 @if (auth()->user()->signature)
-                                                    <a href="/returned/{{ $reservation->id }}"
+                                                    <a href="/returned/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-primary setuju"><i class='bx bx-check'></i>
                                                         Acc Pengembalian</a>
                                                 @endif
                                             @elseif ($reservation->status == 'pending')
                                                 @if (auth()->user()->signature && auth()->user()->role!='pengelola_gedung')
                                                     <div class="d-flex gap-2">
-                                                        <a href="/approve/{{ $reservation->id }}"
+                                                        <a href="/approve/{{ $reservation->id_rr }}"
                                                             class="btn btn-sm btn-primary setuju"><i
                                                                 class='bx bx-check'></i> Setuju</a>
                                                         <button id="delete-btn"
-                                                            data-reservation_id="{{ $reservation->id }}"
-                                                            data-room_id="{{ $reservation->room->id }}"
+                                                            data-reservation_id="{{ $reservation->id_rr }}"
+                                                            data-room_id="{{ $reservation->room->id_rr }}"
                                                             class="btn btn-sm btn-danger"><i class='bx bx-x'></i> Tidak
                                                             Setuju</button>
                                                     </div>
@@ -450,7 +450,7 @@
                                                     <!-- <a href="/open/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-primary "><i
                                                             class='bx bx-check'></i> Buka Kelas</a> -->
-                                                    <a href="/offday/{{ $reservation->id }}"
+                                                    <a href="/offday/{{ $reservation->id_rr }}"
                                                         class="btn btn-sm btn-warning "><i
                                                             class='bx bx-check'></i> Batal Masuk</a>
                                                 </div>
