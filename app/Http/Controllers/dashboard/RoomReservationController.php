@@ -190,6 +190,7 @@ class RoomReservationController extends Controller
 
   public function get(Request $request)
   {
+    $id_tahunajaran = TahunAjaran::where('status','1')->first();
     $date = Carbon::parse($request->date)->format('d-m-Y');
     $dayName = strtolower(substr(Carbon::parse($date)->dayName, 0, 3));
     if (HariLibur::date($date)->isHoliday()) {
@@ -211,6 +212,7 @@ class RoomReservationController extends Controller
         ->where('room_id', '=', $request->id_room)
         ->get(['sessions.id']))
         ->where($dayName, '=', '1')
+        ->where('id_tahun_ajaran', $id_tahunajaran->id)
         ->get();
 
       return response()->json([
