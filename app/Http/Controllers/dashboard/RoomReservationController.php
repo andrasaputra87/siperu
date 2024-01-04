@@ -137,7 +137,7 @@ class RoomReservationController extends Controller
       // var_dump($tahun_ajaran);
       $recurring = $request->reservation_date;
       $recurring_time = $request->start_time;
-      
+      // echo "$tahun_ajaran->end_tahun_ajaran";
       for ($i = 0; $temp_date < $tahun_ajaran->end_tahun_ajaran; $i++) {
         if (RoomReservation::where('reservation_date', $temp_date)->where('start_time', $request->start_time)->count() == 0) {
           $data['reservation_date'] = $temp_date;
