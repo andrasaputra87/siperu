@@ -13,9 +13,22 @@ class BuildingController extends Controller
 {
     //
     public function index(){
+        if (auth()->user()->role == 'admin') {
+            $building = Building::leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','faculty_id')
+                ->orderBy('buildings.id', 'desc')->get();
+            $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->get();
+        }else{
+
+            $building = Building::leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','faculty_id')
+                ->where('faculty_id',auth()->user()->faculty_id)
+                ->orderBy('buildings.id', 'desc')->get();
+            $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->where('faculty_id',auth()->user()->faculty_id)->get();
+        }
         return view('content.dashboard.buildings', [
-            'building' => Building::orderBy('id', 'desc')->get(),
-            'pengelola' => User::where('role', 'pengelola_gedung')->get(),
+            'building' => $building,
+            'pengelola' => $pengelola,
             'building_edit' => '',
             'faculties' => Faculty::orderBy('id', 'desc')->get(),
         ]);
@@ -25,7 +38,7 @@ class BuildingController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'faculty_id' =>'required',
+            // 'faculty_id' =>'required',
             // 'floor' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
             
@@ -69,10 +82,23 @@ class BuildingController extends Controller
     public function edit(Building $building)
     {
         if ($building) {
+            if (auth()->user()->role == 'admin') {
+                $buildings = Building::leftjoin('users','users.id','id_user')
+                    ->leftjoin('faculties','faculties.id','faculty_id')
+                    ->orderBy('buildings.id', 'desc')->get();
+                $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->get();
+            }else{
+    
+                $buildings = Building::leftjoin('users','users.id','id_user')
+                    ->leftjoin('faculties','faculties.id','faculty_id')
+                    ->where('faculty_id',auth()->user()->faculty_id)
+                    ->orderBy('buildings.id', 'desc')->get();
+                $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->where('faculty_id',auth()->user()->faculty_id)->get();
+            }
             return view('content.dashboard.buildings', [
                 'building_edit' => $building,
-                'building' => Building::with(['faculty','user'])->orderBy('id', 'desc')->get(),
-                'pengelola' => User::where('role', 'pengelola_gedung')->get(),
+                'building' => $buildings,
+                'pengelola' => $pengelola,
                 'faculties' => Faculty::orderBy('id', 'desc')->get(),
                 'building_edit' => $building,
             ]);

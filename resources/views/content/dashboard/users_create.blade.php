@@ -55,6 +55,8 @@
             }else{
                 $("#div_jurusan").css('display','block');
             }
+
+
         }
 </script>
 @endsection
@@ -134,12 +136,15 @@
                             
                             <div class="col-12 col-lg-6 custom-col" >
                                 <label class="form-label" for="faculty_id">Fakultas/BAAK</label>
-                                <select name="faculty_id" id="faculty_id" class="form-select" onchange="myFunction()">
+                                <select name="faculty_id" id="faculty_id" class="form-select @error('role') border-danger @enderror" onchange="myFunction()">
                                     <option value="" disabled selected>-- Pilih Fakultas/BAAK --</option>
                                     @foreach ($faculties as $faculty)
                                         <option value="{{ $faculty->id }}" {{ old('faculty_id') == $faculty->id ? 'selected' : '' }}>{{ $faculty->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('faculty_id')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="col-12 col-lg-6 custom-col" id="div_jurusan" >
                                 <label class="form-label" for="department_id">Jurusan</label>

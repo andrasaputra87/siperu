@@ -14,7 +14,7 @@ class Dashboard extends Controller
 {
   public function index()
   {
-    if (in_array(auth()->user()->role, ['admin', 'head_baak', 'head_bm', 'staff_bm'])) {
+    if (in_array(auth()->user()->role, ['admin'])) {
       return view('content.dashboard.dashboard', [
         'rooms' => Room::with(['roomReservations' => function ($query) {
           $query->where('status', 'approved');
@@ -33,11 +33,12 @@ class Dashboard extends Controller
         'total_department' => Department::count(),
         'total_reservation' => RoomReservation::where('status', 'approved')->count(),
       ]);
-    } elseif(auth()->user()->role=='admin_fakultas'){
+    } elseif(in_array(auth()->user()->role, ['admin_fakultas','head_baak'])){
       return view('content.dashboard.dashboard_user', [
         'ruangan_tersedia' => Room::where('availability', '1')
         ->leftjoin('buildings','buildings.id','building_id')
-        ->where('buildings.faculty_id',auth()->user()->faculty_id)->count(),
+        ->leftjoin('users','users.id','id_user')
+        ->where('users.faculty_id',auth()->user()->faculty_id)->count(),
         // 'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->get(),
         'peminjaman' => RoomReservation::where('user_id', auth()->user()->id)->with('session')->get(),
       ]);

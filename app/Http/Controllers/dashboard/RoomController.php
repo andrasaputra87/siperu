@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\Faculty;
 use App\Models\RoomImages;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoomRequest;
 use App\Http\Requests\UpdateRoomRequest;
@@ -20,16 +21,27 @@ class RoomController extends Controller
      */
     public function index()
     {
-
+        if (auth()->user()->role == 'admin') {
+            $building = Building::orderBy('id', 'desc')->get();
+            $room = Room::with(['building'])
+            ->orderBy('id', 'desc')->get();
+        }else{
+            $id_pengelola = User::where('faculty_id', auth()->user()->faculty_id)->where('role','pengelola_gedung')->first()->id;
+            $building = Building::where('id_user',$id_pengelola)
+                ->orderBy('buildings.id', 'desc')->get();
+            $room = Room::with(['building'])
+            -leftJoin('building','buildings.id','building_id')
+            ->where('id_user',$id_pengelola)
+            ->orderBy('id', 'desc')->get();
+        }
         return view('content.dashboard.rooms', [
-            'building' => Building::orderBy('id', 'desc')->get(),
-            'rooms' => Room::with(['building'])
-            ->orderBy('id', 'desc')->get(),
+            'building' => $building,
+            'rooms' => $room,
             'room_edit' => '',
             'room_available' => Room::where('availability', '1')->count(),
             'room_not_available' => Room::where('availability', '0')->count(),
         ]);
-        // var_dump(Room::with('building')->orderBy('id', 'desc')->toSql());
+        // var_dump($building);
     }
 
     /**

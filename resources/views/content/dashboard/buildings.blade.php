@@ -174,25 +174,6 @@
                             @method('PUT')
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="building" class="form-label">Fakultas/BAAK <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <select name="faculty_id" id="faculty_id"
-                                        class="form-select @error('faculty_id') border-danger @enderror">
-                                        <option value="" selected disabled>-- Pilih Fakultas/BAAK --</option>
-
-                                        @foreach ($faculties as $faculty)
-                                            <option value="{{ $faculty->id }}"
-                                                {{ $faculty->id == $building_edit->faculty_id ? 'selected' : '' }}>
-                                                {{ $faculty->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('faculty_id')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col mb-3">
                                     {{-- {{ $building_edit->name }} --}}
                                     <label for="name" class="form-label">Nama Gedung <span
                                             class="text-danger fw-bold">*</span></label>
@@ -244,7 +225,7 @@
                                         @foreach ($pengelola as $peng)
                                             <option value="{{ $peng->id }}"
                                                 {{ $building_edit->id_user == $peng->id ? 'selected' : '' }}>
-                                                {{ $peng->fullname }}</option>
+                                                {{ $peng->fullname }} - {{ $peng->faculty->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -270,23 +251,6 @@
                     @else
                         <form action="{{ route('building.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="row">
-                                <div class="col mb-3">
-                                    <label for="building" class="form-label">Fakultas/BAAK <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <select name="faculty_id" id="faculty_id"
-                                        class="form-select @error('faculty_id') border-danger @enderror">
-                                        <option value="" selected disabled>-- Pilih Fakultas/BAAK --</option>
-
-                                        @foreach ($faculties as $faculty)
-                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('faculty_id')
-                                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label for="name" class="form-label">Nama Gedung <span
@@ -325,7 +289,6 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
@@ -333,7 +296,7 @@
                                         <option value="" disabled selected>-- Pilih Pengelola --</option>
                                         @foreach ($pengelola as $peng)
                                             <option value="{{ $peng->id }}">
-                                                {{ $peng->fullname }}</option>
+                                            {{ $peng->fullname }} - {{ $peng->faculty->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

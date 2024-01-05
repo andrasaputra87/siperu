@@ -193,7 +193,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    @if (Auth::user()->role=='admin' || Auth::user()->role=='head_baak' || Auth::user()->role=='staff_baak')
+                    @if (Auth::user()->role=='admin')
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Pilih Gedung
@@ -279,10 +279,10 @@
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                         <td>
-                                            @if (strlen($reservation->necessary) > 35)
-                                                {{ substr($reservation->necessary, 0, 35) . '...' }}
+                                            @if (strlen($reservation->pemohon_necessary) > 35)
+                                                {{ substr($reservation->pemohon_necessary, 0, 35) . '...' }}
                                             @else
-                                                {{ $reservation->necessary }}
+                                                {{ $reservation->pemohon_necessary }}
                                             @endif
                                         </td>
                                       

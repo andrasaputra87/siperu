@@ -51,7 +51,7 @@ class SessionController extends Controller
         if($request->start<$request->end){
             $start= $request->start;
             // $request->end;
-            for ($i=1; Carbon::parse($start)->addMinutes(135)->toTimeString() < $request->end; $i++) { 
+            for ($i=1; Carbon::parse($start)->addMinutes(160)->toTimeString() < $request->end; $i++) { 
                 $data2 = ([
                     'start' => $start,
                     'id_tahun_ajaran' => $request->id_tahun_ajaran,
@@ -60,7 +60,7 @@ class SessionController extends Controller
                 // var_dump($data2);
                 Session::create($data2);
                 $time = Carbon::parse($start);
-                $updatedTime = $time->addMinutes(135);
+                $updatedTime = $time->addMinutes(160);
                 $start = $updatedTime->toTimeString(); // Output: 13:45:00
             }
         }else{

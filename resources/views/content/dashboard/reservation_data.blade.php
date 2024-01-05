@@ -303,7 +303,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    @if (Auth::user()->role=='admin' || Auth::user()->role=='head_baak' || Auth::user()->role=='staff_baak')
+                    @if (Auth::user()->role=='admin')
                         <div class="dropdown">
                             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 Pilih Gedung
@@ -373,7 +373,13 @@
                                             <small
                                                 class="text-muted d-block">({{ strtoupper($reservation->faculty_name) }})</small>
                                         </td>
-                                        <td>{{ $reservation->reservation_date }}</td>
+                                        <td>
+                                            @if ($reservation->recurring==NULL)
+                                                {{ $reservation->reservation_date }}
+                                            @else
+                                                <a href="/detail/{{ $reservation->reservation_date }}/{{ $reservation->start_time }}"
+                                                class="btn btn-sm btn-info">{{ $reservation->reservation_date }}</a>
+                                            @endif     
                                         <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                         <td>{{ substr($reservation->end_time, 0, 5) }}</td>
                                         <td>

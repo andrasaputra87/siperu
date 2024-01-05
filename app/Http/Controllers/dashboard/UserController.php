@@ -48,6 +48,7 @@ class UserController extends Controller
             'nim' =>'nullable|unique:users',
             'phone_number' =>'required',
             'role' =>'required',
+            'faculty_id' =>'required',
             'email' =>'required|string|email|max:255|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required'

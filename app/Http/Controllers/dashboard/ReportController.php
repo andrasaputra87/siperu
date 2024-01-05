@@ -40,7 +40,7 @@ class ReportController extends Controller
             } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
                     $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
-                })->orderBy('id', 'desc')->toSql();
+                })->orderBy('id', 'desc')->get();
             } else {
                 $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
                     $query->where('ownership', 'bm');

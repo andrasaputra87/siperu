@@ -29,14 +29,14 @@
       "icon": "menu-icon tf-icons bx bx-buildings",
       "slug": ["building.index", "building.edit"],
       "url": "/building",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","admin_fakultas"]
     },
     {
       "name": "Data Ruangan",
       "icon": "menu-icon tf-icons bx bx-buildings",
       "slug": ["rooms.index", "rooms.edit", "add-slider"],
       "url": "/rooms",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","admin_fakultas"]
     },
    
     {
@@ -79,11 +79,11 @@
       "icon": "menu-icon tf-icons bx bxs-report",
       "slug": ["report"],
       "url": "/report",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak"]
+      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","admin_fakultas"]
     },
     {
       "menuHeader": "Peminjaman",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","user"]
+      "roles": ["admin","user"]
     },
     
     {
@@ -91,21 +91,21 @@
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": ["buildingview.index", "room_reservation.show", "rooms.show"],
       "url": "/building_view",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","user"]
+      "roles": ["admin", "user"]
     },
     {
       "name": "Pinjam Ruangan Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
       "slug": ["buildingviewconditonal.index", "room_reservation_conditional.show", "rooms.show"],
       "url": "/building_view_con",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","user"]
+      "roles": ["admin", "user"]
     },
     {
       "name": "Peminjaman Saya",
       "icon": "menu-icon tf-icons bx bxs-user-detail",
       "slug": ["my_reservation", "history"],
       "url": "/my_reservation",
-      "roles": ["admin", "head_baak", "head_bm", "staff_bm", "staff_baak","user"]
+      "roles": ["admin", "user"]
     },
     {
       "menuHeader": "Lainnya"
