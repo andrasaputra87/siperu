@@ -83,7 +83,8 @@ class UserController extends Controller
     {
         return view('content.dashboard.users_edit', [
             'user' => $user,
-            'departments' => Department::all()
+            'departments' => Department::all(),
+            'faculties' => Faculty::all(),
         ]);
     }
 
@@ -143,7 +144,8 @@ class UserController extends Controller
     public function settings()
     {
         return view('content.dashboard.settings', [
-            'departments' => Department::all()
+            'departments' => Department::all(),
+            'faculties' => Faculty::all(),
         ]);
     }
     
@@ -158,6 +160,7 @@ class UserController extends Controller
                 'phone_number' =>'required',
                 'nim' =>'required_if:role,user|max:255|unique:users,nim,'. $id,
                 'department_id' =>'required',
+                'faculty_id' =>'required',
             ]);
         } else {
             $data = $request->validate([
@@ -169,6 +172,7 @@ class UserController extends Controller
                 ],
                 'phone_number' => 'nullable',
                 'department_id' => 'nullable',
+                'faculty_id' => 'nullable',
             ]);
         }
 

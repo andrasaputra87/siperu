@@ -120,12 +120,8 @@
                                 <select name="role" id="role" class="form-select @error('role') border-danger @enderror" onchange="tutupJurusan()">
                                     <option value="" disabled selected>-- Pilih Role --</option>
                                     <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>Pengguna</option>
-                                    {{-- <option value="lecturer" {{ old('role') == 'lecturer' ? 'selected' : '' }}>Dosen</option> --}}
                                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                     <option value="head_baak" {{ old('role') == 'head_baak' ? 'selected' : '' }}>Kepala BAAK</option>
-                                    <option value="staff_baak" {{ old('role') == 'staff_baak' ? 'selected' : '' }}>Staff BAAK</option>
-                                    {{-- <option value="head_bm" {{ old('role') == 'head_bm' ? 'selected' : '' }}>Kepala BM</option>
-                                    <option value="staff_bm" {{ old('role') == 'staff_bm' ? 'selected' : '' }}>Staff BM</option> --}}
                                     <option value="pengelola_gedung" {{ old('role') == 'pengelola_gedung' ? 'selected' : '' }}>Pengelola Gedung</option>
                                     <option value="admin_fakultas" {{ old('role') == 'admin_fakultas' ? 'selected' : '' }}>Admin Fakultas/BAAK</option>
                                 </select>

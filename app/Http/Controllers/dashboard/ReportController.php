@@ -22,29 +22,40 @@ class ReportController extends Controller
             if (auth()->user()->role == 'admin') {
                 // $reservations = RoomReservation::with(['user', 'room'])->orderBy('id', 'desc')->get();
                 $reservations = RoomReservation::with(['room.building', 'user'])
-                    ->orderBy('id', 'desc')
-                    ->get();
+                ->leftjoin('rooms','rooms.id','room_id')
+                ->leftjoin('buildings','buildings.id','building_id')
+                ->leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','users.faculty_id')
+                    ->orderBy('room_reservations.id', 'desc')
+                    ->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);
                 // echo '<pre>' . var_export($reservations, true) . '</pre>';
-            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
-                $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
-                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
-                })->orderBy('id', 'desc')->get();
-            } else {
-                $reservations = RoomReservation::with(['room.building', 'user'])->whereHas('room', function ($query) {
-                    $query->where('ownership', 'bm');
-                })->orderBy('id', 'desc')->get();
-            }
+            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'admin_fakultas') {
+                $reservations = RoomReservation::with(['room.building', 'user'])
+                ->leftjoin('rooms','rooms.id','room_id')
+                ->leftjoin('buildings','buildings.id','building_id')
+                ->leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','users.faculty_id')
+                ->whereHas('room', function ($query) {
+                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', auth()->user()->faculty_id);
+                })->orderBy('room_reservations.id', 'desc')->get();
+            } 
         } else {
             if (auth()->user()->role == 'admin') {
-                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->orderBy('id', 'desc')->get();
-            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
-                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
-                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
-                })->orderBy('id', 'desc')->get();
-            } else {
-                $reservations = RoomReservation::with(['room.building', 'user'])->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
-                    $query->where('ownership', 'bm');
-                })->orderBy('id', 'desc')->get();
+                $reservations = RoomReservation::with(['room.building', 'user'])
+                ->leftjoin('rooms','rooms.id','room_id')
+                ->leftjoin('buildings','buildings.id','building_id')
+                ->leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','users.faculty_id')
+                ->whereBetween('reservation_date', [$startDate, $endDate])->orderBy('room_reservations.id', 'desc')->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);
+            } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'admin_fakultas') {
+                $reservations = RoomReservation::with(['room.building', 'user'])
+                ->leftjoin('rooms','rooms.id','room_id')
+                ->leftjoin('buildings','buildings.id','building_id')
+                ->leftjoin('users','users.id','id_user')
+                ->leftjoin('faculties','faculties.id','users.faculty_id')
+                ->whereBetween('reservation_date', [$startDate, $endDate])->whereHas('room', function ($query) {
+                    $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', auth()->user()->faculty_id);
+                })->orderBy('room_reservations.id', 'desc')->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);
             }
         }
         // var_dump($reservations);
@@ -59,10 +70,8 @@ class ReportController extends Controller
     {
         if (auth()->user()->role == 'admin') {
             return (new MultipleExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
-        } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'staff_baak') {
+        } elseif (auth()->user()->role == 'head_baak' || auth()->user()->role == 'admin_fakultas') {
             return (new MultipleBAAKExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
-        } else {
-            return (new MultipleBMExport(Carbon::now()->year))->download('peminjaman_ruangan.xlsx');
         }
     }
 }

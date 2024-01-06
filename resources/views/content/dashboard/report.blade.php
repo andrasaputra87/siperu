@@ -170,6 +170,7 @@
                                   <th>Peminjam</th>
                                   <th>Gedung</th>
                                   <th>Ruangan</th>
+                                  <th>Fakultas/BAAK</th>
                                   <th>Tanggal Peminjaman</th>
                                   <th>Waktu Mulai</th>
                                   <th>Waktu Selesai</th>
@@ -198,6 +199,7 @@
                                       </td>
                                       <td>{{ $reservation->room->building->building_name }}</td>
                                       <td>{{ $reservation->room->name }}</td>
+                                      <td>{{ $reservation->faculty_name }}</td>
                                       <td>{{ $reservation->reservation_date }}</td>
                                       <td>{{ substr($reservation->session->start, 0, 5) }}</td>
                                       <td>{{ substr($reservation->end_time, 0, 5) }}</td>

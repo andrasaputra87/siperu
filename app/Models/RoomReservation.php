@@ -33,4 +33,9 @@ class RoomReservation extends Model
     {
         return $this->belongsTo(Session::class,'start_time','id');
     }
+
+    public function faculty()
+    {
+        return $this->belongsTo(Session::class,'start_time','id');
+    }
 }

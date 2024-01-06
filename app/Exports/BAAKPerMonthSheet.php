@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use App\Models\Faculty;
 
 class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, WithHeadings, WithEvents, WithCustomStartCell, WithTitle
 {
@@ -31,7 +32,9 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
         return RoomReservation::whereYear('created_at', $this->year)
         ->whereMonth('created_at', $this->month)
         ->whereHas('room', function ($query) {
-            $query->leftjoin('buildings','buildings.id','building_id')->where('faculty_id', '3');
+            $query->leftjoin('buildings','buildings.id','building_id')
+            ->leftJoin('users','users.id','id_user')
+            ->leftJoin('faculties','faculties.id','faculty_id')->where('users.faculty_id', auth()->user()->faculty_id);
         })
         ->get();
     }
@@ -48,7 +51,10 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
             $reservation->necessary,
             $reservation->status,
             $reservation->room->name,
-            $reservation->room->building->building_name
+            $reservation->room->building->building_name,
+            Faculty::rightJoin('users','users.faculty_id','faculties.id')
+            ->where('users.id',$reservation->room->building->id_user)
+            ->first('faculties.name as name')->name
         ];
     }
 
@@ -64,7 +70,8 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
             'Keperluan',
             'Status',
             'Ruangan',
-            'Gedung'
+            'Gedung',
+            'Kepemilikan Fakultas/BAAK'
         ];
     }
 
@@ -72,7 +79,7 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
     {
         return [
             AfterSheet::class    => function(AfterSheet $event) {
-                $event->sheet->getStyle('A2:J2')->applyFromArray([
+                $event->sheet->getStyle('A2:K2')->applyFromArray([
                     'font' => [
                         'bold' => true
                     ],
@@ -89,7 +96,7 @@ class BAAKPerMonthSheet implements FromCollection, ShouldAutoSize, WithMapping, 
 
                 // Mengatur border pada seluruh data
                 $lastRow = $event->sheet->getHighestRow();
-                $event->sheet->getStyle('A2:J' . $lastRow)->applyFromArray([
+                $event->sheet->getStyle('A2:K' . $lastRow)->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => Border::BORDER_THIN,

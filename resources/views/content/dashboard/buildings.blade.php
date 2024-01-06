@@ -219,8 +219,9 @@
                             
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
-                                    <select name="pengelola_id" id="pengelola_id" class="form-select">
+                                    <label class="form-label" for="id_user">Pengelola Gedung<span
+                                        class="text-danger fw-bold">*</span></label>
+                                    <select name="id_user" id="id_user" class="form-select @error('id_user') border-danger @enderror">
                                         <option value="" disabled selected>-- Pilih Pengelola --</option>
                                         @foreach ($pengelola as $peng)
                                             <option value="{{ $peng->id }}"
@@ -228,6 +229,9 @@
                                                 {{ $peng->fullname }} - {{ $peng->faculty->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('id_user')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <img src="{{ asset($building_edit->thumbnail) }}" alt="{{ $building_edit->building_name }}"
@@ -291,14 +295,18 @@
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label class="form-label" for="pengelola_id">Pengelola Gedung</label>
-                                    <select name="pengelola_id" id="pengelola_id" class="form-select">
+                                    <label class="form-label" for="id_user">Pengelola Gedung<span
+                                        class="text-danger fw-bold">*</span></label>
+                                    <select name="id_user" id="id_user" class="form-select @error('id_user') border-danger @enderror"">
                                         <option value="" disabled selected>-- Pilih Pengelola --</option>
                                         @foreach ($pengelola as $peng)
                                             <option value="{{ $peng->id }}">
                                             {{ $peng->fullname }} - {{ $peng->faculty->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('id_user')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -340,22 +348,22 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($building as $building)
+                                @foreach ($building as $build)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td><img src="{{ asset($building->thumbnail) }}" alt="{{ $building->name }}"
+                                        <td><img src="{{ asset($build->thumbnail) }}" alt="{{ $build->name }}"
                                                 style="width: 70px; height: 70px; object-fit:cover"></td>
-                                        <td><b>{{ $building->building_name }}</b></td>
-                                        <td>{{ $building->floor }} </td>
-                                        <td>{{ $building->faculty->name }} </td>
-                                        <td>{{ $building->user->fullname }} </td>
+                                        <td><b>{{ $build->building_name }}</b></td>
+                                        <td>{{ $build->floor }} </td>
+                                        <td>{{ $build->nama_fakultas }} </td>
+                                        <td>{{ $build->user->fullname }} </td>
 
                                         <td>
                                             <div class="d-flex">
-                                                <a href="{{ route('building.edit', $building) }}"
+                                                <a href="{{ route('building.edit', $build) }}"
                                                     class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
-                                                <form action="{{ route('building.destroy', $building) }}"
-                                                    id="delete-form-{{ $building->id }}" method="POST">
+                                                <form action="{{ route('building.destroy', $build) }}"
+                                                    id="delete-form-{{ $build->id }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" href=""

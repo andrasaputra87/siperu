@@ -140,6 +140,21 @@
                             @enderror
                         </div>
                         <div class="mb-3 col-md-6">
+                            <label class="form-label" for="faculty_id">Fakultas/BAAK</label>
+                            <select name="faculty_id" id="faculty_id"
+                                class="form-select @error('faculty_id') invalid @enderror">
+                                <option value="" selected disabled>-- Pilih Jurusan --</option>
+                                @foreach ($faculties as $faculty)
+                                    <option value="{{ $faculty->id }}"
+                                        {{ $faculty->id == auth()->user()->faculty_id ? 'selected' : '' }}>
+                                        {{ $faculty->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('faculty_id')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 col-md-6">
                             <label class="form-label" for="department_id">Jurusan</label>
                             <select name="department_id" id="department_id"
                                 class="form-select @error('department_id') invalid @enderror">

@@ -16,16 +16,17 @@ class BuildingController extends Controller
         if (auth()->user()->role == 'admin') {
             $building = Building::leftjoin('users','users.id','id_user')
                 ->leftjoin('faculties','faculties.id','faculty_id')
-                ->orderBy('buildings.id', 'desc')->get();
+                ->orderBy('buildings.id', 'desc')->get(['buildings.*','faculties.name as nama_fakultas']);
             $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->get();
         }else{
 
             $building = Building::leftjoin('users','users.id','id_user')
                 ->leftjoin('faculties','faculties.id','faculty_id')
                 ->where('faculty_id',auth()->user()->faculty_id)
-                ->orderBy('buildings.id', 'desc')->get();
+                ->orderBy('buildings.id', 'desc')->get(['buildings.*','faculties.name as nama_fakultas']);
             $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->where('faculty_id',auth()->user()->faculty_id)->get();
         }
+        // var_dump($building);
         return view('content.dashboard.buildings', [
             'building' => $building,
             'pengelola' => $pengelola,
@@ -38,7 +39,7 @@ class BuildingController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            // 'faculty_id' =>'required',
+            'id_user' =>'required',
             // 'floor' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048'
             
@@ -47,7 +48,7 @@ class BuildingController extends Controller
         $data['building_name'] = $request->name;
         $data['checkfloor'] = $request->input('checkfloor',1);
         $data['floor'] = $request->input('lantai');
-        $data['id_user'] = $request->input('pengelola_id');
+        // $data['id_user'] = $request->input('pengelola_id');
 
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
@@ -85,14 +86,14 @@ class BuildingController extends Controller
             if (auth()->user()->role == 'admin') {
                 $buildings = Building::leftjoin('users','users.id','id_user')
                     ->leftjoin('faculties','faculties.id','faculty_id')
-                    ->orderBy('buildings.id', 'desc')->get();
+                    ->orderBy('buildings.id', 'desc')->get(['buildings.*','faculties.name as nama_fakultas']);
                 $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->get();
             }else{
     
                 $buildings = Building::leftjoin('users','users.id','id_user')
                     ->leftjoin('faculties','faculties.id','faculty_id')
                     ->where('faculty_id',auth()->user()->faculty_id)
-                    ->orderBy('buildings.id', 'desc')->get();
+                    ->orderBy('buildings.id', 'desc')->get(['buildings.*','faculties.name as nama_fakultas']);
                 $pengelola = User::with('faculty')->where('role', 'pengelola_gedung')->where('faculty_id',auth()->user()->faculty_id)->get();
             }
             return view('content.dashboard.buildings', [

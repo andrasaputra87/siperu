@@ -97,6 +97,15 @@
                                 @enderror
                             </div>
                             <div class="col-12 col-lg-6 custom-col">
+                                <label class="form-label" for="faculty_id">Fakultas</label>
+                                <select name="faculty_id" id="faculty_id" class="form-select">
+                                    <option value="" disabled selected>-- Pilih Fakultas --</option>
+                                    @foreach ($faculties as $facultiy)
+                                        <option value="{{ $facultiy->id }}" {{ old('faculty_id', $user->faculty_id) == $facultiy->id ? 'selected' : '' }}>{{ $facultiy->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-6 custom-col">
                                 <label class="form-label" for="department_id">Jurusan</label>
                                 <select name="department_id" id="department_id" class="form-select">
                                     <option value="" disabled selected>-- Pilih Jurusan --</option>
@@ -113,9 +122,8 @@
                                     <option value="lecturer" {{ old('role', $user->role) == 'lecturer' ? 'selected' : '' }}>Dosen</option>
                                     <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
                                     <option value="head_baak" {{ old('role', $user->role) == 'head_baak' ? 'selected' : '' }}>Kepala BAAK</option>
-                                    <option value="staff_baak" {{ old('role', $user->role) == 'staff_baak' ? 'selected' : '' }}>Staff BAAK</option>
-                                    <option value="head_bm" {{ old('role', $user->role) == 'head_bm' ? 'selected' : '' }}>Kepala BM</option>
-                                    <option value="staff_bm" {{ old('role', $user->role) == 'staff_bm' ? 'selected' : '' }}>Staff BM</option>
+                                    <option value="pengelola_gedung" {{ old('role', $user->role) == 'pengelola_gedung' ? 'selected' : '' }}>Pengelola Gedung</option>
+                                    <option value="admin_fakultas" {{ old('role', $user->role) == 'admin_fakultas' ? 'selected' : '' }}>Admin Fakultas/BAAK</option>
                                 </select>
                                 @error('role')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
