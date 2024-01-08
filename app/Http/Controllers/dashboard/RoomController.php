@@ -24,25 +24,26 @@ class RoomController extends Controller
         if (auth()->user()->role == 'admin') {
             $building = Building::orderBy('id', 'desc')->get();
             $room = Room::with(['building'])
-            ->orderBy('id', 'desc')->get();
+                ->orderBy('id', 'desc')->get();
             $room_available = Room::where('availability', '1')->count();
             $room_not_available = Room::where('availability', '0')->count();
-        }else{
-            $query = User::where('faculty_id', auth()->user()->faculty_id)->where('role','pengelola_gedung')->first();
+        } else {
+            $query = User::where('faculty_id', auth()->user()->faculty_id)->where('role', 'pengelola_gedung')->first();
 
-            $id_pengelola = $query==NULL ? '' : $query->id;
-            $building = Building::where('id_user',$id_pengelola)
+            $id_pengelola = $query == NULL ? '' : $query->id;
+            $building = Building::where('id_user', $id_pengelola)
                 ->orderBy('buildings.id', 'desc')->get();
             $room = Room::with(['building'])
-            ->leftJoin('buildings','buildings.id','building_id')
-            ->where('id_user',$id_pengelola)
-            ->orderBy('rooms.id', 'desc')->get();
-            $room_available = Room::where('availability', '1')->leftJoin('buildings','buildings.id','building_id')
-            ->where('id_user',$id_pengelola)
-            ->orderBy('rooms.id', 'desc')->count();
-            $room_not_available = Room::where('availability', '0')->leftJoin('buildings','buildings.id','building_id')
-            ->where('id_user',$id_pengelola)
-            ->orderBy('rooms.id', 'desc')->count();
+                ->leftJoin('buildings', 'buildings.id', 'building_id')
+                ->where('id_user', $id_pengelola)
+                ->orderBy('rooms.id', 'desc')->get(['rooms.*','rooms.id as id_room']);
+
+            $room_available = Room::where('availability', '1')->leftJoin('buildings', 'buildings.id', 'building_id')
+                ->where('id_user', $id_pengelola)
+                ->orderBy('rooms.id', 'desc')->count();
+            $room_not_available = Room::where('availability', '0')->leftJoin('buildings', 'buildings.id', 'building_id')
+                ->where('id_user', $id_pengelola)
+                ->orderBy('rooms.id', 'desc')->count();
         }
         return view('content.dashboard.rooms', [
             'building' => $building,
@@ -51,7 +52,7 @@ class RoomController extends Controller
             'room_available' => $room_available,
             'room_not_available' => $room_not_available,
         ]);
-        // var_dump($building);
+        // var_dump($room);
     }
 
     /**

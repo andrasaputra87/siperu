@@ -24,6 +24,7 @@ class ReservationController extends Controller
       $query = RoomReservation::with(['user', 'room'])->where('conditional',0)
           ->leftjoin('rooms','rooms.id','room_id')
           ->leftjoin('buildings','buildings.id','building_id')
+          ->leftjoin('users','users.id','id_user')
           ->leftjoin('faculties','faculties.id','faculty_id')
       ->orderBy('status', 'asc')->orderBy('room_reservations.id', 'asc');
       if($id!=NULL){

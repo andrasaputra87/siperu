@@ -56,10 +56,10 @@ Route::get('/dashboard', $controller_path . '\dashboard\Dashboard@index')->name(
 
 // Data master
 Route::resource('rooms', RoomController::class)->middleware(['auth', 'role:admin,head_baak,admin_fakultas'])->except('show');
-Route::get('rooms/{id}', [RoomController::class, 'show'])->middleware(['auth', 'role:admin,head_baak,user,,admin_fakultas'])->name('rooms.show');
-Route::get('/add-slider/{id}', [RoomController::class, 'add_slider'])->name('add-slider')->middleware(['auth', 'role:admin,head_baak']);
-Route::post('/upload-slider/{id}', [RoomController::class, 'upload_slider'])->middleware(['auth', 'role:admin,head_baak']);
-Route::delete('/delete-slider/{id}', [RoomController::class, 'delete_slider'])->middleware(['auth', 'role:admin,head_baak']);
+Route::get('rooms/{id}', [RoomController::class, 'show'])->middleware(['auth', 'role:admin,head_baak,user,admin_fakultas'])->name('rooms.show');
+Route::get('/add-slider/{id}', [RoomController::class, 'add_slider'])->name('add-slider')->middleware(['auth', 'role:admin,head_baak,admin_fakultas']);
+Route::post('/upload-slider/{id}', [RoomController::class, 'upload_slider'])->middleware(['auth', 'role:admin,head_baak,admin_fakultas']);
+Route::delete('/delete-slider/{id}', [RoomController::class, 'delete_slider'])->middleware(['auth', 'role:admin,head_baak,admin_fakultas']);
 Route::resource('departments', DepartmentController::class)->middleware(['auth', 'role:admin']);
 Route::resource('faculties', FacultyController::class)->middleware(['auth', 'role:admin']);
 Route::resource('years', YearsController::class)->middleware(['auth', 'role:admin']);

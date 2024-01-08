@@ -488,6 +488,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
+                                                {{-- {{ $room->id_room }} --}}
                                                 <a href="{{ route('rooms.edit', $room) }}"
                                                     class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
                                                 <form action="{{ route('rooms.destroy', $room) }}"
