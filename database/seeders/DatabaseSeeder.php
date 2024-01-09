@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
       FacultySeeder::class,
       DepartmentSeeder::class,
       UserSeeder::Class,
+      BuildingSeeder::class,
       RoomSeeder::class,
       RoomReservationSeeder::class,
-      RoomImageSeeder::class,
   ]);
   }
 }
