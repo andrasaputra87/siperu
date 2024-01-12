@@ -130,3 +130,6 @@ Route::get('/get_jadwal_building/{id}', [CalendarController::class,'get_jadwal_b
 Route::post('/get_lantai', [CalendarController::class, 'get'])->middleware('auth')->name('get_lantai');
 Route::post('/get-ruangan', [CalendarController::class, 'cariroom']);
 
+// room
+Route::get('/set_room/{id}', [RoomController::class, 'set'])->middleware('auth')->name('set-room');
+Route::get('/set_room_non/{id}', [RoomController::class, 'unset'])->middleware('auth')->name('set-room-non');
