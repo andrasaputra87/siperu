@@ -118,7 +118,7 @@ class BuildingController extends Controller
         $data['building_name'] = $request->name;
         $data['checkfloor'] = $request->input('checkfloor',1);
         $data['floor'] = $request->input('lantai');
-        $data['id_user'] = $request->input('pengelola_id');
+        $data['id_user'] = $request->input('id_user');
 
         if ($request->hasFile('thumbnail')) {
            // Hapus gambar lama jika ada
