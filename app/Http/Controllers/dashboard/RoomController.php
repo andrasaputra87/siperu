@@ -37,7 +37,6 @@ class RoomController extends Controller
                 ->leftJoin('buildings', 'buildings.id', 'building_id')
                 ->where('id_user', $id_pengelola)
                 ->orderBy('rooms.id', 'desc')->get(['rooms.*','rooms.id as id_room']);
-
             $room_available = Room::where('availability', '1')->leftJoin('buildings', 'buildings.id', 'building_id')
                 ->where('id_user', $id_pengelola)
                 ->orderBy('rooms.id', 'desc')->count();
@@ -230,5 +229,30 @@ class RoomController extends Controller
         $data->delete();
 
         return redirect()->back()->with('message', 'Foto slider berhasil dihapus');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function set(Request $request, $id)
+    {
+        $post = Room::find($id);
+        $post->availability = 1;
+        $post->update();
+
+        return redirect('rooms')->with('message', 'Data berhasil diubah!');
+    }
+
+    public function unset(Request $request, $id)
+    {
+        $post = Room::find($id);
+        $post->availability = 0;
+        $post->update();
+
+        return redirect('rooms')->with('message', 'Data berhasil diubah!');
     }
 }

@@ -128,11 +128,11 @@
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
             <div class="content-left">
-              <span>Admin</span>
+              <span>Admin Fakultas/BAAK</span>
               <div class="d-flex align-items-end mt-2">
-                <h4 class="mb-0 me-2">{{ $users->where('role', 'admin')->count() }}</h4>
+                <h4 class="mb-0 me-2">{{ $users->where('role', 'admin_fakultas')->count() }}</h4>
               </div>
-              <small>Total Admin </small>
+              <small>Total Admin Fakultas/BAAK</small>
             </div>
             <span class="badge bg-label-success rounded p-2">
               <i class="bx bxs-user-badge bx-sm"></i>
@@ -142,6 +142,24 @@
       </div>
     </div>
     <div class="col-sm-6 col-xxl-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex align-items-start justify-content-between">
+            <div class="content-left">
+              <span>Pengelola Gedung</span>
+              <div class="d-flex align-items-end mt-2">
+                <h4 class="mb-0 me-2">{{ $users->where('role', 'pengelola_gedung')->count() }}</h4>
+              </div>
+              <small>Total Pengelola Gedung </small>
+            </div>
+            <span class="badge bg-label-success rounded p-2">
+              <i class="bx bxs-user-badge bx-sm"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-6 col-xxl-3">
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between">
@@ -158,7 +176,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     {{-- <div class="col-sm-6 col-xxl-3">
       <div class="card">
         <div class="card-body">

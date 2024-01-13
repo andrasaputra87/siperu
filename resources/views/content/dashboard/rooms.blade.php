@@ -489,6 +489,11 @@
                                         <td>
                                             <div class="d-flex">
                                                 {{-- {{ $room->id_room }} --}}
+                                                @if($room->availability ==0)         
+                                                    <a href="/set_room/{{$room->id}}" class="btn btn-sm btn-icon item-check-circle"><i class="bx bxs-check-circle"></i></a>
+                                                @else
+                                                    <a href="/set_room_non/{{$room->id}}" class="btn btn-sm btn-icon item-check-circle"><i class="bx bxs-checkbox-minus"></i></a>
+                                                @endif
                                                 <a href="{{ route('rooms.edit', $room) }}"
                                                     class="btn btn-sm btn-icon item-edit"><i class="bx bxs-edit"></i></a>
                                                 <form action="{{ route('rooms.destroy', $room) }}"

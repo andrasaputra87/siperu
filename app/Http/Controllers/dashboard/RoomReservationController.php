@@ -40,13 +40,13 @@ class RoomReservationController extends Controller
     $building = Building::find($id);
     if($floor!=NULL){
       return view('content.dashboard.room_reservation', [
-        'rooms' => Room::latest()->where('building_id', $id)->where('location',$floor)->get(),
+        'rooms' => Room::latest()->where('building_id', $id)->where('location',$floor)->where('availability',1)->get(),
         'building_id'=>$id,
         'building'=>$building
       ]);
     }else{
       return view('content.dashboard.room_reservation', [
-        'rooms' => Room::latest()->where('building_id', $id)->get(),
+        'rooms' => Room::latest()->where('building_id', $id)->where('availability',1)->get(),
         'building_id'=>$id,
         'building'=>$building
       ]);

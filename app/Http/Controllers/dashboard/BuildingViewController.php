@@ -26,6 +26,7 @@ class BuildingViewController extends Controller
         return view('content.dashboard.building_view', [
             // 'rooms' => Building::latest()->where('building_name', 'like', "%" . $request->keyword . "%")->get(),
             'total_ruang' => $hasil,
+            'total_ruang_tersedia' => Room::where('availability',1)->count()
 
         ]);
     }
