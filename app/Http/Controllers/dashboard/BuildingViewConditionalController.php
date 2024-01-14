@@ -5,6 +5,7 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Room;
 
 class BuildingViewConditionalController extends Controller
 {
@@ -23,6 +24,7 @@ class BuildingViewConditionalController extends Controller
         return view('content.dashboard.building_view_conditonal', [
             // 'rooms' => Building::latest()->where('building_name', 'like', "%" . $request->keyword . "%")->get(),
             'total_ruang' => $hasil,
+            'total_ruang_tersedia' => Room::where('availability',1)->count()
 
         ]);
     }

@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <h5 class="text-truncate">{{ $room->building_name }}
                                 <div class="d-flex gap-2 mb-3">
-                                    <span class="badge bg-label-primary">Total Ruangan : {{ $room->jumlah_ruang }}</span>
+                                    <span class="badge bg-label-primary">Total Ruangan Tersedia : {{ $total_ruang_tersedia }}</span>
                                     <span class="badge bg-label-primary"></span>
                                 </div>
                                 <div class="d-flex gap-2 mb-3">
