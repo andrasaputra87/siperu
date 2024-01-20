@@ -176,7 +176,7 @@
                                 peminjaman.</p>
                         </div>
                         <hr>
-                        <form action="/complete_personal_data/{{ auth()->user()->id }}" method="POST">
+                        <form action="/complete_personal_data/{{ auth()->user()->id }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -222,7 +222,7 @@
                             <div class="divider-text">Data Peminjaman</div>
                         </div>
 
-                            <form action="{{ route('room_reservation_conditional.store') }}" method="POST" class="row g-3">
+                            <form action="{{ route('room_reservation_conditional.store') }}" method="POST" class="row g-3" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="baak">
                                 <input type="hidden" name="room_id" value="{{ $room->id }}">
@@ -268,7 +268,21 @@
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-                               
+                                <div class="mb-3 col-md-12">
+                                    <label class="form-label" for="file_upload">Surat Permohonan</label>
+                                    <div class="col-sm-12">
+                                        <div id="file-preview" class="file-preview">
+                                            <label for="file-upload" id="file-label" class="btn btn-primary me-2 mb-4">Pilih
+                                                File</label>
+                                            <input type="file" name="file_upload" id="file-upload" hidden accept=".pdf">
+                                        </div>
+                                    </div>
+                                    <p class="text-muted mb-0">Diperbolehkan File PDF. Maksimal ukuran 2MB</p>
+                                    @error('file_upload')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+        
+                                </div>
                                 
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>

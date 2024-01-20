@@ -225,6 +225,7 @@
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
                                     <th>Keperluan</th>
+                                    <th>Surat Permohonan</th>
                                    
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -286,6 +287,8 @@
                                             @endif
                                         </td>
                                       
+                                        <td> <a href="{{asset($reservation->pemohon_file_upload)}}"
+                                            class="btn btn-sm btn-success"> Link</a></td>
                                         <td>
                                                 @if ($reservation->status_conditional == 'approved')
                                                     <span class="badge bg-success">Disetujui</span>
