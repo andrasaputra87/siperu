@@ -313,6 +313,33 @@
                         <span class="badge bg-label-primary">{{ $room->location }}</span>
                         <span class="badge bg-label-primary">{{ $room->capacity }} Orang</span>
                     </div>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                        Fasilitas
+                       </button>
+                       <!-- Modal -->
+                       <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="modalCenterTitle">Fasilitas Ruangan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item">Kursi Kuliah : {{ $room->kursi_kuliah}}</li>
+                                    <li class="list-group-item">Kursi Dosen : {{ $room->kursi_dosen}}</li>
+                                    <li class="list-group-item">Meja Dosen : {{ $room->meja_dosen}}</li>
+                                    <li class="list-group-item">AC : {{ $room->ac}}</li>
+                                    <li class="list-group-item">Kipas Angin : {{ $room->kipas_angin}}</li>
+                                    <li class="list-group-item">White Board : {{ $room->whiteboard}}</li>
+                                    <li class="list-group-item">Penghapus : {{ $room->penghapus}}</li>
+                                    <li class="list-group-item">Proyektor : {{ $room->proyektor}}</li>
+                                  </ul>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+            </td>
                     <p>{{ $room->description }}</p>
                     <table class="table datatables-basic">
                         <thead>
