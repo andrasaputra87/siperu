@@ -335,6 +335,7 @@
                                     <th>Waktu Mulai</th>
                                     <th>Waktu Selesai</th>
                                     <th>Keperluan</th>
+                                    <th>Surat Permohonan</th>
                                     {{-- <th>Jaminan</th> --}}
                                     <th>Status</th>
                                     <th>Permohonan Kondisional</th>
@@ -389,6 +390,8 @@
                                                 {{ $reservation->necessary }}
                                             @endif
                                         </td>
+                                        <td> <a href="{{asset($reservation->file_upload)}}"
+                                            class="btn btn-sm btn-success"> Link</a></td>
                                         {{-- <td>{{ strtoupper($reservation->guarantee) }}</td> --}}
                                         <td>
                                                 @if ($reservation->status == 'approved')

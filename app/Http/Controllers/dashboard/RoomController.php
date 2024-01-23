@@ -74,6 +74,14 @@ class RoomController extends Controller
         } else {
             $data['location'] = $request->input('location');
         }
+        $data['kursi_kuliah'] = $request->input('kursi_kuliah')!=NULL?$request->input('kursi_kuliah'):0;
+        $data['kursi_dosen'] = $request->input('kursi_dosen')!=NULL?$request->input('kursi_dosen'):0;
+        $data['meja_dosen'] = $request->input('meja_dosen')!=NULL?$request->input('meja_dosen'):0;
+        $data['ac'] = $request->input('ac')!=NULL?$request->input('ac'):0;
+        $data['kipas_angin'] = $request->input('kipas_angin')!=NULL?$request->input('kipas_angin'):0;
+        $data['whiteboard'] = $request->input('whiteboard')!=NULL?$request->input('whiteboard'):0;
+        $data['penghapus'] = $request->input('penghapus')!=NULL?$request->input('penghapus'):0;
+        $data['proyektor'] = $request->input('proyektor')!=NULL?$request->input('proyektor'):0;
 
         $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
@@ -146,6 +154,15 @@ class RoomController extends Controller
             $data['location'] = $request->input('location');
         }
 
+        $data['kursi_kuliah'] = $request->input('kursi_kuliah')!=NULL?$request->input('kursi_kuliah'):0;
+        $data['kursi_dosen'] = $request->input('kursi_dosen')!=NULL?$request->input('kursi_dosen'):0;
+        $data['meja_dosen'] = $request->input('meja_dosen')!=NULL?$request->input('meja_dosen'):0;
+        $data['ac'] = $request->input('ac')!=NULL?$request->input('ac'):0;
+        $data['kipas_angin'] = $request->input('kipas_angin')!=NULL?$request->input('kipas_angin'):0;
+        $data['whiteboard'] = $request->input('whiteboard')!=NULL?$request->input('whiteboard'):0;
+        $data['penghapus'] = $request->input('penghapus')!=NULL?$request->input('penghapus'):0;
+        $data['proyektor'] = $request->input('proyektor')!=NULL?$request->input('proyektor'):0;
+        
         $data['building_id'] = $request->input('building');
         if ($request->hasFile('thumbnail')) {
             // Hapus gambar lama jika ada

@@ -103,6 +103,7 @@ class RoomReservationController extends Controller
       $data['note'] = $request->note;
       $data['day'] = date('D',strtotime($request->reservation_date));
 
+
       if ($request->has('signature')) {
         $request->validate([
           'signature' => 'required',
@@ -126,6 +127,13 @@ class RoomReservationController extends Controller
       }
     }
 
+    // var_dump($request->hasFile('file_upload'));
+      if ($request->hasFile('file_upload')) {
+        $file_upload = $request->file('file_upload');
+        $file_upload_name = time() . '_' . $file_upload->getClientOriginalName();
+        $file_upload->move(public_path('storage'), $file_upload_name);
+        $data['file_upload'] = 'storage/surat_permohonan/' . $file_upload_name;
+      }
     $start_time = Session::findOrFail($request->start_time);
     if ($request->sks == 2) {
       $end_time = Carbon::parse($start_time->start)->addMinutes(90)->toTimeString();

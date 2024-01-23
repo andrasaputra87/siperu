@@ -64,6 +64,7 @@ class ReservationConditionalController extends Controller
               ->orderBy('room_reservations.status', 'asc')->orderBy('room_reservations.id', 'asc')
               ->get(['*','users.fullname as pemohon_name','users.avatar as pemohon_avatar',
             'users.slug as pemohon_slug', 'room_reservations.necessary as pemohon_necessary', 
+            'room_reservations.file_upload as pemohon_file_upload', 
             'termohon.fullname as termohon_name','users.nim as pemohon_nim',
             'termohon.nim as termohon_nim','room_reservations.status as status_conditional','room_reservations.id as id_rr']);
             $reservation_total = RoomReservation::where('conditional','!=',0)->count();

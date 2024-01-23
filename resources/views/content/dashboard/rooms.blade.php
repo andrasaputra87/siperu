@@ -307,34 +307,95 @@
                                     @enderror
                                 </div>
                             </div>
-
-                            {{-- <div class="row">
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">Kepemilikan <span
-                                            class="text-danger fw-bold">*</span></label>
-                                    <div class="row">
-                                        <div class="col-xxl-6 mb-3">
-                                            <div
-                                                class="form-check custom-option custom-option-icon @error('ownership') border-danger @enderror">
-                                                <label class="form-check-label custom-option-content" for="radioBAAK">
-                                                    <span class="custom-option-body">
-                                                        <i class="bx bx-user-voice"></i>
-                                                        <span class="custom-option-title">BAAK</span>
-                                                        <small> Biro Administrasi Akademik </small>
-                                                    </span>
-                                                    <input name="ownership" class="form-check-input" type="radio"
-                                                        value="baak" id="radioBAAK"
-                                                        {{ $room_edit->ownership == 'baak' ? 'checked' : '' }} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @error('ownership')
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kursi_kuliah" class="form-label">Fasilitas Kursi Kuliah</label>
+                                    <input type="number" name="kursi_kuliah" id="kursi_kuliah"
+                                        class="form-control @error('kursi_kuliah') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->kursi_kuliah }}">
+                                    @error('kursi_kuliah')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div> --}}
-
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kursi_dosen" class="form-label">Fasilitas Kursi Desan</label>
+                                    <input type="text" name="kursi_dosen" id="kursi_dosen"
+                                        class="form-control @error('kursi_dosen') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->kursi_dosen }}">
+                                    @error('kursi_dosen')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="meja_dosen" class="form-label">Fasilitas Meja Dosen</label>
+                                    <input type="text" name="meja_dosen" id="meja_dosen"
+                                        class="form-control @error('meja_dosen') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->meja_dosen }}">
+                                    @error('meja_dosen')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="ac" class="form-label">Fasilitas AC</label>
+                                    <input type="text" name="ac" id="ac"
+                                        class="form-control @error('ac') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->ac }}">
+                                    @error('ac')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kipas_angin" class="form-label">Fasilitas Kipas Angin</label>
+                                    <input type="text" name="kipas_angin" id="kipas_angin"
+                                        class="form-control @error('kipas_angin') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->kipas_angin }}">
+                                    @error('kipas_angin')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="whiteboard" class="form-label">Fasilitas Whiteboard</label>
+                                    <input type="text" name="whiteboard" id="whiteboard"
+                                        class="form-control @error('whiteboard') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->whiteboard }}">
+                                    @error('whiteboard')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="penghapus" class="form-label">Fasilitas Penghapus</label>
+                                    <input type="text" name="penghapus" id="penghapus"
+                                        class="form-control @error('penghapus') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->penghapus }}">
+                                    @error('penghapus')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="proyektor" class="form-label">Fasilitas Proyektor</label>
+                                    <input type="text" name="proyektor" id="proyektor"
+                                        class="form-control @error('proyektor') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ $room_edit->proyektor }}">
+                                    @error('proyektor')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <img src="{{ asset($room_edit->thumbnail) }}" alt="{{ $room_edit->name }}"
                                 class=" rounded mb-3 shadow-sm"
                                 style="width: 70%; height: 40%; border: 1px solid #d9dee3;">
@@ -421,6 +482,95 @@
                                     @enderror
                                 </div>
                             </div>
+                            
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kursi_kuliah" class="form-label">Fasilitas Kursi Kuliah</label>
+                                    <input type="number" name="kursi_kuliah" id="kursi_kuliah"
+                                        class="form-control @error('kursi_kuliah') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('kursi_kuliah') }}">
+                                    @error('kursi_kuliah')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kursi_dosen" class="form-label">Fasilitas Kursi Desan</label>
+                                    <input type="text" name="kursi_dosen" id="kursi_dosen"
+                                        class="form-control @error('kursi_dosen') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('kursi_dosen') }}">
+                                    @error('kursi_dosen')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="meja_dosen" class="form-label">Fasilitas Meja Dosen</label>
+                                    <input type="text" name="meja_dosen" id="meja_dosen"
+                                        class="form-control @error('meja_dosen') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('meja_dosen') }}">
+                                    @error('meja_dosen')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="ac" class="form-label">Fasilitas AC</label>
+                                    <input type="text" name="ac" id="ac"
+                                        class="form-control @error('ac') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('ac') }}">
+                                    @error('ac')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="kipas_angin" class="form-label">Fasilitas Kipas Angin</label>
+                                    <input type="text" name="kipas_angin" id="kipas_angin"
+                                        class="form-control @error('kipas_angin') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('kipas_angin') }}">
+                                    @error('kipas_angin')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="whiteboard" class="form-label">Fasilitas Whiteboard</label>
+                                    <input type="text" name="whiteboard" id="whiteboard"
+                                        class="form-control @error('whiteboard') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('whiteboard') }}">
+                                    @error('whiteboard')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="penghapus" class="form-label">Fasilitas Penghapus</label>
+                                    <input type="text" name="penghapus" id="penghapus"
+                                        class="form-control @error('penghapus') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('penghapus') }}">
+                                    @error('penghapus')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label for="proyektor" class="form-label">Fasilitas Proyektor</label>
+                                    <input type="text" name="proyektor" id="proyektor"
+                                        class="form-control @error('proyektor') border-danger @enderror"
+                                        placeholder="Masukkan jumlah" value="{{ old('proyektor') }}">
+                                    @error('proyektor')
+                                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <label for="thumbnail" class="form-label">Thumbnail <span
                                         class="text-danger fw-bold">*</span></label>
@@ -455,6 +605,7 @@
                                     <th>Nama</th>
                                     <th>Kapasitas</th>
                                     <th>Gedung</th>
+                                    <th>Fasilitas</th>
                                     <th>Lokasi</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -472,6 +623,34 @@
                                         </td>
                                         <td>{{ $room->capacity }} Orang</td>
                                         <td>{{ $room->building->building_name }}</td>
+                                        <td >
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                                               Cek
+                                              </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalCenterTitle">Fasilitas Ruangan</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <ul class="list-group">
+                                                                <li class="list-group-item">Kursi Kuliah : {{ $room->kursi_kuliah}}</li>
+                                                                <li class="list-group-item">Kursi Dosen : {{ $room->kursi_dosen}}</li>
+                                                                <li class="list-group-item">Meja Dosen : {{ $room->meja_dosen}}</li>
+                                                                <li class="list-group-item">AC : {{ $room->ac}}</li>
+                                                                <li class="list-group-item">Kipas Angin : {{ $room->kipas_angin}}</li>
+                                                                <li class="list-group-item">White Board : {{ $room->whiteboard}}</li>
+                                                                <li class="list-group-item">Penghapus : {{ $room->penghapus}}</li>
+                                                                <li class="list-group-item">Proyektor : {{ $room->proyektor}}</li>
+                                                              </ul>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                        </td>
                                         <td>
                                             @if ($room->location == '')
                                                 <span class="bagde bg-danger">Tidak Bertingkat</span>
@@ -526,8 +705,32 @@
                     </div>
                 </div>
             </div>
+        </div><!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+        
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        
+          </div>
         </div>
+
+        
     </div>
+
+   
+
     <script>
         const dataBuilding = JSON.parse(`<?= json_encode($building) ?>`);
         @if ($room_edit)
