@@ -136,6 +136,24 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="start_tahun_ajaran" class="form-label">Tanggal Mulai <span class="text-danger fw-bold">*</span></label>
+                                <input type="date" name="start_tahun_ajaran" id="start_tahun_ajaran" class="form-control @error('start_tahun_ajaran') border-danger @enderror" value="{{ $tahun_ajaran_edit->start_tahun_ajaran }}">
+                                @error('start_tahun_ajaran')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3">
+                                <label for="end_tahun_ajaran" class="form-label">Tanggal Berakhir <span class="text-danger fw-bold">*</span></label>
+                                <input type="date" name="end_tahun_ajaran" id="end_tahun_ajaran" class="form-control @error('end_tahun_ajaran') border-danger @enderror" value="{{ $tahun_ajaran_edit->end_tahun_ajaran }}">
+                                @error('end_tahun_ajaran')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
 
                         <button type="submit" class="btn btn-primary btn-sm">Submit</button>
                         <button type="reset" class="btn btn-danger btn-sm">Reset</button>

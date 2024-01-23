@@ -80,7 +80,10 @@ class RoomReservationController extends Controller
         'room_id' => 'required',
         'sks' => 'required',
       ]);
-      $data['user_id'] = Auth()->user()->id;
+      // $data['jurusan'] = $request->jurusan_id;
+      // $data['user_id'] = Auth()->user()->id; $userId = NamaModel::where('nama_kolom', $nilai)->pluck('id_user')->first();
+
+      $data['user_id'] = User::where('department_id',$request->jurusan_id)->pluck('id')->first();
     } else {
       $data = $request->validate([
         'reservation_date' => 'required',
@@ -91,6 +94,7 @@ class RoomReservationController extends Controller
       ]);
 
       $data['user_id'] = Auth()->user()->id;
+      // $data['jurusan'] = $request->jurusan_id;
       $data['building_officer'] = $request->building_officer;
       $data['security_officer'] = $request->security_officer;
       $data['clean_officer'] = $request->clean_officer;
@@ -167,9 +171,11 @@ class RoomReservationController extends Controller
   {
     $today = Carbon::today()->format('Y-m-d');
     $room = Room::findOrFail($id);
-
+    $jurusan = Department::where('faculty_id',auth()->user()->faculty_id)->get();
+    // echo auth()->user()->faculty_id;
     return view('content.dashboard.room_reservation_create', [
       'room' => $room,
+      'jurusan' =>$jurusan,
       'departments' => Department::all(),
       'list_reservation' => RoomReservation::latest()->where('room_id', $id)->where('reservation_date', $today)->where(function ($query) {
         $query->where('status', 'pending')

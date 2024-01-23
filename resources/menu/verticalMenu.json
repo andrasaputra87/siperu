@@ -83,7 +83,7 @@
     },
     {
       "menuHeader": "Peminjaman",
-      "roles": ["admin","user"]
+      "roles": ["admin","user","admin_fakultas"]
     },
     
     {
@@ -91,21 +91,21 @@
       "icon": "menu-icon tf-icons bx bx-calendar-check",
       "slug": ["buildingview.index", "room_reservation.show", "rooms.show"],
       "url": "/building_view",
-      "roles": ["admin", "user"]
+      "roles": ["admin", "user","admin_fakultas"]
     },
     {
       "name": "Pinjam Ruangan Kondisional",
       "icon": "menu-icon tf-icons bx bx-calendar-exclamation",
       "slug": ["buildingviewconditonal.index", "room_reservation_conditional.show", "rooms.show"],
       "url": "/building_view_con",
-      "roles": ["admin", "user"]
+      "roles": ["admin", "user","admin_fakultas"]
     },
     {
       "name": "Peminjaman Saya",
       "icon": "menu-icon tf-icons bx bxs-user-detail",
       "slug": ["my_reservation", "history"],
       "url": "/my_reservation",
-      "roles": ["admin", "user"]
+      "roles": ["admin", "user","admin_fakultas"]
     },
     {
       "menuHeader": "Lainnya"

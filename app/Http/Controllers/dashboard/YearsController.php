@@ -91,6 +91,8 @@ class YearsController extends Controller
         ]);
         $post = TahunAjaran::find($id);
         $post->tahun_ajaran = $request->tahun_ajaran;
+        $post->start_tahun_ajaran = $request->start_tahun_ajaran;
+        $post->end_tahun_ajaran = $request->end_tahun_ajaran;
         $post->update();
 
         return redirect('years')->with('message', 'Data berhasil diubah!');

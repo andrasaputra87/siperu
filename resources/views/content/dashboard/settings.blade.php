@@ -23,7 +23,7 @@
 @section('vendor-script')
     {{-- <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script> --}}
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="http://keith-wood.name/js/jquery.signature.js"></script>
+    <script src="{{ asset('assets/js/signature.js') }}"></script>
     <script
         src="https://demos.themeselection.com/sneat-bootstrap-html-laravel-admin-template/demo/assets/vendor/libs/select2/select2.js">
     </script>

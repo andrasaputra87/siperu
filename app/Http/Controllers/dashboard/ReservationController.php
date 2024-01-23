@@ -96,7 +96,9 @@ class ReservationController extends Controller
       $reservations = RoomReservation::with(['user', 'room'])
         ->leftjoin('rooms','room_reservations.room_id','=','rooms.id')
         ->leftjoin('buildings','rooms.building_id','=','buildings.id')
-        ->leftjoin('faculties','faculties.id','faculty_id')
+        ->leftjoin('users','users.id','id_user')
+        ->leftjoin('faculties','faculties.id','users.faculty_id')
+        
         ->where('conditional',0)
         ->where('buildings.id_user',auth()->user()->id)
         ->orderBy('status', 'asc')->orderBy('room_reservations.id', 'asc')->get(['*','room_reservations.id as id_rr','faculties.name as faculty_name']);

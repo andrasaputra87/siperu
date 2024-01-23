@@ -259,6 +259,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if (auth()->user()->role == 'admin_fakultas')
+                                <div class="row">
+                                    <div class="col mb-3">
+                                        <label class="form-label" for="jurusan_id">Jurusan</label>
+                                        <select name="jurusan_id" id="jurusan_id" class="form-select">
+                                            <option value="" disabled selected>-- Pilih Jurusan --</option>
+                                            @foreach ($jurusan as $fak)
+                                                <option value="{{ $fak->id }}">
+                                                    {{ $fak->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                @endif
                                 <div class="col-12">
                                     <label for="necessary" class="form-label">Keperluan</label>
                                     <textarea name="necessary" id="necessary" rows="5"
